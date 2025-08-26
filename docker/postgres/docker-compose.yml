@@ -20,7 +20,8 @@ services:
     container_name: pgadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_EMAIL: 
+
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
@@ -32,7 +33,7 @@ services:
       - pgadmin_data:/var/lib/pgadmin
 
 networks:
-  streaming-network:
+  streaming-network-ez:
     external: true
 
 volumes:

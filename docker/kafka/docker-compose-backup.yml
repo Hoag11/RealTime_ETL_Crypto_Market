@@ -1,9 +1,8 @@
-version: '2'
 services:
   kafka-0:
     image: 'confluentinc/cp-kafka:7.6.1'
     networks:
-      - streaming-network
+      - streaming-network-ez
     hostname: kafka-0
     container_name: kafka-0
     ports:
@@ -39,7 +38,7 @@ services:
   kafka-1:
     image: 'confluentinc/cp-kafka:7.6.1'
     networks:
-      - streaming-network
+      - streaming-network-ez
     hostname: kafka-1
     container_name: kafka-1
     ports:
@@ -74,7 +73,7 @@ services:
   kafka-2:
     image: 'confluentinc/cp-kafka:7.6.1'
     networks:
-      - streaming-network
+      - streaming-network-ez
     hostname: kafka-2
     container_name: kafka-2
     ports:
@@ -109,12 +108,12 @@ services:
   akhq:
     image: 'tchiotludo/akhq:0.24.0'
     networks:
-      - streaming-network
+      - streaming-network-ez
     container_name: akhq
     ports:
-      - '8180:8080'
+      - '1234:1234'
     environment:
-      # password: Unigap@2024
+      # password: admin123
       AKHQ_CONFIGURATION: |
         akhq:
           connections:
@@ -123,12 +122,12 @@ services:
                 bootstrap.servers: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
                 security.protocol: SASL_PLAINTEXT
                 sasl.mechanism: PLAIN
-                sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka" password="UnigapKafka@2024";
+                sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka" password="hoang_user";
           security:
             default-group: no-roles
             basic-auth:
               - username: admin
-                password: "95401c788f8bf4f356ff0f5d74b005afb90c7ee12f98eeb8977bf4612feb67d0"
+                password: "270723e7f50a26d4ae90da0e13079f293dd37e9953f7f9801ce7de19a35fc58e"
                 passwordHash: SHA256
                 groups:
                 - admin
@@ -143,7 +142,7 @@ services:
                         secret: "6661a0975cd371c713f66a94bcd51ec874e0b040aec61f025964ad5fe7ee3120"
 
 networks:
-  streaming-network:
+  streaming-network-ez:
     external: true
 
 volumes:

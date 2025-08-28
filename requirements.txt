@@ -3,3 +3,4 @@ requests
 fake_useragent
 pyspark
 python-kafka
+airflow

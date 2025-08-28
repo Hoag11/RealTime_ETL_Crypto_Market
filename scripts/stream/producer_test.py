@@ -6,10 +6,6 @@ import requests
 from fake_useragent import UserAgent
 from kafka import KafkaProducer
 
-# Logging configuration
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
 
 ua = UserAgent()
 

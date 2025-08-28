@@ -1,3 +1,22 @@
+import logging
+import os
+from datetime import datetime
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_DIR = os.path.join(BASE_DIR, "logging")
+
+os.makedirs(LOG_DIR, exist_ok=True)
+
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler(
+        LOG_FILE, encoding="utf-8"), logging.StreamHandler()],
+)
+
 # KAFKA CONFIG
 KAKFA_BROKER = ["localhost:9094", "localhost:9194", "localhost:9294"]
 
@@ -6,7 +25,7 @@ KAFKA_TOPIC = "coin_prices"
 KAFKA_SECURITY_PROCTOCOL = "SASL_PLAINTEXT"
 KAFKA_SASL_MECHANISM = "PLAIN"
 KAFKA_SASL_USERNAME = "admin"
-KAFKA_SASL_PASSWORD = "admin123"
+KAFKA_SASL_PASSWORD = "Unigap@2024"
 
 # API CONFIG
 API_STREAMING = "https://api.coinlore.net/api/tickers/"

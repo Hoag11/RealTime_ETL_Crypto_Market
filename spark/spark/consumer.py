@@ -4,10 +4,6 @@ from configs import configs
 import json
 import logging
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
 # Kafka configuration
 KAFKA_BROKER = configs.KAKFA_BROKER
 KAFKA_TOPIC = configs.KAFKA_TOPIC
@@ -72,5 +68,7 @@ if __name__ == "__main__":
         .partitionBy("date")
         .start()
     )
+
+    logging.info("Streaming to MinIO started...")
 
     query.awaitTermination()

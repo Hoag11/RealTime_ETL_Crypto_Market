@@ -47,7 +47,7 @@ def create_kafka_producer():
                 logging.warning("No data to send to Kafka")
 
             producer.flush()
-            time.sleep(5)
+            time.sleep(2)
     except KeyboardInterrupt:
         logging.info("Kafka producer stopped manually")
     except Exception as e:

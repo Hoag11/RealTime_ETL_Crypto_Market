@@ -6,12 +6,6 @@ from fake_useragent import UserAgent
 from datetime import datetime
 from configs import configs
 
-# logging configuration
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
-
 ua = UserAgent()
 
 
@@ -51,7 +45,7 @@ def save_news(articles):
     logging.info(f"Saved {len(articles)} articles to {output_path}")
 
 
-if __name__ == "__main__":
-    logging.info("Starting news extraction process")
-    articles = extract_news()
-    save_news(articles)
+# if __name__ == "__main__":
+#     logging.info("Starting news extraction process")
+#     articles = extract_news()
+#     save_news(articles)

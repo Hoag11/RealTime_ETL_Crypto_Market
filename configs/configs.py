@@ -7,14 +7,13 @@ LOG_DIR = os.path.join(BASE_DIR, "logging")
 
 os.makedirs(LOG_DIR, exist_ok=True)
 
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+timestamp = datetime.now().strftime("%Y%m%d")
 LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.WARN,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler(
-        LOG_FILE, encoding="utf-8"), logging.StreamHandler()],
+    handlers=[logging.FileHandler(LOG_FILE, encoding="utf-8"), logging.StreamHandler()],
 )
 
 # KAFKA CONFIG

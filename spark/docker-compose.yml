@@ -15,7 +15,7 @@ services:
     ports:
       - '8080:8080'
   spark-worker:
-    image: unigap/spark:3.5
+    image: spark/spark:3.5
     networks:
       - streaming-network-ez
     volumes:

@@ -18,7 +18,7 @@ KAFKA_SASL_PASSWORD = configs.KAFKA_SASL_PASSWORD
 MINIO_ENDPOINT = configs.MINIO_ENDPOINT
 MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
 MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
-MINIO_BUCKET_RAW_NEWS = configs.MINIO_BUCKET_RAW_NEWS
+MINIO_BUCKET_RAW_PRICE = configs.MINIO_BUCKET_RAW_PRICE
 
 # Schema
 schema = StructType(
@@ -48,7 +48,8 @@ def create_spark_session():
         SparkSession.builder.appName("RawIngestion")
         .config(
             "spark.jars.packages",
-            "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.hadoop:hadoop-aws:3.3.6,org.scala-lang:scala-library:2.12.15",
+            "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,"
+            "org.apache.hadoop:hadoop-aws:3.3.6",
         )
         .config("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT)
         .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
@@ -57,7 +58,7 @@ def create_spark_session():
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config(
             "spark.sql.streaming.checkpointLocation",
-            f"s3a://{MINIO_BUCKET_RAW_NEWS}/checkpoint/raw-news-data",
+            f"s3a://{MINIO_BUCKET_RAW_PRICE}/checkpoint/raw-price-data",
         )
         .getOrCreate()
     )
@@ -82,9 +83,8 @@ if __name__ == "__main__":
         .option("kafka.security.protocol", KAFKA_SECURITY_PROCTOCOL)
         .option(
             "kafka.sasl.jaas.config",
-            f"org.apache.kafka.common.security.plain.PlainLoginModule required username='{
-                KAFKA_SASL_USERNAME
-            }' password='{KAFKA_SASL_PASSWORD}';",
+            f"org.apache.kafka.common.security.plain.PlainLoginModule required "
+            f"username='{KAFKA_SASL_USERNAME}' password='{KAFKA_SASL_PASSWORD}';",
         )
         .load()
     )
@@ -106,10 +106,10 @@ if __name__ == "__main__":
     # Lưu vào MinIO
     query = (
         df_ts.writeStream.format("parquet")
-        .option("path", f"s3a://{MINIO_BUCKET_RAW_NEWS}/raw-news-data")
+        .option("path", f"s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data")
         .option(
             "checkpointLocation",
-            f"s3a://{MINIO_BUCKET_RAW_NEWS}/checkpoint/raw-news-data",
+            f"s3a://{MINIO_BUCKET_RAW_PRICE}/checkpoint/raw-data",
         )
         .partitionBy("date")
         .trigger(processingTime="1 minute")
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     )
 
     logging.info(
-        f"Streaming to MinIO started at s3a://{MINIO_BUCKET_RAW_NEWS}/raw-news-data"
+        f"Streaming to MinIO started at s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data"
     )
 
     # Theo dõi query
@@ -129,3 +129,4 @@ if __name__ == "__main__":
     threading.Thread(target=log_query_progress, args=(query,), daemon=True).start()
 
     query.awaitTermination()
+

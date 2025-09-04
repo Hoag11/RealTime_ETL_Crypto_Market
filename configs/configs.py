@@ -11,9 +11,10 @@ timestamp = datetime.now().strftime("%Y%m%d")
 LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
 
 logging.basicConfig(
-    level=logging.WARN,
+    level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler(LOG_FILE, encoding="utf-8"), logging.StreamHandler()],
+    #handlers=[/*logging.FileHandler(LOG_FILE, encoding="utf-8"), logging.StreamHandler()],
+    handlers=[logging.StreamHandler()],
 )
 
 # KAFKA CONFIG
@@ -32,7 +33,7 @@ API_STREAMING = "https://api.coinlore.net/api/tickers/"
 API_BATCHING = "https://data-api.coindesk.com/news/v1/article/list?lang=EN&limit=100"
 
 # MinIO CONFIG
-MINIO_ENDPOINT = "localhost:9000"
+MINIO_ENDPOINT = "http://minio:9000"
 MINIO_ACCESS_KEY = "admin"
 MINIO_SECRET_KEY = "admin123"
 MINIO_BUCKET_RAW_PRICE = "crypto-data-raw"

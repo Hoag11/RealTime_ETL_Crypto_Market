@@ -1,6 +1,6 @@
-pandas
-requests
-fake_useragent
+# pandas
+# requests
+# fake_useragent
 pyspark
 kafka-python
-apache-airflow
+# apache-airflow

@@ -2,7 +2,7 @@ services:
   kafka-0:
     image: 'confluentinc/cp-kafka:7.6.1'
     networks:
-      - streaming-network
+      - streaming-network-ez
     hostname: kafka-0
     container_name: kafka-0
     ports:
@@ -38,7 +38,7 @@ services:
   kafka-1:
     image: 'confluentinc/cp-kafka:7.6.1'
     networks:
-      - streaming-network
+      - streaming-network-ez
     hostname: kafka-1
     container_name: kafka-1
     ports:
@@ -73,7 +73,7 @@ services:
   kafka-2:
     image: 'confluentinc/cp-kafka:7.6.1'
     networks:
-      - streaming-network
+      - streaming-network-ez
     hostname: kafka-2
     container_name: kafka-2
     ports:
@@ -108,7 +108,7 @@ services:
   akhq:
     image: 'tchiotludo/akhq:0.24.0'
     networks:
-      - streaming-network
+      - streaming-network-ez
     container_name: akhq
     ports:
       - '8180:8080'
@@ -142,7 +142,7 @@ services:
                         secret: "6661a0975cd371c713f66a94bcd51ec874e0b040aec61f025964ad5fe7ee3120"
 
 networks:
-  streaming-network:
+  streaming-network-ez:
     external: true
 
 volumes:

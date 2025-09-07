@@ -17,7 +17,7 @@ docker network create streaming-network --driver bridge
 Firstly, build a custom image using Dockerfile
 
 ```shell
-docker build -t unigap/spark:3.5 .
+docker build -t spark/spark:3.5 .
 ```
 
 Then creating `spark_data` and `spark_lib` volume

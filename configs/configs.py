@@ -13,12 +13,11 @@ LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    #handlers=[/*logging.FileHandler(LOG_FILE, encoding="utf-8"), logging.StreamHandler()],
     handlers=[logging.StreamHandler()],
 )
 
 # KAFKA CONFIG
-KAKFA_BROKER = ["localhost:9094", "localhost:9194", "localhost:9294"]
+KAKFA_BROKER = ["kafka-0:9092", "kafka-1:9092", "kafka-2:9092"]
 
 KAFKA_TOPIC = "coin_prices"
 
@@ -29,10 +28,10 @@ KAFKA_SASL_PASSWORD = "Unigap@2024"
 
 # API CONFIG
 API_STREAMING = "https://api.coinlore.net/api/tickers/"
-
 API_BATCHING = "https://data-api.coindesk.com/news/v1/article/list?lang=EN&limit=100"
 
 # MinIO CONFIG
+# Dùng container name minio (nằm trong cùng network)
 MINIO_ENDPOINT = "http://minio:9000"
 MINIO_ACCESS_KEY = "admin"
 MINIO_SECRET_KEY = "admin123"
@@ -42,13 +41,15 @@ MINIO_BUCKET_RAW_NEWS = "crypto-news-raw"
 MINIO_BUCKET_PROCESSED_NEWS = "crypto-news-processed"
 
 # POSTGRES CONFIG
-PG_HOST = "localhost"
+# Postgres trong container: container_name là postgres-bi
+PG_HOST = "postgres-bi"
 PG_PORT = 5432
 PG_DB_PRICE = "crypto_price"
 PG_DB_NEWS = "crypto_news"
-PG_USER = "admin@admin.com"
-PG_PASSWORD = "admin"
+PG_USER = "postgres"
+PG_PASSWORD = "postgres"
 
 # SPARK CONFIG
-SPARK_MASTER = "localhost:7077"
+# Spark master container là spark-spark-1 (master)
+SPARK_MASTER = "spark-spark-1:7077"
 SPARK_APP_NAME = "streamingCryptoApp"

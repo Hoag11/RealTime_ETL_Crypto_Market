@@ -84,26 +84,21 @@ x-airflow-common:
     &airflow-common-depends-on
     redis:
       condition: service_healthy
-    postgres:
+    airflow-postgres:
       condition: service_healthy
 
 services:
-  postgres:
+  airflow-postgres:
     image: postgres:13
+    container_name: airflow-postgres
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
+    volumes:
+      - airflow_postgres_data:/var/lib/postgresql/data
     networks:
       - streaming-network-ez
-    volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "airflow"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
-    restart: always
 
   redis:
     # Redis is limited to 7.2-bookworm due to licencing change
@@ -139,19 +134,14 @@ services:
         condition: service_completed_successfully
 
   airflow-scheduler:
-    <<: *airflow-common
-    command: scheduler
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    restart: always
+    image: apache/airflow:3.0.6
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
+      AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@airflow-postgres:5432/airflow
     depends_on:
-      <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
+      - airflow-postgres
+    networks:
+      - streaming-network-ez
 
   airflow-dag-processor:
     <<: *airflow-common
@@ -338,7 +328,7 @@ services:
         condition: service_completed_successfully
 
 volumes:
-  postgres-db-volume:
+  airflow_postgres_data:
 
 networks:
   streaming-network-ez:

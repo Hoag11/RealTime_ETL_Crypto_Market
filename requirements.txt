@@ -3,4 +3,5 @@ requests
 fake_useragent
 pyspark
 kafka-python
+minio
 # apache-airflow

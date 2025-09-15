@@ -1,18 +1,35 @@
-import requests
+import sys
 import os
+
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+sys.path.insert(0, parent_dir)
+
+import requests
+import io
 import logging
 import json
 from fake_useragent import UserAgent
 from datetime import datetime
 from configs import configs
+from minio import Minio
+from minio.error import S3Error
 
 ua = UserAgent()
 
+# Configure logging to see messages in the console
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 def extract_news():
+    """Fetches news articles from a remote API."""
     try:
-        response = requests.get(configs.API_BATCHING, headers={
-                                "User-Agent": ua.random})
+        response = requests.get(
+            configs.API_BATCHING, headers={"User-Agent": ua.random}, timeout=10
+        )
+        response.raise_for_status()  # This will raise an HTTPError for bad responses (4xx or 5xx)
         logging.info(f"Response status code: {response.status_code}")
 
         data = response.json()
@@ -22,30 +39,65 @@ def extract_news():
 
         return articles
 
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         logging.error(f"Error fetching news: {e}")
         return []
 
+    except json.JSONDecodeError as e:
+        logging.error(f"Error decoding JSON response: {e}")
+        return []
 
-def save_news(articles):
+
+def save_news_to_minio(articles):
+    """Saves news articles to a Minio bucket as a JSON file."""
+    if not articles:
+        logging.warning("No articles to save to Minio.")
+        return
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    bucket_name = configs.MINIO_BUCKET_RAW_NEWS
+    object_name = f"{timestamp}_crypto_news.json"
 
-    project_root = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    )
-    data_dir = os.path.join(project_root, "data")
+    # Create an in-memory file-like object to avoid writing to disk
+    json_data = json.dumps(articles, ensure_ascii=False, indent=4).encode("utf-8")
 
-    os.makedirs(data_dir, exist_ok=True)
+    try:
+        client = Minio(
+            configs.MINIO_ENDPOINT.replace("http://", ""),
+            access_key=configs.MINIO_ACCESS_KEY,
+            secret_key=configs.MINIO_SECRET_KEY,
+            secure=False,
+        )
 
-    out_put_name = f"{timestamp}_crypto_news.json"
-    output_path = os.path.join(data_dir, out_put_name)
+        # Check if bucket exists and create if it doesn't
+        if not client.bucket_exists(bucket_name):
+            logging.info(f"Bucket '{bucket_name}' does not exist. Creating it now.")
+            client.make_bucket(bucket_name)
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(articles, f, ensure_ascii=False, indent=4)
-    logging.info(f"Saved {len(articles)} articles to {output_path}")
+        # Upload the in-memory data
+        client.put_object(
+            bucket_name,
+            object_name,
+            data=io.BytesIO(json_data),
+            length=len(json_data),
+            content_type="application/json",
+        )
+
+        logging.info(
+            f"Successfully uploaded {len(articles)} articles to Minio bucket '{bucket_name}' as '{object_name}'"
+        )
+
+    except S3Error as e:
+        logging.error(f"Minio S3 Error: {e}")
+
+    except Exception as e:
+        logging.error(f"An unexpected error occurred while saving to Minio: {e}")
 
 
-# if __name__ == "__main__":
-#     logging.info("Starting news extraction process")
-#     articles = extract_news()
-#     save_news(articles)
+def main():
+    extracted_news = extract_news()
+    save_news_to_minio(extracted_news)
+
+
+if __name__ == "__main__":
+    main()

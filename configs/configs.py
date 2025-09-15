@@ -13,7 +13,7 @@ LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler()],
+    handlers=[logging.StreamHandler(), logging.FileHandler(LOG_FILE)],
 )
 
 # KAFKA CONFIG
@@ -31,7 +31,6 @@ API_STREAMING = "https://api.coinlore.net/api/tickers/"
 API_BATCHING = "https://data-api.coindesk.com/news/v1/article/list?lang=EN&limit=100"
 
 # MinIO CONFIG
-# Dùng container name minio (nằm trong cùng network)
 MINIO_ENDPOINT = "http://minio:9000"
 MINIO_ACCESS_KEY = "admin"
 MINIO_SECRET_KEY = "admin123"
@@ -41,7 +40,6 @@ MINIO_BUCKET_RAW_NEWS = "crypto-news-raw"
 MINIO_BUCKET_PROCESSED_NEWS = "crypto-news-processed"
 
 # POSTGRES CONFIG
-# Postgres trong container: container_name là postgres-bi
 PG_HOST = "postgres-bi"
 PG_PORT = 5432
 PG_DB_PRICE = "crypto_price"
@@ -50,6 +48,5 @@ PG_USER = "postgres"
 PG_PASSWORD = "postgres"
 
 # SPARK CONFIG
-# Spark master container là spark-spark-1 (master)
 SPARK_MASTER = "spark-spark-1:7077"
 SPARK_APP_NAME = "streamingCryptoApp"

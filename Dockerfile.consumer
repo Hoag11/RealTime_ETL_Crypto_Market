@@ -1,0 +1,27 @@
+FROM spark/spark:3.5
+
+# Làm việc trong /app
+WORKDIR /app
+
+# Copy code & configs
+COPY spark/spark/consumer_price.py /app/consumer_price.py
+COPY configs/configs.py /app/configs.py
+COPY requirements.txt /app/requirements.txt
+# COPY logging /app/logging
+
+# Tạo virtualenv và cài dependencies
+RUN python -m venv /data/pyspark_venv && \
+    /data/pyspark_venv/bin/pip install --upgrade pip && \
+    /data/pyspark_venv/bin/pip install -r /app/requirements.txt
+
+# Thiết lập biến môi trường cho Spark
+ENV PYSPARK_DRIVER_PYTHON=python
+ENV PYSPARK_PYTHON=/data/pyspark_venv/bin/python
+ENV PYTHONPATH=/app
+
+# Expose Spark UI
+EXPOSE 4040
+
+# Chạy consumer bằng spark-submit
+CMD ["spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.6", "/app/consumer_price.py"]
+

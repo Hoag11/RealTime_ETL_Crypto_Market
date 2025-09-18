@@ -48,8 +48,11 @@ def extract_news():
         return []
 
 
-def save_news_to_minio(articles):
+def save_news_to_minio(**context):
     """Saves news articles to a Minio bucket as a JSON file."""
+    ti = context["ti"]  # Or context['task_instance']
+    articles = ti.xcom_pull(task_ids="extract_news")  # Pull from upstream task
+
     if not articles:
         logging.warning("No articles to save to Minio.")
         return

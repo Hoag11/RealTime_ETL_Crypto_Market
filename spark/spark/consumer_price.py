@@ -1,7 +1,14 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json, col, current_timestamp, to_date
-from pyspark.sql.types import StructType, StructField, StringType, LongType, DoubleType
-from configs import configs
+from pyspark.sql.functions import from_json, col, current_timestamp, to_date, explode
+from pyspark.sql.types import (
+    StructType,
+    StructField,
+    StringType,
+    LongType,
+    DoubleType,
+    ArrayType,
+)
+import configs
 import logging
 import threading
 import time
@@ -20,25 +27,38 @@ MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
 MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
 MINIO_BUCKET_RAW_PRICE = configs.MINIO_BUCKET_RAW_PRICE
 
-# Schema
-schema = StructType(
+# Schema cho từng coin record
+coin_schema = StructType(
     [
         StructField("id", StringType(), True),
         StructField("symbol", StringType(), True),
         StructField("name", StringType(), True),
         StructField("nameid", StringType(), True),
         StructField("rank", LongType(), True),
-        StructField("price_usd", DoubleType(), True),
-        StructField("percent_change_24h", DoubleType(), True),
-        StructField("percent_change_1h", DoubleType(), True),
-        StructField("percent_change_7d", DoubleType(), True),
-        StructField("price_btc", DoubleType(), True),
-        StructField("market_cap_usd", DoubleType(), True),
+        StructField("price_usd", StringType(), True),  # Chú ý: trong JSON là string
+        StructField("percent_change_24h", StringType(), True),  # String trong JSON
+        StructField("percent_change_1h", StringType(), True),  # String trong JSON
+        StructField("percent_change_7d", StringType(), True),  # String trong JSON
+        StructField("price_btc", StringType(), True),  # String trong JSON
+        StructField("market_cap_usd", StringType(), True),  # String trong JSON
         StructField("volume24", DoubleType(), True),
         StructField("volume24a", DoubleType(), True),
-        StructField("csupply", DoubleType(), True),
-        StructField("tsupply", DoubleType(), True),
-        StructField("msupply", DoubleType(), True),
+        StructField("csupply", StringType(), True),  # String trong JSON
+        StructField("tsupply", StringType(), True),  # String trong JSON
+        StructField("msupply", StringType(), True),  # String trong JSON, có thể null
+    ]
+)
+
+# Schema cho info object
+info_schema = StructType(
+    [StructField("coins_num", LongType(), True), StructField("time", LongType(), True)]
+)
+
+# Schema tổng thể
+main_schema = StructType(
+    [
+        StructField("data", ArrayType(coin_schema), True),
+        StructField("info", info_schema, True),
     ]
 )
 
@@ -89,23 +109,51 @@ if __name__ == "__main__":
         .load()
     )
 
-    # Parse JSON
+    # Parse JSON với schema chính xác
     df_parsed = (
         df.selectExpr("CAST(value AS STRING)")
-        .select(from_json(col("value"), schema, {"mode": "PERMISSIVE"}).alias("data"))
-        .select("data.*")
+        .select(
+            from_json(col("value"), main_schema, {"mode": "PERMISSIVE"}).alias(
+                "parsed_data"
+            )
+        )
+        .select("parsed_data.data", "parsed_data.info")
     )
 
-    # Thêm timestamp và date
-    df_ts = (
-        df_parsed.withColumn("timestamp", current_timestamp())
-        .withColumn("date", to_date(col("timestamp")))
-        .withWatermark("timestamp", "10 minutes")
+    # Explode array để có từng coin riêng biệt
+    df_exploded = df_parsed.select(
+        explode(col("data")).alias("coin_data"), col("info")
+    ).select(
+        col("coin_data.*"),
+        col("info.coins_num").alias("total_coins"),
+        col("info.time").alias("api_timestamp"),
+    )
+
+    # Convert string fields to numeric và thêm timestamp
+    df_processed = (
+        df_exploded.withColumn("price_usd_numeric", col("price_usd").cast(DoubleType()))
+        .withColumn(
+            "percent_change_24h_numeric", col("percent_change_24h").cast(DoubleType())
+        )
+        .withColumn(
+            "percent_change_1h_numeric", col("percent_change_1h").cast(DoubleType())
+        )
+        .withColumn(
+            "percent_change_7d_numeric", col("percent_change_7d").cast(DoubleType())
+        )
+        .withColumn("price_btc_numeric", col("price_btc").cast(DoubleType()))
+        .withColumn("market_cap_usd_numeric", col("market_cap_usd").cast(DoubleType()))
+        .withColumn("csupply_numeric", col("csupply").cast(DoubleType()))
+        .withColumn("tsupply_numeric", col("tsupply").cast(DoubleType()))
+        .withColumn("msupply_numeric", col("msupply").cast(DoubleType()))
+        .withColumn("ingestion_timestamp", current_timestamp())
+        .withColumn("date", to_date(col("ingestion_timestamp")))
+        .withWatermark("ingestion_timestamp", "10 minutes")
     )
 
     # Lưu vào MinIO
     query = (
-        df_ts.writeStream.format("parquet")
+        df_processed.writeStream.format("parquet")
         .option("path", f"s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data")
         .option(
             "checkpointLocation",
@@ -129,4 +177,3 @@ if __name__ == "__main__":
     threading.Thread(target=log_query_progress, args=(query,), daemon=True).start()
 
     query.awaitTermination()
-

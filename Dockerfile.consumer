@@ -1,5 +1,14 @@
 FROM spark/spark:3.5
 
+USER root
+
+ENV HOME=/root
+RUN mkdir -p /root/.ivy2
+
+
+# Pre-download Spark dependencies to avoid runtime downloads
+RUN echo 'exit()' | spark-shell --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.6
+
 # Làm việc trong /app
 WORKDIR /app
 
@@ -22,6 +31,5 @@ ENV PYTHONPATH=/app
 # Expose Spark UI
 EXPOSE 4040
 
-# Chạy consumer bằng spark-submit
+# Chạy consumer bằng spark-submit (no need to change --packages here; they're pre-cached)
 CMD ["spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.6", "/app/consumer_price.py"]
-

@@ -1,0 +1,10 @@
+{"timestamp":"2025-09-21T11:58:14.567751","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-09-21T11:58:14.568078","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/global_data_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-09-21T11:58:14.647814Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:14.647938Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:14.648063Z","level":"info","event":"Current task name:fetch_global_market_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:14.648112Z","level":"info","event":"Dag name:global_market_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:15.051853","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
+{"timestamp":"2025-09-21T11:58:15.062734Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:15.062845Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:15.063438Z","level":"info","event":"Task operator:<Task(PythonOperator): fetch_global_market_data>","chan":"stdout","logger":"task"}

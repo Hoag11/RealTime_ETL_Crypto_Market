@@ -1,0 +1,968 @@
+{"timestamp":"2025-09-19T09:32:34.852907","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-09-19T09:32:34.853512","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/historical_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-09-19T09:32:34.992451Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:34.992685Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:34.992822Z","level":"info","event":"Current task name:fetch_historical_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:34.992913Z","level":"info","event":"Dag name:historical_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.293827","level":"info","event":"Fetched 92 records for Bitcoin (osmosis-allbtc)","logger":"root"}
+{"timestamp":"2025-09-19T09:32:35.319475Z","level":"info","event":"        timestamp      open  ...             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.319724Z","level":"info","event":"0   1726617600000   58237.0  ...  2024-09-18 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.319842Z","level":"info","event":"1   1726963200000   60296.0  ...  2024-09-22 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.319946Z","level":"info","event":"2   1727308800000   63529.0  ...  2024-09-26 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320037Z","level":"info","event":"3   1727654400000   63147.0  ...  2024-09-30 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320120Z","level":"info","event":"4   1728000000000   65628.0  ...  2024-10-04 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320193Z","level":"info","event":"..            ...       ...  ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320265Z","level":"info","event":"87  1756684800000  111343.0  ...  2025-09-01 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320335Z","level":"info","event":"88  1757030400000  107990.0  ...  2025-09-05 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320407Z","level":"info","event":"89  1757376000000  110466.0  ...  2025-09-09 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320478Z","level":"info","event":"90  1757721600000  112131.0  ...  2025-09-13 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320549Z","level":"info","event":"91  1758067200000  116369.0  ...  2025-09-17 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320621Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:32:35.320696Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.593279","level":"info","event":"Fetched 79 records for Ethereum (the-ticker-is-eth)","logger":"root"}
+{"timestamp":"2025-09-19T09:33:05.601488Z","level":"info","event":"        timestamp      open  ...             datetime            coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.601664Z","level":"info","event":"0   1731110400000  0.000803  ...  2024-11-09 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.601724Z","level":"info","event":"1   1731456000000  0.003905  ...  2024-11-13 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.601774Z","level":"info","event":"2   1731801600000  0.002472  ...  2024-11-17 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.601834Z","level":"info","event":"3   1732147200000  0.001405  ...  2024-11-21 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.601896Z","level":"info","event":"4   1732492800000  0.000778  ...  2024-11-25 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.601966Z","level":"info","event":"..            ...       ...  ...                  ...                ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602015Z","level":"info","event":"74  1756684800000  0.000074  ...  2025-09-01 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602061Z","level":"info","event":"75  1757030400000  0.000072  ...  2025-09-05 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602106Z","level":"info","event":"76  1757376000000  0.000076  ...  2025-09-09 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602183Z","level":"info","event":"77  1757721600000  0.000079  ...  2025-09-13 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602262Z","level":"info","event":"78  1758067200000  0.000087  ...  2025-09-17 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602326Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:05.602380Z","level":"info","event":"[79 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.917402","level":"info","event":"Fetched 92 records for XRP (warioxrpdumbledoreyugioh69inu)","logger":"root"}
+{"timestamp":"2025-09-19T09:33:35.931162Z","level":"info","event":"        timestamp      open  ...             datetime                        coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931349Z","level":"info","event":"0   1726617600000  0.000123  ...  2024-09-18 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931414Z","level":"info","event":"1   1726963200000  0.000124  ...  2024-09-22 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931462Z","level":"info","event":"2   1727308800000  0.000141  ...  2024-09-26 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931518Z","level":"info","event":"3   1727654400000  0.000146  ...  2024-09-30 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931563Z","level":"info","event":"4   1728000000000  0.000144  ...  2024-10-04 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931627Z","level":"info","event":"..            ...       ...  ...                  ...                            ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931694Z","level":"info","event":"87  1756684800000  0.000160  ...  2025-09-01 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931742Z","level":"info","event":"88  1757030400000  0.000159  ...  2025-09-05 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931788Z","level":"info","event":"89  1757376000000  0.000159  ...  2025-09-09 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931832Z","level":"info","event":"90  1757721600000  0.000168  ...  2025-09-13 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.931890Z","level":"info","event":"91  1758067200000  0.000165  ...  2025-09-17 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.932081Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:33:35.932238Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.247163","level":"info","event":"Fetched 63 records for Tether (zircuit-bridged-usdt-zircuit)","logger":"root"}
+{"timestamp":"2025-09-19T09:34:06.263164Z","level":"info","event":"        timestamp      open  ...             datetime                       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263331Z","level":"info","event":"0   1733875200000  1.014000  ...  2024-12-11 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263412Z","level":"info","event":"1   1734220800000  0.997075  ...  2024-12-15 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263473Z","level":"info","event":"2   1734566400000  0.999873  ...  2024-12-19 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263530Z","level":"info","event":"3   1734912000000  0.989196  ...  2024-12-23 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263587Z","level":"info","event":"4   1735257600000  0.995653  ...  2024-12-27 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263644Z","level":"info","event":"..            ...       ...  ...                  ...                           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263701Z","level":"info","event":"58  1756684800000  0.999985  ...  2025-09-01 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263758Z","level":"info","event":"59  1757030400000  1.000000  ...  2025-09-05 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263813Z","level":"info","event":"60  1757376000000  1.000000  ...  2025-09-09 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263883Z","level":"info","event":"61  1757721600000  1.000000  ...  2025-09-13 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.263956Z","level":"info","event":"62  1758067200000  1.001000  ...  2025-09-17 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.264019Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:06.264078Z","level":"info","event":"[63 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.509101","level":"info","event":"Fetched 92 records for Binance Coin (binance-coin-wormhole)","logger":"root"}
+{"timestamp":"2025-09-19T09:34:36.521911Z","level":"info","event":"        timestamp    open  ...             datetime                coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522108Z","level":"info","event":"0   1726617600000  536.10  ...  2024-09-18 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522191Z","level":"info","event":"1   1726963200000  549.97  ...  2024-09-22 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522263Z","level":"info","event":"2   1727308800000  588.81  ...  2024-09-26 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522333Z","level":"info","event":"3   1727654400000  586.46  ...  2024-09-30 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522401Z","level":"info","event":"4   1728000000000  595.96  ...  2024-10-04 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522475Z","level":"info","event":"..            ...     ...  ...                  ...                    ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522552Z","level":"info","event":"87  1756684800000  856.50  ...  2025-09-01 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522629Z","level":"info","event":"88  1757030400000  857.03  ...  2025-09-05 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522698Z","level":"info","event":"89  1757376000000  844.41  ...  2025-09-09 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522765Z","level":"info","event":"90  1757721600000  878.84  ...  2025-09-13 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522833Z","level":"info","event":"91  1758067200000  922.90  ...  2025-09-17 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.522901Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:34:36.525880Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.195070","level":"info","event":"Fetched 92 records for Solana (wrapped-solana)","logger":"root"}
+{"timestamp":"2025-09-19T09:35:07.215068Z","level":"info","event":"        timestamp    open    high  ...   close             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215224Z","level":"info","event":"0   1726617600000  131.47  135.39  ...  131.51  2024-09-18 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215287Z","level":"info","event":"1   1726963200000  131.52  151.87  ...  149.70  2024-09-22 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215339Z","level":"info","event":"2   1727308800000  149.34  153.39  ...  147.90  2024-09-26 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215389Z","level":"info","event":"3   1727654400000  148.02  161.15  ...  158.69  2024-09-30 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215436Z","level":"info","event":"4   1728000000000  158.66  159.31  ...  136.67  2024-10-04 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215484Z","level":"info","event":"..            ...     ...     ...  ...     ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215532Z","level":"info","event":"87  1756684800000  202.83  217.83  ...  200.75  2025-09-01 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215594Z","level":"info","event":"88  1757030400000  200.28  212.46  ...  202.71  2025-09-05 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215668Z","level":"info","event":"89  1757376000000  202.55  216.88  ...  214.17  2025-09-09 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215724Z","level":"info","event":"90  1757721600000  214.40  243.64  ...  242.32  2025-09-13 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215775Z","level":"info","event":"91  1758067200000  242.28  249.09  ...  236.93  2025-09-17 00:00:00  wrapped-solana","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215824Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:07.215874Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.425702","level":"info","event":"Fetched 92 records for USD Coin (zksync-bridged-usdc-zksync)","logger":"root"}
+{"timestamp":"2025-09-19T09:35:38.436612Z","level":"info","event":"        timestamp      open  ...             datetime                     coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.436799Z","level":"info","event":"0   1726617600000  0.999989  ...  2024-09-18 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.436905Z","level":"info","event":"1   1726963200000  1.001000  ...  2024-09-22 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437014Z","level":"info","event":"2   1727308800000  1.001000  ...  2024-09-26 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437100Z","level":"info","event":"3   1727654400000  0.999676  ...  2024-09-30 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437183Z","level":"info","event":"4   1728000000000  0.999651  ...  2024-10-04 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437264Z","level":"info","event":"..            ...       ...  ...                  ...                         ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437345Z","level":"info","event":"87  1756684800000  0.999806  ...  2025-09-01 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437430Z","level":"info","event":"88  1757030400000  0.999705  ...  2025-09-05 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437723Z","level":"info","event":"89  1757376000000  0.999800  ...  2025-09-09 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437889Z","level":"info","event":"90  1757721600000  0.999802  ...  2025-09-13 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.437999Z","level":"info","event":"91  1758067200000  0.999810  ...  2025-09-17 00:00:00  zksync-bridged-usdc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.438105Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:35:38.438205Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.247666","level":"info","event":"Fetched 92 records for Staked Ether (staked-ether)","logger":"root"}
+{"timestamp":"2025-09-19T09:36:09.262561Z","level":"info","event":"        timestamp     open     high  ...    close             datetime       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.262758Z","level":"info","event":"0   1726617600000  2293.97  2413.24  ...  2338.03  2024-09-18 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.262826Z","level":"info","event":"1   1726963200000  2335.76  2618.49  ...  2615.21  2024-09-22 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.262877Z","level":"info","event":"2   1727308800000  2614.65  2689.69  ...  2578.34  2024-09-26 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.262949Z","level":"info","event":"3   1727654400000  2577.73  2720.48  ...  2656.43  2024-09-30 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263017Z","level":"info","event":"4   1728000000000  2656.36  2658.47  ...  2346.79  2024-10-04 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263068Z","level":"info","event":"..            ...      ...      ...  ...      ...                  ...           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263116Z","level":"info","event":"87  1756684800000  4495.95  4614.84  ...  4378.21  2025-09-01 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263164Z","level":"info","event":"88  1757030400000  4378.69  4475.16  ...  4297.31  2025-09-05 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263212Z","level":"info","event":"89  1757376000000  4290.93  4463.09  ...  4303.04  2025-09-09 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263267Z","level":"info","event":"90  1757721600000  4302.11  4713.35  ...  4700.88  2025-09-13 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263326Z","level":"info","event":"91  1758067200000  4704.69  4749.78  ...  4497.67  2025-09-17 00:00:00  staked-ether","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263376Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:09.263426Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.867008","level":"info","event":"Fetched 86 records for Dogecoin (doge-on-pulsechain)","logger":"root"}
+{"timestamp":"2025-09-19T09:36:39.878732Z","level":"info","event":"        timestamp          open  ...             datetime             coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.878877Z","level":"info","event":"0   1726617600000  1.679000e-09  ...  2024-09-18 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.878946Z","level":"info","event":"1   1726963200000  1.794000e-09  ...  2024-09-22 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.878996Z","level":"info","event":"2   1727308800000  2.012000e-09  ...  2024-09-26 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879041Z","level":"info","event":"3   1727654400000  2.020000e-09  ...  2024-09-30 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879087Z","level":"info","event":"4   1728000000000  2.739000e-09  ...  2024-10-04 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879132Z","level":"info","event":"..            ...           ...  ...                  ...                 ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879194Z","level":"info","event":"81  1756684800000  4.706000e-09  ...  2025-09-01 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879399Z","level":"info","event":"82  1757030400000  4.483000e-09  ...  2025-09-05 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879490Z","level":"info","event":"83  1757376000000  3.721000e-09  ...  2025-09-09 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879542Z","level":"info","event":"84  1757721600000  4.440000e-09  ...  2025-09-13 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879592Z","level":"info","event":"85  1758067200000  4.296000e-09  ...  2025-09-17 00:00:00  doge-on-pulsechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879669Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:36:39.879724Z","level":"info","event":"[86 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.431389","level":"info","event":"Fetched 92 records for TRON (tron-bsc)","logger":"root"}
+{"timestamp":"2025-09-19T09:37:10.445524Z","level":"info","event":"        timestamp      open      high  ...     close             datetime   coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.445698Z","level":"info","event":"0   1726617600000  0.149039  0.151930  ...  0.150361  2024-09-18 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.445767Z","level":"info","event":"1   1726963200000  0.150504  0.155778  ...  0.152607  2024-09-22 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.445828Z","level":"info","event":"2   1727308800000  0.152809  0.153841  ...  0.149647  2024-09-26 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.445901Z","level":"info","event":"3   1727654400000  0.149697  0.158118  ...  0.156107  2024-09-30 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446024Z","level":"info","event":"4   1728000000000  0.156797  0.158013  ...  0.157127  2024-10-04 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446096Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...       ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446184Z","level":"info","event":"87  1756684800000  0.345497  0.350479  ...  0.341112  2025-09-01 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446243Z","level":"info","event":"88  1757030400000  0.341250  0.343772  ...  0.335250  2025-09-05 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446299Z","level":"info","event":"89  1757376000000  0.335240  0.339381  ...  0.331650  2025-09-09 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446350Z","level":"info","event":"90  1757721600000  0.331530  0.352023  ...  0.351135  2025-09-13 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446403Z","level":"info","event":"91  1758067200000  0.350681  0.356024  ...  0.342293  2025-09-17 00:00:00  tron-bsc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446458Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:10.446513Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.104179","level":"info","event":"Fetched 92 records for Cardano (cardano)","logger":"root"}
+{"timestamp":"2025-09-19T09:37:41.116691Z","level":"info","event":"        timestamp      open      high  ...     close             datetime  coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.116930Z","level":"info","event":"0   1726617600000  0.330107  0.342453  ...  0.334017  2024-09-18 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117067Z","level":"info","event":"1   1726963200000  0.333925  0.361060  ...  0.358671  2024-09-22 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117191Z","level":"info","event":"2   1727308800000  0.358656  0.392475  ...  0.380728  2024-09-26 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117311Z","level":"info","event":"3   1727654400000  0.381168  0.414509  ...  0.397474  2024-09-30 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117433Z","level":"info","event":"4   1728000000000  0.397414  0.397414  ...  0.344776  2024-10-04 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117534Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...      ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117636Z","level":"info","event":"87  1756684800000  0.850016  0.877546  ...  0.811693  2025-09-01 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117742Z","level":"info","event":"88  1757030400000  0.810894  0.842774  ...  0.810336  2025-09-05 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117842Z","level":"info","event":"89  1757376000000  0.809402  0.868259  ...  0.864680  2025-09-09 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.117949Z","level":"info","event":"90  1757721600000  0.868633  0.917246  ...  0.916948  2025-09-13 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.118053Z","level":"info","event":"91  1758067200000  0.917578  0.951640  ...  0.880387  2025-09-17 00:00:00  cardano","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.118155Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:37:41.118265Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.719291","level":"info","event":"Fetched 6 records for Hyperliquid (wormhole-bridged-hype)","logger":"root"}
+{"timestamp":"2025-09-19T09:38:11.728013Z","level":"info","event":"       timestamp   open  ...             datetime                coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728396Z","level":"info","event":"0  1756339200000  96.37  ...  2025-08-28 00:00:00  wormhole-bridged-hype","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728510Z","level":"info","event":"1  1756684800000  96.39  ...  2025-09-01 00:00:00  wormhole-bridged-hype","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728587Z","level":"info","event":"2  1757030400000  43.89  ...  2025-09-05 00:00:00  wormhole-bridged-hype","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728660Z","level":"info","event":"3  1757376000000  45.34  ...  2025-09-09 00:00:00  wormhole-bridged-hype","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728731Z","level":"info","event":"4  1757721600000  50.83  ...  2025-09-13 00:00:00  wormhole-bridged-hype","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728803Z","level":"info","event":"5  1758067200000  55.35  ...  2025-09-17 00:00:00  wormhole-bridged-hype","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728877Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:11.728949Z","level":"info","event":"[6 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.439360","level":"info","event":"Fetched 89 records for ChainLink (osmosis-alllink)","logger":"root"}
+{"timestamp":"2025-09-19T09:38:42.448368Z","level":"info","event":"        timestamp   open   high  ...  close             datetime          coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.448548Z","level":"info","event":"0   1727654400000  12.37  12.73  ...  12.64  2024-09-30 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.448648Z","level":"info","event":"1   1728000000000  12.64  12.64  ...  10.73  2024-10-04 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.448728Z","level":"info","event":"2   1728345600000  10.74  11.49  ...  11.09  2024-10-08 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.448805Z","level":"info","event":"3   1728691200000  11.09  11.26  ...  10.92  2024-10-12 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.448886Z","level":"info","event":"4   1729036800000  10.92  11.48  ...  11.20  2024-10-16 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.448988Z","level":"info","event":"..            ...    ...    ...  ...    ...                  ...              ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449076Z","level":"info","event":"84  1756684800000  23.75  25.73  ...  23.24  2025-09-01 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449158Z","level":"info","event":"85  1757030400000  23.21  23.87  ...  22.45  2025-09-05 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449236Z","level":"info","event":"86  1757376000000  22.44  23.28  ...  23.08  2025-09-09 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449294Z","level":"info","event":"87  1757721600000  23.13  25.20  ...  25.13  2025-09-13 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449350Z","level":"info","event":"88  1758067200000  25.14  25.71  ...  23.59  2025-09-17 00:00:00  osmosis-alllink","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449409Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:38:42.449501Z","level":"info","event":"[89 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.056872","level":"info","event":"Fetched 92 records for WETH (zora-bridged-weth-zora-network)","logger":"root"}
+{"timestamp":"2025-09-19T09:39:13.064712Z","level":"info","event":"        timestamp     open  ...             datetime                         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.064843Z","level":"info","event":"0   1726617600000  2305.28  ...  2024-09-18 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.064898Z","level":"info","event":"1   1726963200000  2341.08  ...  2024-09-22 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.064956Z","level":"info","event":"2   1727308800000  2614.75  ...  2024-09-26 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065002Z","level":"info","event":"3   1727654400000  2576.59  ...  2024-09-30 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065046Z","level":"info","event":"4   1728000000000  2656.73  ...  2024-10-04 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065090Z","level":"info","event":"..            ...      ...  ...                  ...                             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065132Z","level":"info","event":"87  1756684800000  4499.72  ...  2025-09-01 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065175Z","level":"info","event":"88  1757030400000  4387.98  ...  2025-09-05 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065218Z","level":"info","event":"89  1757376000000  4296.49  ...  2025-09-09 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065260Z","level":"info","event":"90  1757721600000  4309.05  ...  2025-09-13 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065303Z","level":"info","event":"91  1758067200000  4714.28  ...  2025-09-17 00:00:00  zora-bridged-weth-zora-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065345Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:13.065389Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.674817","level":"info","event":"Fetched 92 records for Wrapped Bitcoin (zksync-bridged-wbtc-zksync)","logger":"root"}
+{"timestamp":"2025-09-19T09:39:43.684885Z","level":"info","event":"        timestamp      open  ...             datetime                     coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.685250Z","level":"info","event":"0   1726617600000   58094.0  ...  2024-09-18 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.685407Z","level":"info","event":"1   1726963200000   59956.0  ...  2024-09-22 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.685544Z","level":"info","event":"2   1727308800000   63856.0  ...  2024-09-26 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.685674Z","level":"info","event":"3   1727654400000   63054.0  ...  2024-09-30 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.685782Z","level":"info","event":"4   1728000000000   65447.0  ...  2024-10-04 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.685879Z","level":"info","event":"..            ...       ...  ...                  ...                         ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686001Z","level":"info","event":"87  1756684800000  110471.0  ...  2025-09-01 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686118Z","level":"info","event":"88  1757030400000  107838.0  ...  2025-09-05 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686221Z","level":"info","event":"89  1757376000000  109687.0  ...  2025-09-09 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686317Z","level":"info","event":"90  1757721600000  111919.0  ...  2025-09-13 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686410Z","level":"info","event":"91  1758067200000  116339.0  ...  2025-09-17 00:00:00  zksync-bridged-wbtc-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686507Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:39:43.686606Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.804732","level":"info","event":"Fetched 92 records for Wrapped Beacon ETH (wrapped-beacon-eth)","logger":"root"}
+{"timestamp":"2025-09-19T09:40:14.812659Z","level":"info","event":"        timestamp     open  ...             datetime             coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.812907Z","level":"info","event":"0   1726617600000  2407.80  ...  2024-09-18 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813059Z","level":"info","event":"1   1726963200000  2457.08  ...  2024-09-22 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813174Z","level":"info","event":"2   1727308800000  2741.73  ...  2024-09-26 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813291Z","level":"info","event":"3   1727654400000  2706.01  ...  2024-09-30 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813402Z","level":"info","event":"4   1728000000000  2790.72  ...  2024-10-04 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813522Z","level":"info","event":"..            ...      ...  ...                  ...                 ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813633Z","level":"info","event":"87  1756684800000  4854.16  ...  2025-09-01 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813744Z","level":"info","event":"88  1757030400000  4725.91  ...  2025-09-05 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813838Z","level":"info","event":"89  1757376000000  4633.32  ...  2025-09-09 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813910Z","level":"info","event":"90  1757721600000  4639.40  ...  2025-09-13 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.813992Z","level":"info","event":"91  1758067200000  5084.17  ...  2025-09-17 00:00:00  wrapped-beacon-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.814065Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:14.814139Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.406728","level":"info","event":"Fetched 92 records for OKB (okb)","logger":"root"}
+{"timestamp":"2025-09-19T09:40:45.424823Z","level":"info","event":"        timestamp    open    high     low   close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425064Z","level":"info","event":"0   1726617600000   38.55   38.62   37.63   38.12  2024-09-18 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425170Z","level":"info","event":"1   1726963200000   38.13   40.82   37.30   39.67  2024-09-22 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425271Z","level":"info","event":"2   1727308800000   39.74   40.74   39.34   39.55  2024-09-26 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425370Z","level":"info","event":"3   1727654400000   39.56   42.98   39.20   42.84  2024-09-30 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425457Z","level":"info","event":"4   1728000000000   42.84   42.86   39.65   40.73  2024-10-04 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425548Z","level":"info","event":"..            ...     ...     ...     ...     ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425646Z","level":"info","event":"87  1756684800000  171.31  183.94  162.17  173.20  2025-09-01 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425739Z","level":"info","event":"88  1757030400000  173.45  183.39  163.75  177.41  2025-09-05 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425831Z","level":"info","event":"89  1757376000000  177.68  209.24  176.73  189.11  2025-09-09 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.425941Z","level":"info","event":"90  1757721600000  189.50  201.96  184.55  200.56  2025-09-13 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.426053Z","level":"info","event":"91  1758067200000  200.42  207.31  193.02  196.22  2025-09-17 00:00:00     okb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.426138Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:40:45.426223Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.937997","level":"info","event":"Fetched 92 records for Bitcoin Cash (bitcoin-cash)","logger":"root"}
+{"timestamp":"2025-09-19T09:41:15.954237Z","level":"info","event":"        timestamp    open    high  ...   close             datetime       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.954513Z","level":"info","event":"0   1726617600000  311.58  321.64  ...  314.23  2024-09-18 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.954692Z","level":"info","event":"1   1726963200000  314.05  348.83  ...  345.64  2024-09-22 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.954852Z","level":"info","event":"2   1727308800000  346.11  355.91  ...  343.53  2024-09-26 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955025Z","level":"info","event":"3   1727654400000  343.32  364.31  ...  352.85  2024-09-30 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955176Z","level":"info","event":"4   1728000000000  352.63  353.14  ...  319.99  2024-10-04 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955304Z","level":"info","event":"..            ...     ...     ...  ...     ...                  ...           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955420Z","level":"info","event":"87  1756684800000  550.06  565.16  ...  544.80  2025-09-01 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955570Z","level":"info","event":"88  1757030400000  543.60  604.75  ...  586.73  2025-09-05 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955691Z","level":"info","event":"89  1757376000000  586.60  616.24  ...  588.22  2025-09-09 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955825Z","level":"info","event":"90  1757721600000  588.49  601.71  ...  599.12  2025-09-13 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.955976Z","level":"info","event":"91  1758067200000  598.72  605.36  ...  598.78  2025-09-17 00:00:00  bitcoin-cash","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.956110Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:15.956264Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.657607","level":"info","event":"Fetched 92 records for Sui (sui)","logger":"root"}
+{"timestamp":"2025-09-19T09:41:46.662858Z","level":"info","event":"        timestamp   open  high    low  close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.662945Z","level":"info","event":"0   1726617600000  1.041  1.18  1.022   1.17  2024-09-18 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.662994Z","level":"info","event":"1   1726963200000  1.170  1.57  1.150   1.49  2024-09-22 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663023Z","level":"info","event":"2   1727308800000  1.490  1.78  1.430   1.70  2024-09-26 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663051Z","level":"info","event":"3   1727654400000  1.700  1.84  1.610   1.76  2024-09-30 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663079Z","level":"info","event":"4   1728000000000  1.760  1.99  1.620   1.68  2024-10-04 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663108Z","level":"info","event":"..            ...    ...   ...    ...    ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663135Z","level":"info","event":"87  1756684800000  3.430  3.52  3.220   3.25  2025-09-01 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663162Z","level":"info","event":"88  1757030400000  3.250  3.40  3.120   3.29  2025-09-05 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663189Z","level":"info","event":"89  1757376000000  3.290  3.51  3.280   3.50  2025-09-09 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663215Z","level":"info","event":"90  1757721600000  3.500  3.72  3.430   3.72  2025-09-13 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663243Z","level":"info","event":"91  1758067200000  3.720  3.87  3.470   3.60  2025-09-17 00:00:00     sui","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663270Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:41:46.663300Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.277792","level":"info","event":"Fetched 92 records for Stellar (stellar)","logger":"root"}
+{"timestamp":"2025-09-19T09:42:17.289101Z","level":"info","event":"        timestamp      open      high  ...     close             datetime  coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289244Z","level":"info","event":"0   1726617600000  0.094871  0.096713  ...  0.094576  2024-09-18 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289302Z","level":"info","event":"1   1726963200000  0.094578  0.098869  ...  0.098027  2024-09-22 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289350Z","level":"info","event":"2   1727308800000  0.098028  0.098028  ...  0.095943  2024-09-26 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289397Z","level":"info","event":"3   1727654400000  0.095924  0.103492  ...  0.101630  2024-09-30 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289444Z","level":"info","event":"4   1728000000000  0.101724  0.103558  ...  0.090174  2024-10-04 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289499Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...      ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289557Z","level":"info","event":"87  1756684800000  0.378809  0.386761  ...  0.352825  2025-09-01 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289605Z","level":"info","event":"88  1757030400000  0.351975  0.368431  ...  0.352523  2025-09-05 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289651Z","level":"info","event":"89  1757376000000  0.352178  0.383523  ...  0.377774  2025-09-09 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289696Z","level":"info","event":"90  1757721600000  0.378930  0.404727  ...  0.404689  2025-09-13 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289742Z","level":"info","event":"91  1758067200000  0.404969  0.413806  ...  0.383924  2025-09-17 00:00:00  stellar","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289789Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:17.289837Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:48.099178","level":"info","event":"Fetched 92 records for Avalanche (binance-peg-avalanche)","logger":"root"}
+{"timestamp":"2025-09-19T09:42:50.819981Z","level":"info","event":"        timestamp   open  ...             datetime                coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820031Z","level":"info","event":"0   1726617600000  23.50  ...  2024-09-18 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820088Z","level":"info","event":"1   1726963200000  23.85  ...  2024-09-22 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820118Z","level":"info","event":"2   1727308800000  27.79  ...  2024-09-26 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820146Z","level":"info","event":"3   1727654400000  27.31  ...  2024-09-30 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820173Z","level":"info","event":"4   1728000000000  28.97  ...  2024-10-04 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820201Z","level":"info","event":"..            ...    ...  ...                  ...                    ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820229Z","level":"info","event":"87  1756684800000  24.38  ...  2025-09-01 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820255Z","level":"info","event":"88  1757030400000  23.49  ...  2025-09-05 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820281Z","level":"info","event":"89  1757376000000  24.24  ...  2025-09-09 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820308Z","level":"info","event":"90  1757721600000  25.24  ...  2025-09-13 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820334Z","level":"info","event":"91  1758067200000  28.95  ...  2025-09-17 00:00:00  binance-peg-avalanche","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820361Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:42:50.820391Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.127452","level":"info","event":"Fetched 92 records for Hedera Hashgraph (hedera-hashgraph)","logger":"root"}
+{"timestamp":"2025-09-19T09:43:19.138653Z","level":"info","event":"        timestamp      open  ...             datetime           coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.138799Z","level":"info","event":"0   1726617600000  0.049407  ...  2024-09-18 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.138866Z","level":"info","event":"1   1726963200000  0.049839  ...  2024-09-22 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.138932Z","level":"info","event":"2   1727308800000  0.056085  ...  2024-09-26 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.138989Z","level":"info","event":"3   1727654400000  0.058481  ...  2024-09-30 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139045Z","level":"info","event":"4   1728000000000  0.061420  ...  2024-10-04 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139098Z","level":"info","event":"..            ...       ...  ...                  ...               ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139151Z","level":"info","event":"87  1756684800000  0.237529  ...  2025-09-01 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139208Z","level":"info","event":"88  1757030400000  0.218420  ...  2025-09-05 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139294Z","level":"info","event":"89  1757376000000  0.213580  ...  2025-09-09 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139362Z","level":"info","event":"90  1757721600000  0.226898  ...  2025-09-13 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139416Z","level":"info","event":"91  1758067200000  0.245665  ...  2025-09-17 00:00:00  hedera-hashgraph","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139470Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:19.139527Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.745516","level":"info","event":"Fetched 92 records for Litecoin (litecoin)","logger":"root"}
+{"timestamp":"2025-09-19T09:43:49.752625Z","level":"info","event":"        timestamp    open    high  ...   close             datetime   coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752706Z","level":"info","event":"0   1726617600000   62.58   63.97  ...   63.72  2024-09-18 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752740Z","level":"info","event":"1   1726963200000   63.77   67.12  ...   67.00  2024-09-22 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752769Z","level":"info","event":"2   1727308800000   66.93   69.21  ...   66.65  2024-09-26 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752797Z","level":"info","event":"3   1727654400000   66.54   71.45  ...   69.34  2024-09-30 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752824Z","level":"info","event":"4   1728000000000   69.25   69.27  ...   63.39  2024-10-04 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752851Z","level":"info","event":"..            ...     ...     ...  ...     ...                  ...       ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752877Z","level":"info","event":"87  1756684800000  112.10  114.44  ...  108.92  2025-09-01 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752904Z","level":"info","event":"88  1757030400000  108.81  113.45  ...  111.10  2025-09-05 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752936Z","level":"info","event":"89  1757376000000  111.09  115.31  ...  112.67  2025-09-09 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.752972Z","level":"info","event":"90  1757721600000  112.93  118.24  ...  118.20  2025-09-13 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.753008Z","level":"info","event":"91  1758067200000  118.12  120.68  ...  114.98  2025-09-17 00:00:00  litecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.753036Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:43:49.753065Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.365594","level":"info","event":"Fetched 92 records for TON Coin (tontoken)","logger":"root"}
+{"timestamp":"2025-09-19T09:44:20.371380Z","level":"info","event":"        timestamp      open      high  ...     close             datetime   coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371482Z","level":"info","event":"0   1726617600000  0.016516  0.016690  ...  0.016525  2024-09-18 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371517Z","level":"info","event":"1   1726963200000  0.016495  0.017770  ...  0.017330  2024-09-22 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371547Z","level":"info","event":"2   1727308800000  0.017308  0.018041  ...  0.016527  2024-09-26 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371575Z","level":"info","event":"3   1727654400000  0.016527  0.019032  ...  0.018058  2024-09-30 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371603Z","level":"info","event":"4   1728000000000  0.018067  0.018078  ...  0.015143  2024-10-04 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371631Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...       ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371657Z","level":"info","event":"87  1756684800000  0.020279  0.020958  ...  0.019594  2025-09-01 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371684Z","level":"info","event":"88  1757030400000  0.019584  0.019634  ...  0.018831  2025-09-05 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371711Z","level":"info","event":"89  1757376000000  0.018821  0.019082  ...  0.017660  2025-09-09 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371737Z","level":"info","event":"90  1757721600000  0.017650  0.017714  ...  0.016649  2025-09-13 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371764Z","level":"info","event":"91  1758067200000  0.016654  0.016851  ...  0.013905  2025-09-17 00:00:00  tontoken","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371790Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:20.371818Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.981467","level":"info","event":"Fetched 79 records for Shiba Inu (strategic-hub-for-innovation-in-blockchain)","logger":"root"}
+{"timestamp":"2025-09-19T09:44:50.987399Z","level":"info","event":"        timestamp  ...                                     coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987472Z","level":"info","event":"0   1731110400000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987510Z","level":"info","event":"1   1731456000000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987543Z","level":"info","event":"2   1731801600000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987578Z","level":"info","event":"3   1732147200000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987617Z","level":"info","event":"4   1732492800000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987648Z","level":"info","event":"..            ...  ...                                         ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987677Z","level":"info","event":"74  1756684800000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987705Z","level":"info","event":"75  1757030400000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987733Z","level":"info","event":"76  1757376000000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987760Z","level":"info","event":"77  1757721600000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987789Z","level":"info","event":"78  1758067200000  ...  strategic-hub-for-innovation-in-blockchain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987818Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:44:50.987850Z","level":"info","event":"[79 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.598767","level":"info","event":"Fetched 17 records for Ethena USDe (xbanking-usde)","logger":"root"}
+{"timestamp":"2025-09-19T09:45:21.609726Z","level":"info","event":"        timestamp      open  ...             datetime        coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.609889Z","level":"info","event":"0   1746316800000  1.002000  ...  2025-05-04 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.609989Z","level":"info","event":"1   1746662400000  0.998830  ...  2025-05-08 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610068Z","level":"info","event":"2   1747008000000  0.994446  ...  2025-05-12 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610141Z","level":"info","event":"3   1747353600000  1.003000  ...  2025-05-16 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610213Z","level":"info","event":"4   1747699200000  1.005000  ...  2025-05-20 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610284Z","level":"info","event":"5   1748044800000  0.994428  ...  2025-05-24 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610385Z","level":"info","event":"6   1748390400000  0.995166  ...  2025-05-28 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610466Z","level":"info","event":"7   1748736000000  1.002000  ...  2025-06-01 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610540Z","level":"info","event":"8   1749081600000  0.999320  ...  2025-06-05 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610611Z","level":"info","event":"9   1749427200000  0.950825  ...  2025-06-09 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610683Z","level":"info","event":"10  1749772800000  0.998018  ...  2025-06-13 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610754Z","level":"info","event":"11  1750118400000  0.997071  ...  2025-06-17 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610814Z","level":"info","event":"12  1750464000000  0.993666  ...  2025-06-21 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610877Z","level":"info","event":"13  1750809600000  0.955239  ...  2025-06-25 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.610970Z","level":"info","event":"14  1752192000000  0.917715  ...  2025-07-11 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.611031Z","level":"info","event":"15  1752883200000  0.921332  ...  2025-07-19 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.611088Z","level":"info","event":"16  1753228800000  0.922413  ...  2025-07-23 00:00:00  xbanking-usde","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.611143Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:21.611200Z","level":"info","event":"[17 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.215581","level":"info","event":"Fetched 92 records for Polkadot (xcdot)","logger":"root"}
+{"timestamp":"2025-09-19T09:45:52.221506Z","level":"info","event":"        timestamp  open  high   low  close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221614Z","level":"info","event":"0   1726617600000  4.20  4.30  4.14   4.16  2024-09-18 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221653Z","level":"info","event":"1   1726963200000  4.17  4.47  3.98   4.47  2024-09-22 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221685Z","level":"info","event":"2   1727308800000  4.44  4.77  4.26   4.65  2024-09-26 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221716Z","level":"info","event":"3   1727654400000  4.64  4.94  4.58   4.74  2024-09-30 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221746Z","level":"info","event":"4   1728000000000  4.74  4.76  3.98   4.12  2024-10-04 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221776Z","level":"info","event":"..            ...   ...   ...   ...    ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221806Z","level":"info","event":"87  1756684800000  3.85  4.03  3.72   3.74  2025-09-01 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221836Z","level":"info","event":"88  1757030400000  3.74  3.91  3.63   3.78  2025-09-05 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221866Z","level":"info","event":"89  1757376000000  3.78  4.08  3.77   4.05  2025-09-09 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221895Z","level":"info","event":"90  1757721600000  4.06  4.32  4.02   4.32  2025-09-13 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221931Z","level":"info","event":"91  1758067200000  4.31  4.62  4.11   4.25  2025-09-17 00:00:00   xcdot","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.221967Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:45:52.222001Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.832209","level":"info","event":"Fetched 92 records for Uniswap (uniswap-wormhole)","logger":"root"}
+{"timestamp":"2025-09-19T09:46:22.838845Z","level":"info","event":"        timestamp   open   high  ...  close             datetime           coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.838983Z","level":"info","event":"0   1726617600000   6.44   6.93  ...   6.89  2024-09-18 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839049Z","level":"info","event":"1   1726963200000   6.89   7.41  ...   7.04  2024-09-22 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839083Z","level":"info","event":"2   1727308800000   7.08   7.70  ...   6.85  2024-09-26 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839123Z","level":"info","event":"3   1727654400000   6.85   7.70  ...   7.39  2024-09-30 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839172Z","level":"info","event":"4   1728000000000   7.39   7.69  ...   6.71  2024-10-04 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839204Z","level":"info","event":"..            ...    ...    ...  ...    ...                  ...               ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839235Z","level":"info","event":"87  1756684800000   9.91  11.01  ...   9.70  2025-09-01 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839265Z","level":"info","event":"88  1757030400000   9.70  10.06  ...   9.62  2025-09-05 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839294Z","level":"info","event":"89  1757376000000   9.62   9.79  ...   9.49  2025-09-09 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839324Z","level":"info","event":"90  1757721600000   9.49  10.13  ...  10.08  2025-09-13 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839353Z","level":"info","event":"91  1758067200000  10.08  10.30  ...   9.34  2025-09-17 00:00:00  uniswap-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839384Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:22.839415Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.449330","level":"info","event":"Fetched 92 records for Bitget Token (bitget-token)","logger":"root"}
+{"timestamp":"2025-09-19T09:46:53.454750Z","level":"info","event":"        timestamp      open  ...             datetime       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.454892Z","level":"info","event":"0   1726617600000  0.908630  ...  2024-09-18 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.454963Z","level":"info","event":"1   1726963200000  0.923827  ...  2024-09-22 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455019Z","level":"info","event":"2   1727308800000  0.942696  ...  2024-09-26 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455074Z","level":"info","event":"3   1727654400000  0.976073  ...  2024-09-30 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455128Z","level":"info","event":"4   1728000000000  1.049000  ...  2024-10-04 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455180Z","level":"info","event":"..            ...       ...  ...                  ...           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455233Z","level":"info","event":"87  1756684800000  4.620000  ...  2025-09-01 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455285Z","level":"info","event":"88  1757030400000  4.530000  ...  2025-09-05 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455337Z","level":"info","event":"89  1757376000000  4.800000  ...  2025-09-09 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455389Z","level":"info","event":"90  1757721600000  4.860000  ...  2025-09-13 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455439Z","level":"info","event":"91  1758067200000  4.960000  ...  2025-09-17 00:00:00  bitget-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455494Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:46:53.455549Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.067101","level":"info","event":"Fetched 92 records for Dai (zksync-erc20-bridged-dai-zksync)","logger":"root"}
+{"timestamp":"2025-09-19T09:47:24.071972Z","level":"info","event":"        timestamp  ...                          coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072129Z","level":"info","event":"0   1726617600000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072195Z","level":"info","event":"1   1726963200000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072253Z","level":"info","event":"2   1727308800000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072308Z","level":"info","event":"3   1727654400000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072354Z","level":"info","event":"4   1728000000000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072395Z","level":"info","event":"..            ...  ...                              ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072437Z","level":"info","event":"87  1756684800000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072478Z","level":"info","event":"88  1757030400000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072520Z","level":"info","event":"89  1757376000000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072569Z","level":"info","event":"90  1757721600000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072614Z","level":"info","event":"91  1758067200000  ...  zksync-erc20-bridged-dai-zksync","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072658Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:24.072702Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.673556","level":"info","event":"Fetched 92 records for Monero (monero)","logger":"root"}
+{"timestamp":"2025-09-19T09:47:54.678629Z","level":"info","event":"        timestamp    open    high     low   close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678721Z","level":"info","event":"0   1726617600000  170.32  172.63  168.92  172.40  2024-09-18 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678755Z","level":"info","event":"1   1726963200000  172.43  178.67  170.24  177.15  2024-09-22 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678784Z","level":"info","event":"2   1727308800000  177.04  177.29  164.85  165.36  2024-09-26 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678812Z","level":"info","event":"3   1727654400000  165.60  166.35  152.54  152.97  2024-09-30 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678840Z","level":"info","event":"4   1728000000000  152.84  155.68  135.41  143.97  2024-10-04 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678867Z","level":"info","event":"..            ...     ...     ...     ...     ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678893Z","level":"info","event":"87  1756684800000  274.25  277.15  256.02  262.88  2025-09-01 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678931Z","level":"info","event":"88  1757030400000  262.51  274.63  258.41  269.76  2025-09-05 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.678969Z","level":"info","event":"89  1757376000000  270.11  273.70  264.79  266.96  2025-09-09 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.679004Z","level":"info","event":"90  1757721600000  266.33  284.16  266.04  284.16  2025-09-13 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.679032Z","level":"info","event":"91  1758067200000  284.23  327.31  284.23  319.55  2025-09-17 00:00:00  monero","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.679059Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:47:54.679090Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.301574","level":"info","event":"Fetched 92 records for Ethena (ethena)","logger":"root"}
+{"timestamp":"2025-09-19T09:48:25.308193Z","level":"info","event":"        timestamp      open      high  ...     close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308313Z","level":"info","event":"0   1726617600000  0.209328  0.230235  ...  0.226954  2024-09-18 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308354Z","level":"info","event":"1   1726963200000  0.227585  0.288720  ...  0.288544  2024-09-22 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308394Z","level":"info","event":"2   1727308800000  0.287502  0.340952  ...  0.312823  2024-09-26 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308446Z","level":"info","event":"3   1727654400000  0.313423  0.396566  ...  0.389272  2024-09-30 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308498Z","level":"info","event":"4   1728000000000  0.388226  0.420347  ...  0.279273  2024-10-04 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308549Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308600Z","level":"info","event":"87  1756684800000  0.609874  0.681411  ...  0.644480  2025-09-01 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308650Z","level":"info","event":"88  1757030400000  0.638731  0.736267  ...  0.649326  2025-09-05 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308685Z","level":"info","event":"89  1757376000000  0.648506  0.802154  ...  0.780983  2025-09-09 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308715Z","level":"info","event":"90  1757721600000  0.781166  0.865066  ...  0.779122  2025-09-13 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308743Z","level":"info","event":"91  1758067200000  0.778087  0.781626  ...  0.699464  2025-09-17 00:00:00  ethena","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308771Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:25.308808Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.020650","level":"info","event":"Fetched 92 records for Aave (aave)","logger":"root"}
+{"timestamp":"2025-09-19T09:48:56.026628Z","level":"info","event":"        timestamp    open    high     low   close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026743Z","level":"info","event":"0   1726617600000  140.26  146.92  136.95  140.59  2024-09-18 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026787Z","level":"info","event":"1   1726963200000  140.58  157.13  134.16  154.11  2024-09-22 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026832Z","level":"info","event":"2   1727308800000  154.61  178.19  154.61  165.21  2024-09-26 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026874Z","level":"info","event":"3   1727654400000  165.24  173.74  159.21  161.46  2024-09-30 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026927Z","level":"info","event":"4   1728000000000  161.41  164.01  135.35  142.74  2024-10-04 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026963Z","level":"info","event":"..            ...     ...     ...     ...     ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.026997Z","level":"info","event":"87  1756684800000  320.32  327.96  305.06  315.98  2025-09-01 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.027029Z","level":"info","event":"88  1757030400000  315.27  330.94  300.37  307.20  2025-09-05 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.027062Z","level":"info","event":"89  1757376000000  306.91  312.68  297.68  302.97  2025-09-09 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.027095Z","level":"info","event":"90  1757721600000  303.43  321.53  295.32  321.53  2025-09-13 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.027129Z","level":"info","event":"91  1758067200000  321.69  321.69  289.95  299.13  2025-09-17 00:00:00    aave","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.027163Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:48:56.027199Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.844377","level":"info","event":"Fetched 92 records for Pepe (pepe-token)","logger":"root"}
+{"timestamp":"2025-09-19T09:49:26.855090Z","level":"info","event":"        timestamp      open  ...             datetime     coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855191Z","level":"info","event":"0   1726617600000  0.000477  ...  2024-09-18 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855239Z","level":"info","event":"1   1726963200000  0.000453  ...  2024-09-22 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855281Z","level":"info","event":"2   1727308800000  0.000483  ...  2024-09-26 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855322Z","level":"info","event":"3   1727654400000  0.000466  ...  2024-09-30 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855362Z","level":"info","event":"4   1728000000000  0.000479  ...  2024-10-04 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855402Z","level":"info","event":"..            ...       ...  ...                  ...         ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855442Z","level":"info","event":"87  1756684800000  0.000464  ...  2025-09-01 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855481Z","level":"info","event":"88  1757030400000  0.000500  ...  2025-09-05 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855521Z","level":"info","event":"89  1757376000000  0.000471  ...  2025-09-09 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855560Z","level":"info","event":"90  1757721600000  0.000464  ...  2025-09-13 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855599Z","level":"info","event":"91  1758067200000  0.000509  ...  2025-09-17 00:00:00  pepe-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855639Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:26.855685Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.532263","level":"info","event":"Fetched 86 records for Mantle (mynth)","logger":"root"}
+{"timestamp":"2025-09-19T09:49:57.537366Z","level":"info","event":"        timestamp      open      high  ...     close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537499Z","level":"info","event":"0   1728345600000  0.035932  0.037765  ...  0.032622  2024-10-08 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537565Z","level":"info","event":"1   1728691200000  0.032456  0.043523  ...  0.043115  2024-10-12 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537622Z","level":"info","event":"2   1729036800000  0.043263  0.043301  ...  0.039293  2024-10-16 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537678Z","level":"info","event":"3   1729382400000  0.039129  0.039776  ...  0.030245  2024-10-20 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537724Z","level":"info","event":"4   1729728000000  0.030244  0.033548  ...  0.024925  2024-10-24 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537769Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537817Z","level":"info","event":"81  1756684800000  0.075610  0.095520  ...  0.071977  2025-09-01 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537866Z","level":"info","event":"82  1757030400000  0.071756  0.154902  ...  0.101008  2025-09-05 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537910Z","level":"info","event":"83  1757376000000  0.101133  0.120514  ...  0.106040  2025-09-09 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.537961Z","level":"info","event":"84  1757721600000  0.106031  0.109863  ...  0.109150  2025-09-13 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.538005Z","level":"info","event":"85  1758067200000  0.109256  0.113154  ...  0.103608  2025-09-17 00:00:00   mynth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.538047Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:49:57.538091Z","level":"info","event":"[86 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.209619","level":"info","event":"Fetched 92 records for Ethereum Classic (ethereum-classic)","logger":"root"}
+{"timestamp":"2025-09-19T09:50:28.215241Z","level":"info","event":"        timestamp   open   high  ...  close             datetime           coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215373Z","level":"info","event":"0   1726617600000  17.74  18.20  ...  17.99  2024-09-18 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215438Z","level":"info","event":"1   1726963200000  17.99  19.43  ...  19.39  2024-09-22 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215496Z","level":"info","event":"2   1727308800000  19.38  19.81  ...  19.30  2024-09-26 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215554Z","level":"info","event":"3   1727654400000  19.30  21.06  ...  20.46  2024-09-30 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215603Z","level":"info","event":"4   1728000000000  20.43  20.45  ...  18.50  2024-10-04 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215645Z","level":"info","event":"..            ...    ...    ...  ...    ...                  ...               ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215688Z","level":"info","event":"87  1756684800000  21.49  21.93  ...  20.70  2025-09-01 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215741Z","level":"info","event":"88  1757030400000  20.67  21.25  ...  20.23  2025-09-05 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215800Z","level":"info","event":"89  1757376000000  20.21  21.07  ...  20.77  2025-09-09 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215844Z","level":"info","event":"90  1757721600000  20.80  21.99  ...  21.99  2025-09-13 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215887Z","level":"info","event":"91  1758067200000  21.98  22.45  ...  20.53  2025-09-17 00:00:00  ethereum-classic","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215938Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:28.215982Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.900032","level":"info","event":"Fetched 73 records for Bittensor (the-anthropic-order)","logger":"root"}
+{"timestamp":"2025-09-19T09:50:58.905742Z","level":"info","event":"        timestamp      open  ...             datetime              coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.905857Z","level":"info","event":"0   1733184000000  0.005335  ...  2024-12-03 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.905891Z","level":"info","event":"1   1733529600000  0.002918  ...  2024-12-07 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.905927Z","level":"info","event":"2   1733875200000  0.007439  ...  2024-12-11 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.905956Z","level":"info","event":"3   1734220800000  0.003143  ...  2024-12-15 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.905983Z","level":"info","event":"4   1734566400000  0.000707  ...  2024-12-19 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906010Z","level":"info","event":"..            ...       ...  ...                  ...                  ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906037Z","level":"info","event":"68  1756684800000  0.000045  ...  2025-09-01 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906063Z","level":"info","event":"69  1757030400000  0.000032  ...  2025-09-05 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906089Z","level":"info","event":"70  1757376000000  0.000031  ...  2025-09-09 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906116Z","level":"info","event":"71  1757721600000  0.000030  ...  2025-09-13 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906142Z","level":"info","event":"72  1758067200000  0.000032  ...  2025-09-17 00:00:00  the-anthropic-order","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906168Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:50:58.906197Z","level":"info","event":"[73 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.619644","level":"info","event":"Fetched 92 records for NEAR Protocol (near)","logger":"root"}
+{"timestamp":"2025-09-19T09:51:29.624623Z","level":"info","event":"        timestamp  open  high   low  close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624683Z","level":"info","event":"0   1726617600000  3.88  4.29  3.84   4.13  2024-09-18 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624715Z","level":"info","event":"1   1726963200000  4.13  4.68  3.94   4.67  2024-09-22 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624749Z","level":"info","event":"2   1727308800000  4.67  5.45  4.39   5.15  2024-09-26 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624787Z","level":"info","event":"3   1727654400000  5.14  5.86  5.13   5.49  2024-09-30 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624815Z","level":"info","event":"4   1728000000000  5.50  5.54  4.43   4.63  2024-10-04 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624844Z","level":"info","event":"..            ...   ...   ...   ...    ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624872Z","level":"info","event":"87  1756684800000  2.52  2.56  2.37   2.37  2025-09-01 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624899Z","level":"info","event":"88  1757030400000  2.36  2.49  2.29   2.38  2025-09-05 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624931Z","level":"info","event":"89  1757376000000  2.38  2.59  2.37   2.58  2025-09-09 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624959Z","level":"info","event":"90  1757721600000  2.59  2.81  2.59   2.79  2025-09-13 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.624986Z","level":"info","event":"91  1758067200000  2.79  2.89  2.59   2.71  2025-09-17 00:00:00    near","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.625015Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:51:29.625045Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.442987","level":"info","event":"Fetched 92 records for Ondo (ondo-finance)","logger":"root"}
+{"timestamp":"2025-09-19T09:52:00.448935Z","level":"info","event":"        timestamp      open  ...             datetime       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449037Z","level":"info","event":"0   1726617600000  0.595486  ...  2024-09-18 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449095Z","level":"info","event":"1   1726963200000  0.597948  ...  2024-09-22 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449148Z","level":"info","event":"2   1727308800000  0.703051  ...  2024-09-26 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449202Z","level":"info","event":"3   1727654400000  0.766648  ...  2024-09-30 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449253Z","level":"info","event":"4   1728000000000  0.808086  ...  2024-10-04 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449297Z","level":"info","event":"..            ...       ...  ...                  ...           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449339Z","level":"info","event":"87  1756684800000  0.927228  ...  2025-09-01 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449385Z","level":"info","event":"88  1757030400000  0.894864  ...  2025-09-05 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449426Z","level":"info","event":"89  1757376000000  0.909754  ...  2025-09-09 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449466Z","level":"info","event":"90  1757721600000  0.936675  ...  2025-09-13 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449504Z","level":"info","event":"91  1758067200000  1.100000  ...  2025-09-17 00:00:00  ondo-finance","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449543Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:00.449584Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.060799","level":"info","event":"Fetched 92 records for Aptos (aptos)","logger":"root"}
+{"timestamp":"2025-09-19T09:52:31.070016Z","level":"info","event":"        timestamp  open  high   low  close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070138Z","level":"info","event":"0   1726617600000  5.74  6.01  5.70   5.94  2024-09-18 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070175Z","level":"info","event":"1   1726963200000  5.94  8.32  5.71   8.26  2024-09-22 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070205Z","level":"info","event":"2   1727308800000  8.25  8.36  7.71   8.00  2024-09-26 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070234Z","level":"info","event":"3   1727654400000  8.01  8.58  7.81   8.08  2024-09-30 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070263Z","level":"info","event":"4   1728000000000  8.08  8.66  7.43   8.52  2024-10-04 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070292Z","level":"info","event":"..            ...   ...   ...   ...    ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070320Z","level":"info","event":"87  1756684800000  4.36  4.48  4.19   4.25  2025-09-01 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070348Z","level":"info","event":"88  1757030400000  4.25  4.44  4.12   4.24  2025-09-05 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070376Z","level":"info","event":"89  1757376000000  4.24  4.44  4.18   4.40  2025-09-09 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070406Z","level":"info","event":"90  1757721600000  4.42  4.63  4.36   4.62  2025-09-13 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070434Z","level":"info","event":"91  1758067200000  4.63  4.74  4.32   4.45  2025-09-17 00:00:00   aptos","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070463Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:52:31.070492Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.880458","level":"info","event":"Fetched 92 records for Pi (pi-network-iou)","logger":"root"}
+{"timestamp":"2025-09-19T09:53:01.885636Z","level":"info","event":"        timestamp       open  ...             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885723Z","level":"info","event":"0   1726617600000  32.590000  ...  2024-09-18 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885762Z","level":"info","event":"1   1726963200000  32.250000  ...  2024-09-22 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885794Z","level":"info","event":"2   1727308800000  31.620000  ...  2024-09-26 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885825Z","level":"info","event":"3   1727654400000  31.370000  ...  2024-09-30 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885856Z","level":"info","event":"4   1728000000000  34.020000  ...  2024-10-04 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885886Z","level":"info","event":"..            ...        ...  ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885923Z","level":"info","event":"87  1756684800000   0.341328  ...  2025-09-01 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885955Z","level":"info","event":"88  1757030400000   0.359923  ...  2025-09-05 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.885991Z","level":"info","event":"89  1757376000000   0.344476  ...  2025-09-09 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.886029Z","level":"info","event":"90  1757721600000   0.344548  ...  2025-09-13 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.886060Z","level":"info","event":"91  1758067200000   0.356914  ...  2025-09-17 00:00:00  pi-network-iou","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.886091Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:01.886124Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.497798","level":"info","event":"Fetched 92 records for Internet Computer (IOU) (internet-computer)","logger":"root"}
+{"timestamp":"2025-09-19T09:53:32.503238Z","level":"info","event":"        timestamp  open   high  ...  close             datetime            coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503308Z","level":"info","event":"0   1726617600000  8.03   8.27  ...   7.92  2024-09-18 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503342Z","level":"info","event":"1   1726963200000  7.91   8.67  ...   8.55  2024-09-22 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503373Z","level":"info","event":"2   1727308800000  8.54   9.53  ...   9.06  2024-09-26 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503400Z","level":"info","event":"3   1727654400000  9.05  10.02  ...   9.58  2024-09-30 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503427Z","level":"info","event":"4   1728000000000  9.54   9.57  ...   8.01  2024-10-04 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503454Z","level":"info","event":"..            ...   ...    ...  ...    ...                  ...                ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503481Z","level":"info","event":"87  1756684800000  5.02   5.14  ...   4.76  2025-09-01 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503508Z","level":"info","event":"88  1757030400000  4.75   4.94  ...   4.70  2025-09-05 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503535Z","level":"info","event":"89  1757376000000  4.70   4.94  ...   4.89  2025-09-09 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503561Z","level":"info","event":"90  1757721600000  4.91   5.05  ...   4.98  2025-09-13 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503588Z","level":"info","event":"91  1758067200000  4.98   5.16  ...   4.77  2025-09-17 00:00:00  internet-computer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503614Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:53:32.503642Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.217597","level":"info","event":"Fetched 89 records for Arbitrum (osmosis-allarb)","logger":"root"}
+{"timestamp":"2025-09-19T09:54:03.222474Z","level":"info","event":"        timestamp      open  ...             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222564Z","level":"info","event":"0   1727654400000  0.625045  ...  2024-09-30 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222600Z","level":"info","event":"1   1728000000000  0.647508  ...  2024-10-04 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222631Z","level":"info","event":"2   1728345600000  0.535382  ...  2024-10-08 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222664Z","level":"info","event":"3   1728691200000  0.555440  ...  2024-10-12 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222700Z","level":"info","event":"4   1729036800000  0.534762  ...  2024-10-16 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222728Z","level":"info","event":"..            ...       ...  ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222759Z","level":"info","event":"84  1756684800000  0.540062  ...  2025-09-01 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222787Z","level":"info","event":"85  1757030400000  0.528515  ...  2025-09-05 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222815Z","level":"info","event":"86  1757376000000  0.535351  ...  2025-09-09 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222842Z","level":"info","event":"87  1757721600000  0.514150  ...  2025-09-13 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222869Z","level":"info","event":"88  1758067200000  0.565481  ...  2025-09-17 00:00:00  osmosis-allarb","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222898Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:03.222935Z","level":"info","event":"[89 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.859174","level":"info","event":"Fetched 92 records for Crypto.com Chain (crypto-com-chain)","logger":"root"}
+{"timestamp":"2025-09-19T09:54:34.863997Z","level":"info","event":"        timestamp      open  ...             datetime           coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864130Z","level":"info","event":"0   1726617600000  0.079100  ...  2024-09-18 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864199Z","level":"info","event":"1   1726963200000  0.079844  ...  2024-09-22 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864253Z","level":"info","event":"2   1727308800000  0.088216  ...  2024-09-26 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864303Z","level":"info","event":"3   1727654400000  0.084583  ...  2024-09-30 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864351Z","level":"info","event":"4   1728000000000  0.086188  ...  2024-10-04 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864401Z","level":"info","event":"..            ...       ...  ...                  ...               ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864455Z","level":"info","event":"87  1756684800000  0.258381  ...  2025-09-01 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864506Z","level":"info","event":"88  1757030400000  0.292185  ...  2025-09-05 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864559Z","level":"info","event":"89  1757376000000  0.267653  ...  2025-09-09 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864610Z","level":"info","event":"90  1757721600000  0.250721  ...  2025-09-13 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864658Z","level":"info","event":"91  1758067200000  0.256363  ...  2025-09-17 00:00:00  crypto-com-chain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864710Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:54:34.864765Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.494768","level":"info","event":"Fetched 54 records for Story (story-2)","logger":"root"}
+{"timestamp":"2025-09-19T09:55:05.504166Z","level":"info","event":"        timestamp  open   high   low  close             datetime  coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504257Z","level":"info","event":"0   1739750400000  2.55   2.61  1.38   1.76  2025-02-17 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504301Z","level":"info","event":"1   1740096000000  1.74   7.00  1.61   5.83  2025-02-21 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504337Z","level":"info","event":"2   1740441600000  5.70   5.70  3.74   4.51  2025-02-25 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504371Z","level":"info","event":"3   1740787200000  4.53   7.31  4.47   5.50  2025-03-01 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504404Z","level":"info","event":"4   1741132800000  5.49   6.90  5.03   5.55  2025-03-05 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504436Z","level":"info","event":"5   1741478400000  5.47   5.83  4.55   4.73  2025-03-09 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504468Z","level":"info","event":"6   1741824000000  4.74   6.59  4.68   6.34  2025-03-13 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504502Z","level":"info","event":"7   1742169600000  6.33   6.36  5.42   5.46  2025-03-17 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504534Z","level":"info","event":"8   1742515200000  5.46   5.66  5.13   5.51  2025-03-21 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504566Z","level":"info","event":"9   1742860800000  5.53   6.47  5.44   5.98  2025-03-25 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504597Z","level":"info","event":"10  1743206400000  6.00   6.51  5.07   5.54  2025-03-29 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504629Z","level":"info","event":"11  1743552000000  5.54   5.54  4.57   4.57  2025-04-02 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504661Z","level":"info","event":"12  1743897600000  4.56   4.61  3.96   4.28  2025-04-06 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504693Z","level":"info","event":"13  1744243200000  4.27   4.66  3.85   4.57  2025-04-10 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504725Z","level":"info","event":"14  1744588800000  4.56   4.57  3.87   3.97  2025-04-14 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504756Z","level":"info","event":"15  1744934400000  3.95   4.26  3.11   3.91  2025-04-18 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504788Z","level":"info","event":"16  1745280000000  3.91   3.97  3.59   3.60  2025-04-22 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504820Z","level":"info","event":"17  1745625600000  3.60   4.15  3.45   4.02  2025-04-26 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504852Z","level":"info","event":"18  1745971200000  4.03   4.23  3.76   4.02  2025-04-30 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504883Z","level":"info","event":"19  1746316800000  4.02   4.23  3.75   3.75  2025-05-04 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504931Z","level":"info","event":"20  1746662400000  3.75   3.88  3.46   3.86  2025-05-08 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.504970Z","level":"info","event":"21  1747008000000  3.85   5.28  3.84   4.62  2025-05-12 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505009Z","level":"info","event":"22  1747353600000  4.62   4.97  4.36   4.76  2025-05-16 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505051Z","level":"info","event":"23  1747699200000  4.77   5.07  4.60   4.68  2025-05-20 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505084Z","level":"info","event":"24  1748044800000  4.69   4.89  4.16   4.16  2025-05-24 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505115Z","level":"info","event":"25  1748390400000  4.11   4.41  4.11   4.38  2025-05-28 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505147Z","level":"info","event":"26  1748736000000  4.39   4.42  3.73   4.22  2025-06-01 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505176Z","level":"info","event":"27  1749081600000  4.22   4.25  4.02   4.04  2025-06-05 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505203Z","level":"info","event":"28  1749427200000  4.04   4.11  3.82   4.04  2025-06-09 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505229Z","level":"info","event":"29  1749772800000  4.04   4.25  3.77   3.80  2025-06-13 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505255Z","level":"info","event":"30  1750118400000  3.80   3.80  3.47   3.49  2025-06-17 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505282Z","level":"info","event":"31  1750464000000  3.46   3.52  2.46   2.63  2025-06-21 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505309Z","level":"info","event":"32  1750809600000  2.65   3.34  2.58   2.96  2025-06-25 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505336Z","level":"info","event":"33  1751155200000  2.97   3.10  2.86   2.99  2025-06-29 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505362Z","level":"info","event":"34  1751500800000  2.98   3.26  2.79   2.97  2025-07-03 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505388Z","level":"info","event":"35  1751846400000  2.97   3.13  2.84   3.11  2025-07-07 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505414Z","level":"info","event":"36  1752192000000  3.12   3.56  2.98   3.51  2025-07-11 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505441Z","level":"info","event":"37  1752537600000  3.50   4.89  3.40   4.37  2025-07-15 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505467Z","level":"info","event":"38  1752883200000  4.36   4.79  4.19   4.75  2025-07-19 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505494Z","level":"info","event":"39  1753228800000  4.74   5.18  4.55   4.99  2025-07-23 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505520Z","level":"info","event":"40  1753574400000  4.99   5.67  4.73   5.48  2025-07-27 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505546Z","level":"info","event":"41  1753920000000  5.48   6.00  5.38   5.93  2025-07-31 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505572Z","level":"info","event":"42  1754265600000  5.94   6.54  5.66   6.12  2025-08-04 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505598Z","level":"info","event":"43  1754611200000  6.11   6.24  5.60   6.23  2025-08-08 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505624Z","level":"info","event":"44  1754956800000  6.24   7.06  6.12   6.18  2025-08-12 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505652Z","level":"info","event":"45  1755302400000  6.14   6.19  5.45   5.60  2025-08-16 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505681Z","level":"info","event":"46  1755648000000  5.60   6.03  5.49   5.53  2025-08-20 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505708Z","level":"info","event":"47  1755993600000  5.54   6.20  5.47   5.96  2025-08-24 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505734Z","level":"info","event":"48  1756339200000  5.96   6.46  5.48   5.96  2025-08-28 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505761Z","level":"info","event":"49  1756684800000  5.96   8.64  5.93   7.97  2025-09-01 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505786Z","level":"info","event":"50  1757030400000  7.91   8.49  7.51   7.88  2025-09-05 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505812Z","level":"info","event":"51  1757376000000  7.88   8.88  7.86   8.59  2025-09-09 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505838Z","level":"info","event":"52  1757721600000  8.58  11.66  8.53   9.64  2025-09-13 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:05.505864Z","level":"info","event":"53  1758067200000  9.65  10.14  9.04   9.99  2025-09-17 00:00:00  story-2","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.606718","level":"info","event":"Fetched 92 records for Kaspa (wrapped-kaspa)","logger":"root"}
+{"timestamp":"2025-09-19T09:55:36.612504Z","level":"info","event":"        timestamp      open  ...             datetime        coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.612720Z","level":"info","event":"0   1726617600000  0.166975  ...  2024-09-18 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.612806Z","level":"info","event":"1   1726963200000  0.174510  ...  2024-09-22 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.612879Z","level":"info","event":"2   1727308800000  0.170218  ...  2024-09-26 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.612960Z","level":"info","event":"3   1727654400000  0.162798  ...  2024-09-30 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613032Z","level":"info","event":"4   1728000000000  0.163428  ...  2024-10-04 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613108Z","level":"info","event":"..            ...       ...  ...                  ...            ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613178Z","level":"info","event":"87  1756684800000  0.010040  ...  2025-09-01 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613250Z","level":"info","event":"88  1757030400000  0.009552  ...  2025-09-05 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613324Z","level":"info","event":"89  1757376000000  0.009251  ...  2025-09-09 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613415Z","level":"info","event":"90  1757721600000  0.010519  ...  2025-09-13 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613529Z","level":"info","event":"91  1758067200000  0.011210  ...  2025-09-17 00:00:00  wrapped-kaspa","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613635Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:55:36.613724Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.578691","level":"info","event":"Fetched 92 records for Binance Staked SOL (binance-staked-sol)","logger":"root"}
+{"timestamp":"2025-09-19T09:56:07.584166Z","level":"info","event":"        timestamp    open  ...             datetime             coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584276Z","level":"info","event":"0   1726617600000  131.84  ...  2024-09-18 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584311Z","level":"info","event":"1   1726963200000  131.72  ...  2024-09-22 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584340Z","level":"info","event":"2   1727308800000  149.79  ...  2024-09-26 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584369Z","level":"info","event":"3   1727654400000  148.35  ...  2024-09-30 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584397Z","level":"info","event":"4   1728000000000  158.94  ...  2024-10-04 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584424Z","level":"info","event":"..            ...     ...  ...                  ...                 ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584451Z","level":"info","event":"87  1756684800000  217.48  ...  2025-09-01 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584478Z","level":"info","event":"88  1757030400000  214.47  ...  2025-09-05 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584509Z","level":"info","event":"89  1757376000000  216.88  ...  2025-09-09 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584538Z","level":"info","event":"90  1757721600000  229.84  ...  2025-09-13 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584564Z","level":"info","event":"91  1758067200000  259.53  ...  2025-09-17 00:00:00  binance-staked-sol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584592Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:07.584620Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.149183","level":"info","event":"Fetched 92 records for VeChain (vechain)","logger":"root"}
+{"timestamp":"2025-09-19T09:56:38.156837Z","level":"info","event":"        timestamp      open      high  ...     close             datetime  coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.156944Z","level":"info","event":"0   1726617600000  0.020907  0.021633  ...  0.021191  2024-09-18 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.156980Z","level":"info","event":"1   1726963200000  0.021203  0.024333  ...  0.024274  2024-09-22 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157009Z","level":"info","event":"2   1727308800000  0.024292  0.025427  ...  0.024603  2024-09-26 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157037Z","level":"info","event":"3   1727654400000  0.024609  0.026979  ...  0.025760  2024-09-30 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157065Z","level":"info","event":"4   1728000000000  0.025758  0.025758  ...  0.022100  2024-10-04 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157092Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...      ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157118Z","level":"info","event":"87  1756684800000  0.024875  0.025848  ...  0.024164  2025-09-01 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157146Z","level":"info","event":"88  1757030400000  0.024112  0.024646  ...  0.023180  2025-09-05 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157178Z","level":"info","event":"89  1757376000000  0.023153  0.024540  ...  0.024356  2025-09-09 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157212Z","level":"info","event":"90  1757721600000  0.024405  0.025375  ...  0.025375  2025-09-13 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157240Z","level":"info","event":"91  1758067200000  0.025376  0.025934  ...  0.024488  2025-09-17 00:00:00  vechain","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157267Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:56:38.157294Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.743206","level":"info","event":"Fetched 92 records for Algorand (algorand)","logger":"root"}
+{"timestamp":"2025-09-19T09:57:08.748756Z","level":"info","event":"        timestamp      open      high  ...     close             datetime   coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.748859Z","level":"info","event":"0   1726617600000  0.123568  0.127335  ...  0.124007  2024-09-18 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.748895Z","level":"info","event":"1   1726963200000  0.124104  0.136395  ...  0.136208  2024-09-22 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.748936Z","level":"info","event":"2   1727308800000  0.136403  0.142138  ...  0.137264  2024-09-26 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.748966Z","level":"info","event":"3   1727654400000  0.137309  0.147114  ...  0.141140  2024-09-30 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.748993Z","level":"info","event":"4   1728000000000  0.141191  0.141191  ...  0.121866  2024-10-04 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749020Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...       ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749048Z","level":"info","event":"87  1756684800000  0.247294  0.255957  ...  0.231582  2025-09-01 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749076Z","level":"info","event":"88  1757030400000  0.231699  0.236997  ...  0.227331  2025-09-05 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749103Z","level":"info","event":"89  1757376000000  0.227099  0.238920  ...  0.236551  2025-09-09 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749130Z","level":"info","event":"90  1757721600000  0.236999  0.249332  ...  0.248359  2025-09-13 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749157Z","level":"info","event":"91  1758067200000  0.248605  0.259814  ...  0.237162  2025-09-17 00:00:00  algorand","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749184Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:08.749213Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.230777","level":"info","event":"Fetched 92 records for Worldcoin (worldcoin-wld)","logger":"root"}
+{"timestamp":"2025-09-19T09:57:40.238624Z","level":"info","event":"        timestamp      open  ...             datetime        coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.238736Z","level":"info","event":"0   1726617600000  1.410000  ...  2024-09-18 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.238786Z","level":"info","event":"1   1726963200000  1.480000  ...  2024-09-22 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.238831Z","level":"info","event":"2   1727308800000  1.650000  ...  2024-09-26 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.238881Z","level":"info","event":"3   1727654400000  2.110000  ...  2024-09-30 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.238944Z","level":"info","event":"4   1728000000000  2.050000  ...  2024-10-04 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.238994Z","level":"info","event":"..            ...       ...  ...                  ...            ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239026Z","level":"info","event":"87  1756684800000  0.931348  ...  2025-09-01 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239054Z","level":"info","event":"88  1757030400000  0.880648  ...  2025-09-05 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239083Z","level":"info","event":"89  1757376000000  0.865931  ...  2025-09-09 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239122Z","level":"info","event":"90  1757721600000  1.620000  ...  2025-09-13 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239151Z","level":"info","event":"91  1758067200000  1.660000  ...  2025-09-17 00:00:00  worldcoin-wld","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239180Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:57:40.239211Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.027037","level":"info","event":"Fetched 69 records for Pudgy Penguins (pudgy-penguins)","logger":"root"}
+{"timestamp":"2025-09-19T09:58:11.037252Z","level":"info","event":"        timestamp      open  ...             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037386Z","level":"info","event":"0   1734566400000  0.011410  ...  2024-12-19 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037445Z","level":"info","event":"1   1734912000000  0.035566  ...  2024-12-23 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037497Z","level":"info","event":"2   1735257600000  0.025942  ...  2024-12-27 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037546Z","level":"info","event":"3   1735603200000  0.038083  ...  2024-12-31 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037596Z","level":"info","event":"4   1735948800000  0.030954  ...  2025-01-04 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037631Z","level":"info","event":"..            ...       ...  ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037674Z","level":"info","event":"64  1756684800000  0.030045  ...  2025-09-01 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037727Z","level":"info","event":"65  1757030400000  0.028933  ...  2025-09-05 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037771Z","level":"info","event":"66  1757376000000  0.028528  ...  2025-09-09 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037815Z","level":"info","event":"67  1757721600000  0.033869  ...  2025-09-13 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037860Z","level":"info","event":"68  1758067200000  0.036403  ...  2025-09-17 00:00:00  pudgy-penguins","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037906Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:11.037970Z","level":"info","event":"[69 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.745302","level":"info","event":"Fetched 92 records for Render (render-token)","logger":"root"}
+{"timestamp":"2025-09-19T09:58:41.751249Z","level":"info","event":"        timestamp  open  high   low  close             datetime       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751397Z","level":"info","event":"0   1726617600000  4.74  4.96  4.67   4.76  2024-09-18 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751446Z","level":"info","event":"1   1726963200000  4.76  5.63  4.61   5.62  2024-09-22 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751478Z","level":"info","event":"2   1727308800000  5.61  6.31  5.41   5.92  2024-09-26 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751508Z","level":"info","event":"3   1727654400000  5.93  6.81  5.85   6.68  2024-09-30 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751536Z","level":"info","event":"4   1728000000000  6.67  6.77  5.05   5.23  2024-10-04 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751564Z","level":"info","event":"..            ...   ...   ...   ...    ...                  ...           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751592Z","level":"info","event":"87  1756684800000  3.57  3.70  3.38   3.42  2025-09-01 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751619Z","level":"info","event":"88  1757030400000  3.42  3.52  3.26   3.37  2025-09-05 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751648Z","level":"info","event":"89  1757376000000  3.36  3.74  3.36   3.70  2025-09-09 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751676Z","level":"info","event":"90  1757721600000  3.73  4.06  3.73   4.03  2025-09-13 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751704Z","level":"info","event":"91  1758067200000  4.03  4.13  3.69   3.87  2025-09-17 00:00:00  render-token","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751732Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:58:41.751762Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:12.362427","level":"info","event":"Fetched 1 records for Cosmos (lost-bitcoin-layer)","logger":"root"}
+{"timestamp":"2025-09-19T09:59:12.366352Z","level":"info","event":"       timestamp      open  ...             datetime             coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:12.366440Z","level":"info","event":"0  1758067200000  0.000099  ...  2025-09-17 00:00:00  lost-bitcoin-layer","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:12.366476Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:12.366507Z","level":"info","event":"[1 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.391025","level":"info","event":"Fetched 92 records for Sei (sei-network)","logger":"root"}
+{"timestamp":"2025-09-19T09:59:43.398855Z","level":"info","event":"        timestamp      open  ...             datetime      coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.398963Z","level":"info","event":"0   1726617600000  0.270481  ...  2024-09-18 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399001Z","level":"info","event":"1   1726963200000  0.278021  ...  2024-09-22 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399033Z","level":"info","event":"2   1727308800000  0.389869  ...  2024-09-26 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399065Z","level":"info","event":"3   1727654400000  0.454670  ...  2024-09-30 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399103Z","level":"info","event":"4   1728000000000  0.482915  ...  2024-10-04 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399146Z","level":"info","event":"..            ...       ...  ...                  ...          ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399177Z","level":"info","event":"87  1756684800000  0.292737  ...  2025-09-01 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399207Z","level":"info","event":"88  1757030400000  0.284053  ...  2025-09-05 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399237Z","level":"info","event":"89  1757376000000  0.279857  ...  2025-09-09 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399268Z","level":"info","event":"90  1757721600000  0.311025  ...  2025-09-13 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399297Z","level":"info","event":"91  1758067200000  0.345046  ...  2025-09-17 00:00:00  sei-network","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399327Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:59:43.399359Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.418912","level":"info","event":"Fetched 75 records for OFFICIAL TRUMP (trumpeffect69420)","logger":"root"}
+{"timestamp":"2025-09-19T10:00:14.428531Z","level":"info","event":"        timestamp      open  ...             datetime           coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.428688Z","level":"info","event":"0   1731801600000  0.040411  ...  2024-11-17 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.428757Z","level":"info","event":"1   1732147200000  0.001347  ...  2024-11-21 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.428812Z","level":"info","event":"2   1732492800000  0.001498  ...  2024-11-25 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.428862Z","level":"info","event":"3   1732838400000  0.000959  ...  2024-11-29 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.428910Z","level":"info","event":"4   1733184000000  0.001292  ...  2024-12-03 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.428988Z","level":"info","event":"..            ...       ...  ...                  ...               ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429038Z","level":"info","event":"70  1756684800000  0.000729  ...  2025-09-01 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429085Z","level":"info","event":"71  1757030400000  0.000710  ...  2025-09-05 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429130Z","level":"info","event":"72  1757376000000  0.000692  ...  2025-09-09 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429181Z","level":"info","event":"73  1757721600000  0.000711  ...  2025-09-13 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429234Z","level":"info","event":"74  1758067200000  0.000755  ...  2025-09-17 00:00:00  trumpeffect69420","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429288Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:14.429342Z","level":"info","event":"[75 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.240802","level":"info","event":"Fetched 92 records for Bonk (bonk-on-eth)","logger":"root"}
+{"timestamp":"2025-09-19T10:00:45.246912Z","level":"info","event":"        timestamp          open  ...             datetime      coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247045Z","level":"info","event":"0   1726617600000  1.227000e-09  ...  2024-09-18 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247089Z","level":"info","event":"1   1726963200000  1.220000e-09  ...  2024-09-22 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247125Z","level":"info","event":"2   1727308800000  1.294000e-09  ...  2024-09-26 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247159Z","level":"info","event":"3   1727654400000  1.425000e-09  ...  2024-09-30 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247192Z","level":"info","event":"4   1728000000000  1.917000e-09  ...  2024-10-04 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247225Z","level":"info","event":"..            ...           ...  ...                  ...          ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247258Z","level":"info","event":"87  1756684800000  1.099000e-09  ...  2025-09-01 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247289Z","level":"info","event":"88  1757030400000  1.033000e-09  ...  2025-09-05 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247320Z","level":"info","event":"89  1757376000000  1.020000e-09  ...  2025-09-09 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247351Z","level":"info","event":"90  1757721600000  1.007000e-09  ...  2025-09-13 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247381Z","level":"info","event":"91  1758067200000  8.509880e-10  ...  2025-09-17 00:00:00  bonk-on-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247412Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:00:45.247446Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.102779","level":"info","event":"Fetched 92 records for Filecoin (filecoin)","logger":"root"}
+{"timestamp":"2025-09-19T10:01:16.110906Z","level":"info","event":"        timestamp  open  high   low  close             datetime   coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111025Z","level":"info","event":"0   1726617600000  3.41  3.53  3.39   3.46  2024-09-18 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111062Z","level":"info","event":"1   1726963200000  3.46  3.88  3.36   3.87  2024-09-22 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111092Z","level":"info","event":"2   1727308800000  3.87  4.04  3.61   3.93  2024-09-26 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111122Z","level":"info","event":"3   1727654400000  3.94  4.27  3.90   4.08  2024-09-30 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111156Z","level":"info","event":"4   1728000000000  4.08  4.09  3.43   3.56  2024-10-04 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111184Z","level":"info","event":"..            ...   ...   ...   ...    ...                  ...       ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111211Z","level":"info","event":"87  1756684800000  2.31  2.39  2.23   2.27  2025-09-01 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111238Z","level":"info","event":"88  1757030400000  2.27  2.49  2.22   2.26  2025-09-05 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111265Z","level":"info","event":"89  1757376000000  2.26  2.46  2.26   2.44  2025-09-09 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111296Z","level":"info","event":"90  1757721600000  2.44  2.57  2.41   2.56  2025-09-13 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111331Z","level":"info","event":"91  1758067200000  2.56  2.65  2.38   2.56  2025-09-17 00:00:00  filecoin","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111359Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:16.111387Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.784320","level":"info","event":"Fetched 92 records for Maker (maker)","logger":"root"}
+{"timestamp":"2025-09-19T10:01:46.798537Z","level":"info","event":"        timestamp     open     high  ...    close             datetime coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798674Z","level":"info","event":"0   1726617600000  1522.09  1565.72  ...  1499.32  2024-09-18 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798725Z","level":"info","event":"1   1726963200000  1497.53  1587.64  ...  1584.37  2024-09-22 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798768Z","level":"info","event":"2   1727308800000  1585.07  1653.35  ...  1551.72  2024-09-26 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798808Z","level":"info","event":"3   1727654400000  1550.19  1716.14  ...  1665.97  2024-09-30 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798849Z","level":"info","event":"4   1728000000000  1657.15  1657.15  ...  1432.36  2024-10-04 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798888Z","level":"info","event":"..            ...      ...      ...  ...      ...                  ...     ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798937Z","level":"info","event":"87  1756684800000  1590.25  1603.96  ...  1543.97  2025-09-01 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.798977Z","level":"info","event":"88  1757030400000  1542.07  1847.34  ...  1747.26  2025-09-05 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.799017Z","level":"info","event":"89  1757376000000  1747.69  1842.53  ...  1668.55  2025-09-09 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.799055Z","level":"info","event":"90  1757721600000  1669.55  1833.94  ...  1756.40  2025-09-13 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.799094Z","level":"info","event":"91  1758067200000  1760.31  1916.21  ...  1765.75  2025-09-17 00:00:00   maker","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.799134Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:01:46.799178Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.604564","level":"info","event":"Fetched 92 records for Flare (flare-networks)","logger":"root"}
+{"timestamp":"2025-09-19T10:02:17.609618Z","level":"info","event":"        timestamp      open  ...             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.609749Z","level":"info","event":"0   1726617600000  0.014486  ...  2024-09-18 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.609804Z","level":"info","event":"1   1726963200000  0.014639  ...  2024-09-22 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.609853Z","level":"info","event":"2   1727308800000  0.015199  ...  2024-09-26 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.609900Z","level":"info","event":"3   1727654400000  0.014928  ...  2024-09-30 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.609966Z","level":"info","event":"4   1728000000000  0.016122  ...  2024-10-04 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610026Z","level":"info","event":"..            ...       ...  ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610076Z","level":"info","event":"87  1756684800000  0.021172  ...  2025-09-01 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610123Z","level":"info","event":"88  1757030400000  0.021526  ...  2025-09-05 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610171Z","level":"info","event":"89  1757376000000  0.020032  ...  2025-09-09 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610218Z","level":"info","event":"90  1757721600000  0.022060  ...  2025-09-13 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610264Z","level":"info","event":"91  1758067200000  0.022805  ...  2025-09-17 00:00:00  flare-networks","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610311Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:17.610360Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.325542","level":"info","event":"Fetched 92 records for Fetch.ai (fetch-ai)","logger":"root"}
+{"timestamp":"2025-09-19T10:02:48.333999Z","level":"info","event":"        timestamp      open      high  ...     close             datetime   coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334124Z","level":"info","event":"0   1726617600000  1.260000  1.370000  ...  1.350000  2024-09-18 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334166Z","level":"info","event":"1   1726963200000  1.350000  1.670000  ...  1.640000  2024-09-22 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334201Z","level":"info","event":"2   1727308800000  1.630000  1.740000  ...  1.640000  2024-09-26 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334236Z","level":"info","event":"3   1727654400000  1.640000  1.740000  ...  1.620000  2024-09-30 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334268Z","level":"info","event":"4   1728000000000  1.620000  1.660000  ...  1.370000  2024-10-04 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334301Z","level":"info","event":"..            ...       ...       ...  ...       ...                  ...       ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334334Z","level":"info","event":"87  1756684800000  0.637367  0.655843  ...  0.613465  2025-09-01 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334368Z","level":"info","event":"88  1757030400000  0.612593  0.627298  ...  0.593628  2025-09-05 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334400Z","level":"info","event":"89  1757376000000  0.593826  0.659752  ...  0.647944  2025-09-09 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334433Z","level":"info","event":"90  1757721600000  0.652131  0.683567  ...  0.681053  2025-09-13 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334465Z","level":"info","event":"91  1758067200000  0.681879  0.697771  ...  0.643569  2025-09-17 00:00:00  fetch-ai","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334498Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:02:48.334532Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.045595","level":"info","event":"Fetched 92 records for First Digital USD (first-digital-usd)","logger":"root"}
+{"timestamp":"2025-09-19T10:03:19.052285Z","level":"info","event":"        timestamp      open  ...             datetime            coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052446Z","level":"info","event":"0   1726617600000  0.997491  ...  2024-09-18 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052522Z","level":"info","event":"1   1726963200000  1.002000  ...  2024-09-22 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052587Z","level":"info","event":"2   1727308800000  1.002000  ...  2024-09-26 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052643Z","level":"info","event":"3   1727654400000  0.998422  ...  2024-09-30 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052688Z","level":"info","event":"4   1728000000000  1.000000  ...  2024-10-04 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052732Z","level":"info","event":"..            ...       ...  ...                  ...                ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052778Z","level":"info","event":"87  1756684800000  0.997162  ...  2025-09-01 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052831Z","level":"info","event":"88  1757030400000  0.997770  ...  2025-09-05 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052877Z","level":"info","event":"89  1757376000000  0.996682  ...  2025-09-09 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052936Z","level":"info","event":"90  1757721600000  0.997374  ...  2025-09-13 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.052982Z","level":"info","event":"91  1758067200000  0.999967  ...  2025-09-17 00:00:00  first-digital-usd","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.053025Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:19.053069Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.868690","level":"info","event":"Fetched 92 records for Injective Protocol (injective-protocol)","logger":"root"}
+{"timestamp":"2025-09-19T10:03:49.878717Z","level":"info","event":"        timestamp   open   high  ...  close             datetime             coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.878961Z","level":"info","event":"0   1726617600000  18.02  19.85  ...  19.48  2024-09-18 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879067Z","level":"info","event":"1   1726963200000  19.49  21.57  ...  21.19  2024-09-22 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879150Z","level":"info","event":"2   1727308800000  21.21  23.11  ...  22.56  2024-09-26 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879236Z","level":"info","event":"3   1727654400000  22.52  23.95  ...  23.27  2024-09-30 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879325Z","level":"info","event":"4   1728000000000  23.27  24.80  ...  19.04  2024-10-04 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879410Z","level":"info","event":"..            ...    ...    ...  ...    ...                  ...                 ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879492Z","level":"info","event":"87  1756684800000  13.31  14.16  ...  12.73  2025-09-01 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879569Z","level":"info","event":"88  1757030400000  12.68  13.39  ...  12.45  2025-09-05 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879660Z","level":"info","event":"89  1757376000000  12.45  13.64  ...  13.59  2025-09-09 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879758Z","level":"info","event":"90  1757721600000  13.66  14.51  ...  14.46  2025-09-13 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879836Z","level":"info","event":"91  1758067200000  14.45  14.86  ...  13.80  2025-09-17 00:00:00  injective-protocol","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.879914Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T10:03:49.880013Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}

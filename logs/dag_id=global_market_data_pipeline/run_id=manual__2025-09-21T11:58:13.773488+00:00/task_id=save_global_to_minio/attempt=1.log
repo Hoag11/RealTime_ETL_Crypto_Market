@@ -1,0 +1,11 @@
+{"timestamp":"2025-09-21T11:58:16.217277","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-09-21T11:58:16.217629","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/global_data_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-09-21T11:58:16.312708Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:16.312832Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:16.313203Z","level":"info","event":"Current task name:save_global_to_minio","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:16.313276Z","level":"info","event":"Dag name:global_market_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:16.324171","level":"error","event":"No data retrieved from XCom","logger":"root"}
+{"timestamp":"2025-09-21T11:58:16.324705","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
+{"timestamp":"2025-09-21T11:58:16.335819Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:16.335953Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:58:16.336110Z","level":"info","event":"Task operator:<Task(PythonOperator): save_global_to_minio>","chan":"stdout","logger":"task"}

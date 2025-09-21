@@ -1,0 +1,87 @@
+{"timestamp":"2025-09-19T09:29:33.268168","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-09-19T09:29:33.268558","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/historical_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-09-19T09:29:33.387188Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:33.387344Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:33.387442Z","level":"info","event":"Current task name:fetch_historical_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:33.387503Z","level":"info","event":"Dag name:historical_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.188544","level":"info","event":"Fetched 92 records for Bitcoin (osmosis-allbtc)","logger":"root"}
+{"timestamp":"2025-09-19T09:29:34.214155Z","level":"info","event":"        timestamp      open  ...             datetime         coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214382Z","level":"info","event":"0   1726617600000   58237.0  ...  2024-09-18 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214480Z","level":"info","event":"1   1726963200000   60296.0  ...  2024-09-22 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214559Z","level":"info","event":"2   1727308800000   63529.0  ...  2024-09-26 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214662Z","level":"info","event":"3   1727654400000   63147.0  ...  2024-09-30 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214752Z","level":"info","event":"4   1728000000000   65628.0  ...  2024-10-04 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214827Z","level":"info","event":"..            ...       ...  ...                  ...             ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214899Z","level":"info","event":"87  1756684800000  111343.0  ...  2025-09-01 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.214982Z","level":"info","event":"88  1757030400000  107990.0  ...  2025-09-05 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.215055Z","level":"info","event":"89  1757376000000  110466.0  ...  2025-09-09 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.215128Z","level":"info","event":"90  1757721600000  112131.0  ...  2025-09-13 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.215201Z","level":"info","event":"91  1758067200000  116369.0  ...  2025-09-17 00:00:00  osmosis-allbtc","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.215275Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.215377Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.902642","level":"info","event":"Fetched 79 records for Ethereum (the-ticker-is-eth)","logger":"root"}
+{"timestamp":"2025-09-19T09:29:34.914811Z","level":"info","event":"        timestamp      open  ...             datetime            coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.914969Z","level":"info","event":"0   1731110400000  0.000803  ...  2024-11-09 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915029Z","level":"info","event":"1   1731456000000  0.003905  ...  2024-11-13 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915075Z","level":"info","event":"2   1731801600000  0.002472  ...  2024-11-17 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915129Z","level":"info","event":"3   1732147200000  0.001405  ...  2024-11-21 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915183Z","level":"info","event":"4   1732492800000  0.000778  ...  2024-11-25 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915229Z","level":"info","event":"..            ...       ...  ...                  ...                ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915272Z","level":"info","event":"74  1756684800000  0.000074  ...  2025-09-01 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915315Z","level":"info","event":"75  1757030400000  0.000072  ...  2025-09-05 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915356Z","level":"info","event":"76  1757376000000  0.000076  ...  2025-09-09 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915398Z","level":"info","event":"77  1757721600000  0.000079  ...  2025-09-13 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915440Z","level":"info","event":"78  1758067200000  0.000087  ...  2025-09-17 00:00:00  the-ticker-is-eth","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915482Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:34.915525Z","level":"info","event":"[79 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.477480","level":"info","event":"Fetched 92 records for XRP (warioxrpdumbledoreyugioh69inu)","logger":"root"}
+{"timestamp":"2025-09-19T09:29:35.488957Z","level":"info","event":"        timestamp      open  ...             datetime                        coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489205Z","level":"info","event":"0   1726617600000  0.000123  ...  2024-09-18 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489325Z","level":"info","event":"1   1726963200000  0.000124  ...  2024-09-22 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489393Z","level":"info","event":"2   1727308800000  0.000141  ...  2024-09-26 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489451Z","level":"info","event":"3   1727654400000  0.000146  ...  2024-09-30 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489508Z","level":"info","event":"4   1728000000000  0.000144  ...  2024-10-04 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489564Z","level":"info","event":"..            ...       ...  ...                  ...                            ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489619Z","level":"info","event":"87  1756684800000  0.000160  ...  2025-09-01 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489673Z","level":"info","event":"88  1757030400000  0.000159  ...  2025-09-05 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489726Z","level":"info","event":"89  1757376000000  0.000159  ...  2025-09-09 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489780Z","level":"info","event":"90  1757721600000  0.000168  ...  2025-09-13 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489838Z","level":"info","event":"91  1758067200000  0.000165  ...  2025-09-17 00:00:00  warioxrpdumbledoreyugioh69inu","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.489896Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:35.490007Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.131051","level":"info","event":"Fetched 63 records for Tether (zircuit-bridged-usdt-zircuit)","logger":"root"}
+{"timestamp":"2025-09-19T09:29:36.140428Z","level":"info","event":"        timestamp      open  ...             datetime                       coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.140705Z","level":"info","event":"0   1733875200000  1.014000  ...  2024-12-11 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.140784Z","level":"info","event":"1   1734220800000  0.997075  ...  2024-12-15 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.140893Z","level":"info","event":"2   1734566400000  0.999873  ...  2024-12-19 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.140983Z","level":"info","event":"3   1734912000000  0.989196  ...  2024-12-23 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141066Z","level":"info","event":"4   1735257600000  0.995653  ...  2024-12-27 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141154Z","level":"info","event":"..            ...       ...  ...                  ...                           ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141220Z","level":"info","event":"58  1756684800000  0.999985  ...  2025-09-01 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141280Z","level":"info","event":"59  1757030400000  1.000000  ...  2025-09-05 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141341Z","level":"info","event":"60  1757376000000  1.000000  ...  2025-09-09 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141399Z","level":"info","event":"61  1757721600000  1.000000  ...  2025-09-13 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141458Z","level":"info","event":"62  1758067200000  1.001000  ...  2025-09-17 00:00:00  zircuit-bridged-usdt-zircuit","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141526Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.141586Z","level":"info","event":"[63 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.847859","level":"info","event":"Fetched 92 records for Binance Coin (binance-coin-wormhole)","logger":"root"}
+{"timestamp":"2025-09-19T09:29:36.860245Z","level":"info","event":"        timestamp    open  ...             datetime                coin_id","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.860591Z","level":"info","event":"0   1726617600000  536.10  ...  2024-09-18 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.860766Z","level":"info","event":"1   1726963200000  549.97  ...  2024-09-22 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.860886Z","level":"info","event":"2   1727308800000  588.81  ...  2024-09-26 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.860964Z","level":"info","event":"3   1727654400000  586.46  ...  2024-09-30 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861022Z","level":"info","event":"4   1728000000000  595.96  ...  2024-10-04 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861084Z","level":"info","event":"..            ...     ...  ...                  ...                    ...","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861150Z","level":"info","event":"87  1756684800000  856.50  ...  2025-09-01 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861218Z","level":"info","event":"88  1757030400000  857.03  ...  2025-09-05 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861274Z","level":"info","event":"89  1757376000000  844.41  ...  2025-09-09 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861327Z","level":"info","event":"90  1757721600000  878.84  ...  2025-09-13 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861375Z","level":"info","event":"91  1758067200000  922.90  ...  2025-09-17 00:00:00  binance-coin-wormhole","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861422Z","level":"info","event":"","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:36.861472Z","level":"info","event":"[92 rows x 7 columns]","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:37.085979","level":"error","event":"Error fetching data for Solana (wrapped-solana): 429 Client Error: Too Many Requests for url: https://api.coingecko.com/api/v3/coins/wrapped-solana/ohlc?vs_currency=usd&days=365","logger":"root"}
+{"timestamp":"2025-09-19T09:29:37.087813","level":"error","event":"Task failed with exception","logger":"task","error_detail":[{"exc_type":"AttributeError","exc_value":"'NoneType' object has no attribute 'empty'","exc_notes":[],"syntax_error":null,"is_cause":false,"frames":[{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/task_runner.py","lineno":920,"name":"run"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/task_runner.py","lineno":1215,"name":"_execute_task"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/bases/operator.py","lineno":397,"name":"wrapper"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/standard/operators/python.py","lineno":216,"name":"execute"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/standard/operators/python.py","lineno":239,"name":"execute_callable"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/execution_time/callback_runner.py","lineno":81,"name":"run"},{"filename":"/opt/airflow/dags/scripts/batch/historical.py","lineno":76,"name":"fetch_historical_data"}],"is_group":false,"exceptions":[]}]}
+{"timestamp":"2025-09-19T09:29:37.113267Z","level":"info","event":"Task instance in failure state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:37.113565Z","level":"info","event":"Task start","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:37.113705Z","level":"info","event":"Task:<Task(PythonOperator): fetch_historical_data>","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-19T09:29:37.113810Z","level":"info","event":"Failure caused by 'NoneType' object has no attribute 'empty'","chan":"stdout","logger":"task"}

@@ -1,0 +1,21 @@
+{"timestamp":"2025-09-21T11:48:14.972510","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-09-21T11:48:14.973021","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/global_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-09-21T11:48:15.055846Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:48:15.055974Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:48:15.056090Z","level":"info","event":"Current task name:fetch_historical_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:48:15.056151Z","level":"info","event":"Dag name:global_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-21T11:48:15.061857","level":"info","event":"Found existing historical object -> incremental mode","logger":"root"}
+{"timestamp":"2025-09-21T11:48:15.595149","level":"info","event":"Fetched 48 rows for osmosis-allbtc (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:48:31.159197","level":"info","event":"Fetched 47 rows for the-ticker-is-eth (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:48:46.621023","level":"info","event":"Fetched 36 rows for warioxrpdumbledoreyugioh69inu (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:49:02.191875","level":"info","event":"Fetched 48 rows for zircuit-bridged-usdt-zircuit (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:49:17.640627","level":"info","event":"Fetched 48 rows for binance-coin-wormhole (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:49:33.214045","level":"info","event":"Fetched 48 rows for wrapped-solana (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:49:48.789914","level":"info","event":"Fetched 48 rows for zksync-bridged-usdc-zksync (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:50:04.241559","level":"info","event":"Fetched 48 rows for staked-ether (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:50:19.703364","level":"info","event":"Fetched 48 rows for doge-on-pulsechain (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:50:35.200748","level":"info","event":"Fetched 48 rows for tron-bsc (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:50:50.666987","level":"info","event":"Fetched 48 rows for cardano (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:51:05.702960Z","level":"error","event":"Server indicated the task shouldn't be running anymore. Terminating process","detail":{"detail":{"reason":"not_running","message":"TI is no longer in the running state and task should terminate","current_state":"success"}},"logger":"task"}
+{"timestamp":"2025-09-21T11:51:06.092688","level":"info","event":"Fetched 48 rows for wormhole-bridged-hype (days=1)","logger":"root"}
+{"timestamp":"2025-09-21T11:51:10.718112Z","level":"error","event":"Task killed!","logger":"task"}

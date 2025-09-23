@@ -29,7 +29,7 @@ MINIO_SECURE = False
 OBJECT_FOLDER = "historical"
 OBJECT_NAME = f"{OBJECT_FOLDER}/historical_data.json"
 
-RATE_LIMIT_SECONDS = 15
+RATE_LIMIT_SECONDS = 20
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
@@ -45,7 +45,6 @@ def _init_minio_client():
 
 
 def get_data(coin_data, vs_currency="usd", days=365):
-    # Lấy coin_id (ưu tiên nameid -> id -> symbol)
     if isinstance(coin_data, dict):
         coin_id = (
             coin_data.get("nameid") or coin_data.get("id") or coin_data.get("symbol")
@@ -57,26 +56,47 @@ def get_data(coin_data, vs_currency="usd", days=365):
         logging.warning("No coin_id found in coin_data: %s", coin_data)
         return None
 
-    url = f"{API}/coins/{coin_id}/ohlc"
-    params = {"vs_currency": vs_currency, "days": int(days)}
-
     try:
-        resp = requests.get(
-            url, params=params, headers={"User-Agent": ua.random}, timeout=60
+        # ---- OHLC ----
+        url_ohlc = f"{API}/coins/{coin_id}/ohlc"
+        resp_ohlc = requests.get(
+            url_ohlc,
+            params={"vs_currency": vs_currency, "days": int(days)},
+            headers={"User-Agent": ua.random},
+            timeout=60,
         )
-        resp.raise_for_status()
-        data = resp.json()
-        if not data:
+        resp_ohlc.raise_for_status()
+        ohlc_data = resp_ohlc.json()
+        if not ohlc_data:
             logging.info("No OHLC data for %s (days=%s)", coin_id, days)
             return None
+        df_ohlc = pd.DataFrame(
+            ohlc_data, columns=["timestamp", "open", "high", "low", "close"]
+        )
 
-        df = pd.DataFrame(data, columns=["timestamp", "open", "high", "low", "close"])
-        # convert timestamp (ms) -> string (consistent for dedupe)
+        # ---- Market Chart (for volume) ----
+        url_mc = f"{API}/coins/{coin_id}/market_chart"
+        resp_mc = requests.get(
+            url_mc,
+            params={"vs_currency": vs_currency, "days": int(days)},
+            headers={"User-Agent": ua.random},
+            timeout=60,
+        )
+        resp_mc.raise_for_status()
+        mc_data = resp_mc.json()
+        if not mc_data or "total_volumes" not in mc_data:
+            logging.info("No market_chart data for %s (days=%s)", coin_id, days)
+            return None
+        df_vol = pd.DataFrame(mc_data["total_volumes"], columns=["timestamp", "volume"])
+
+        # ---- Merge ----
+        df = pd.merge(df_ohlc, df_vol, on="timestamp", how="left")
         df["datetime"] = pd.to_datetime(df["timestamp"], unit="ms").dt.strftime(
             "%Y-%m-%d %H:%M:%S"
         )
         df["coin_id"] = coin_id
-        df = df[["coin_id", "datetime", "open", "high", "low", "close"]]
+        df = df[["coin_id", "datetime", "open", "high", "low", "close", "volume"]]
+
         logging.info("Fetched %d rows for %s (days=%s)", len(df), coin_id, days)
         return df
 
@@ -86,7 +106,6 @@ def get_data(coin_data, vs_currency="usd", days=365):
     except Exception as e:
         logging.exception("Unexpected error while fetching %s: %s", coin_id, e)
         return None
-
 
 # ---------- AIRFLOW TASKS (keeps signatures for DAG) ----------
 def fetch_historical_data(**context):

@@ -1,0 +1,25 @@
+{"timestamp":"2025-09-23T10:47:15.705686","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-09-23T10:47:15.706080","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/historical_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-09-23T10:47:15.788082Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-23T10:47:15.788216Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-23T10:47:15.788323Z","level":"info","event":"Current task name:fetch_historical_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-23T10:47:15.788374Z","level":"info","event":"Dag name:historical_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-09-23T10:47:15.794990","level":"info","event":"Found existing historical object -> incremental mode","logger":"root"}
+{"timestamp":"2025-09-23T10:47:16.452443","level":"info","event":"Fetched 48 rows for osmosis-allbtc (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:47:32.095406","level":"info","event":"Fetched 48 rows for the-ticker-is-eth (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:47:47.711339","level":"info","event":"Fetched 45 rows for warioxrpdumbledoreyugioh69inu (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:48:03.351004","level":"error","event":"HTTP error while fetching zircuit-bridged-usdt-zircuit: 429 Client Error: Too Many Requests for url: https://api.coingecko.com/api/v3/coins/zircuit-bridged-usdt-zircuit/market_chart?vs_currency=usd&days=1","logger":"root"}
+{"timestamp":"2025-09-23T10:48:19.101014","level":"info","event":"Fetched 48 rows for binance-coin-wormhole (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:48:34.666320","level":"info","event":"Fetched 48 rows for wrapped-solana (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:48:49.921033","level":"error","event":"HTTP error while fetching zksync-bridged-usdc-zksync: 429 Client Error: Too Many Requests for url: https://api.coingecko.com/api/v3/coins/zksync-bridged-usdc-zksync/market_chart?vs_currency=usd&days=1","logger":"root"}
+{"timestamp":"2025-09-23T10:49:05.494497","level":"info","event":"Fetched 48 rows for staked-ether (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:49:21.159680","level":"info","event":"Fetched 48 rows for doge-on-pulsechain (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:49:36.667234","level":"info","event":"Fetched 48 rows for tron-bsc (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:49:52.189099","level":"info","event":"Fetched 48 rows for cardano (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:50:07.664003","level":"info","event":"Fetched 48 rows for wormhole-bridged-hype (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:50:23.423673","level":"info","event":"Fetched 48 rows for osmosis-alllink (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:50:39.366217","level":"info","event":"Fetched 48 rows for zora-bridged-weth-zora-network (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:50:55.375794","level":"info","event":"Fetched 48 rows for zksync-bridged-wbtc-zksync (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:51:11.193677","level":"info","event":"Fetched 48 rows for wrapped-beacon-eth (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:51:27.017949","level":"info","event":"Fetched 48 rows for okb (days=1)","logger":"root"}
+{"timestamp":"2025-09-23T10:51:42.793197","level":"info","event":"Fetched 48 rows for bitcoin-cash (days=1)","logger":"root"}

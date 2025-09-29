@@ -2,3 +2,5 @@
 .env
 /logging
 logging
+.idea
+.vscode

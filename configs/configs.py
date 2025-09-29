@@ -44,10 +44,9 @@ MINIO_BUCKET_HISTORICAL = "crypto-historical-data"
 # POSTGRES CONFIG
 PG_HOST = "postgres-bi"
 PG_PORT = 5432
-PG_DB_PRICE = "crypto_price"
-PG_DB_NEWS = "crypto_news"
 PG_USER = "postgres"
 PG_PASSWORD = "postgres"
+PG_DB = "warehouse"
 
 # SPARK CONFIG
 SPARK_MASTER = "spark-spark-1:7077"

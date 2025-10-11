@@ -1,0 +1,25 @@
+FROM spark/spark:3.5
+
+USER root
+
+ENV HOME=/root
+RUN mkdir -p /root/.ivy2
+
+WORKDIR /app
+
+COPY spark/spark/streaming_load.py /app/batching_load.py
+COPY configs/configs.py /app/configs.py
+COPY requirements.txt /app/requirements.txt
+
+RUN python -m venv /data/pyspark_venv && \
+    /data/pyspark_venv/bin/pip install --upgrade pip && \
+    /data/pyspark_venv/bin/pip install -r /app/requirements.txt
+
+ENV PYSPARK_DRIVER_PYTHON=python
+ENV PYSPARK_PYTHON=/data/pyspark_venv/bin/python
+ENDV PYTHONPATH=/app
+
+EXPOSE 4040
+
+CMD ["spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.6", "/app/batching_load.py"]
+

@@ -31,9 +31,6 @@ MINIO_SECURE = False
 OBJECT_FOLDER = "global_market"
 
 RATE_LIMIT_SECONDS = 15
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
 
 
 def _init_minio_client():

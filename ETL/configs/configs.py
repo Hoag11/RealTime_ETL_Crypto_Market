@@ -2,11 +2,11 @@ import logging
 import os
 from datetime import datetime
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_DIR = os.path.join(BASE_DIR, "logging")
-
-os.makedirs(LOG_DIR, exist_ok=True)
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# LOG_DIR = os.path.join(BASE_DIR, "logging")
+#
+# os.makedirs(LOG_DIR, exist_ok=True)
+#
 timestamp = datetime.now().strftime("%Y%m%d")
 # LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
 

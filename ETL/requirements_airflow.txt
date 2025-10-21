@@ -1,4 +1,7 @@
 requests
 fake_useragent
 minio
+psycopg2-binary
 pandas
+apache-airflow-providers-apache-spark
+apache-airflow-providers-postgres

@@ -3,7 +3,7 @@ services:
     image: "postgres:16.3"
     networks:
       - streaming-network-ez
-    hostname: postgres
+    hostname: postgres-bi
     container_name: postgres-bi
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -12,9 +12,6 @@ services:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "postgres"
       PGDATA: "/var/lib/postgresql/data"
-      # POSTGRES_USER: "airflow"
-      # POSTGRES_PASSWORD: "airflow"
-      # POSTGRES_DB: "airflow"
     ports:
       - "5432:5432"
 

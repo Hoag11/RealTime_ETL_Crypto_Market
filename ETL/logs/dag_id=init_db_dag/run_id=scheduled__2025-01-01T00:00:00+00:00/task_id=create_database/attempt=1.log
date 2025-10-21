@@ -1,0 +1,12 @@
+{"timestamp":"2025-10-19T10:32:24.814638","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-10-19T10:32:24.814955","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/init_db_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-10-19T10:32:24.879135","level":"error","event":"Failed to resolve template field 'sql'","logger":"airflow.sdk.definitions._internal.templater","error_detail":[{"exc_type":"TemplateNotFound","exc_value":"'/scripts/sql/concurrencies.sql' not found in search path: '/opt/airflow/dags'","exc_notes":[],"syntax_error":null,"is_cause":false,"frames":[{"filename":"/home/airflow/.local/lib/python3.12/site-packages/airflow/sdk/definitions/_internal/templater.py","lineno":98,"name":"resolve_template_files"},{"filename":"/home/airflow/.local/lib/python3.12/site-packages/jinja2/loaders.py","lineno":209,"name":"get_source"}],"is_group":false,"exceptions":[]}]}
+{"timestamp":"2025-10-19T10:32:24.889125Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.889232Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.889304Z","level":"info","event":"Current task name:create_database","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.889339Z","level":"info","event":"Dag name:init_db_dag","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.932133Z","level":"info","event":"Database warehouse created successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.932642","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
+{"timestamp":"2025-10-19T10:32:24.941107Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.941190Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
+{"timestamp":"2025-10-19T10:32:24.941283Z","level":"info","event":"Task operator:<Task(PythonOperator): create_database>","chan":"stdout","logger":"task"}

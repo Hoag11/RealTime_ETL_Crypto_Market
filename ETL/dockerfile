@@ -3,7 +3,12 @@ FROM apache/airflow:3.0.6
 # Install custom Python dependencies
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential  # Optional, but good for any C-based packages
+  build-essential  # Optional, but good for any C-based packages
+
+RUN apt-get update && apt-get install -y openjdk-17-jdk docker.io
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
 USER airflow
 
 COPY requirements_airflow.txt .

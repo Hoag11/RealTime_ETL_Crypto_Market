@@ -30,6 +30,7 @@ with DAG(
         "-v spark_lib:/opt/bitnami/spark/.ivy2 "
         "-v spark_data:/data "
         "spark/spark:3.5 bash -c '"
+        "pip install psycopg2-binary && "
         "export PYTHONPATH=$PYTHONPATH:/configs && "
         "spark-submit "
         "--packages org.postgresql:postgresql:42.7.3,org.apache.hadoop:hadoop-aws:3.3.6 "

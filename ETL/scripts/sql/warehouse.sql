@@ -120,3 +120,27 @@ CREATE TABLE IF NOT EXISTS fact_news (
     category_data JSONB,                   -- danh sách CATEGORY_DATA
     ingestion_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS fact_news_staging (
+    type TEXT,
+    guid TEXT,
+    published_on TIMESTAMP,
+    title TEXT,
+    subtitle TEXT,
+    authors TEXT,
+    url TEXT,
+    source_id TEXT,
+    body TEXT,
+    keywords TEXT,
+    lang TEXT,
+    upvotes INT,
+    downvotes INT,
+    score DOUBLE PRECISION,
+    sentiment TEXT,
+    status TEXT,
+    created_on TIMESTAMP,
+    updated_on TIMESTAMP,
+    source_data TEXT,
+    category_data TEXT
+);
+

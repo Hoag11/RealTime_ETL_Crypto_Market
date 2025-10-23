@@ -12,7 +12,7 @@ with DAG(
     dag_id="etl_crypto_batch_pipeline",
     description="Batch ETL Pipeline: load data into Postgres using Spark container",
     start_date=datetime(2025, 10, 1),
-    schedule=None,
+    schedule="0 8 * * 1-5",
     catchup=False,
     default_args=default_args,
 ) as dag:

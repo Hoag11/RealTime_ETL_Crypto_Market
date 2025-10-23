@@ -16,7 +16,7 @@ with DAG(
     dag_id="historical_data_pipeline",
     default_args=default_args,
     description="Fetch and save historical OHLC data to Minio",
-    schedule="@daily",
+    schedule="30 5 * * 1-5",
     start_date=datetime(2025, 1, 1),
     catchup=False,
     tags=["crypto", "historical"],

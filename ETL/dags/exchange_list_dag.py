@@ -16,7 +16,7 @@ with DAG(
     dag_id="exchange_list_data_pipeline",
     default_args=default_args,
     description="Fetch and save exchange list data to Minio",
-    schedule="@daily",
+    schedule="0 5 * * 1-5",
     start_date=datetime(2025, 1, 1),
     catchup=False,
     tags=["crypto", "exchange_list"],

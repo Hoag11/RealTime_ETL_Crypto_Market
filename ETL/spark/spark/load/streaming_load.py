@@ -106,7 +106,7 @@ def process_batch(df, batch_id):
 
     # 4️⃣ Chọn đúng schema theo fact_coin_metrics
     df_final = df_joined.filter(F.col("date_id").isNotNull()).select(
-        F.col("id").alias("coin_id"),
+        F.col("nameid").alias("coin_id"),
         "date_id",
         "price_usd",
         "percent_change_1h",
@@ -123,7 +123,7 @@ def process_batch(df, batch_id):
     )
 
     # 5️⃣ Dedup trùng coin_id + date_id (chỉ giữ bản ghi mới nhất)
-    window_spec = Window.partitionBy("coin_id", "date_id").orderBy(
+    window_spec = Window.partitionBy("coin_id", "api_timestamp").orderBy(
         F.col("api_timestamp").desc()
     )
     df_dedup = (
@@ -149,7 +149,7 @@ def process_batch(df, batch_id):
     merge_query = """
         INSERT INTO fact_coin_metrics AS fcm
         SELECT * FROM fact_coin_metrics_stage
-        ON CONFLICT (coin_id, date_id)
+        ON CONFLICT (coin_id, api_timestamp)
         DO UPDATE SET
             price_usd = EXCLUDED.price_usd,
             percent_change_1h = EXCLUDED.percent_change_1h,

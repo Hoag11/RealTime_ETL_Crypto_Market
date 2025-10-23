@@ -16,7 +16,7 @@ with DAG(
     dag_id="global_market_data_pipeline",
     default_args=default_args,
     description="Fetch and save global market data to Minio",
-    schedule="@daily",  # chạy hằng ngày
+    schedule="15 5 * * 1-5",
     start_date=datetime(2025, 1, 1),
     catchup=False,
     tags=["crypto", "global_market"],

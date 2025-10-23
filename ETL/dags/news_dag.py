@@ -7,7 +7,7 @@ from scripts.batch import news_crawler
 with DAG(
     dag_id="news_dag",
     start_date=datetime.datetime(2025, 9, 16),
-    schedule="@weekly",
+    schedule="0 7 * * 1",
     catchup=False,
     tags=["news", "batch"],
 ) as dag:

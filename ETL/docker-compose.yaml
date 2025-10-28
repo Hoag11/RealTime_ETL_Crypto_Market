@@ -62,6 +62,7 @@ x-airflow-common:
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
     AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
+    PYTHONPATH: '/opt/airflow/dags/src'
     # yamllint disable rule:line-length
     # Use simple http server on scheduler for health checks
     # See https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/logging-monitoring/check-health.html#scheduler-health-check-server
@@ -81,6 +82,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ${AIRFLOW_PROJ_DIR:-.}/configs:/opt/airflow/dags/configs
     - ${AIRFLOW_PROJ_DIR:-.}/scripts:/opt/airflow/dags/scripts
+    - ${AIRFLOW_PROJ_DIR:-.}/src:/opt/airflow/dags/src
     - ${AIRFLOW_PROJ_DIR:-.}/spark:/opt/airflow/spark
     - /var/run/docker.sock:/var/run/docker.sock 
   networks:

@@ -1,7 +1,9 @@
+from datetime import datetime, timedelta
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from datetime import datetime, timedelta
-from scripts.batch import historical
+
+from pipelines.batch import historical
 
 default_args = {
     "owner": "airflow",

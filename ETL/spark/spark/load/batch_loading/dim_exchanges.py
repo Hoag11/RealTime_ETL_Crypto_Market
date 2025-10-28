@@ -1,47 +1,29 @@
-import os
+import logging
 import sys
 import traceback
-import logging
+
 from pyspark.sql import SparkSession
 
-# -------------------- Logging setup --------------------
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s"
-)
+from pipelines import config
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s")
 log = logging.getLogger("dim_exchanges")
 
-# -------------------- Import configs --------------------
-if "/configs" not in sys.path:
-    sys.path.insert(0, "/configs")
-
-try:
-    import configs
-except Exception as e:
-    log.error(
-        "Không thể import configs.py từ /configs. Kiểm tra volume mount và tên file."
-    )
-    raise
-
-# -------------------- Load configs --------------------
-MINIO_ENDPOINT = getattr(configs, "MINIO_ENDPOINT", "http://minio:9000")
-MINIO_ACCESS_KEY = getattr(configs, "MINIO_ACCESS_KEY", "")
-MINIO_SECRET_KEY = getattr(configs, "MINIO_SECRET_KEY", "")
-MINIO_BUCKET_RAW_PRICE = getattr(configs, "MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
-
-PG_HOST = getattr(configs, "PG_HOST", "postgres-bi")
-PG_PORT = int(getattr(configs, "PG_PORT", 5432))
-PG_USER = getattr(configs, "PG_USER", "postgres")
-PG_PASSWORD = getattr(configs, "PG_PASSWORD", "postgres")
-PG_DB = getattr(configs, "PG_DB", "warehouse")
+MINIO_ENDPOINT = config.MINIO_ENDPOINT
+MINIO_ACCESS_KEY = config.MINIO_ACCESS_KEY
+MINIO_SECRET_KEY = config.MINIO_SECRET_KEY
+MINIO_BUCKET_RAW_PRICE = getattr(config, "MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
+PG_HOST = config.PG_HOST
+PG_PORT = config.PG_PORT
+PG_USER = config.PG_USER
+PG_PASSWORD = config.PG_PASSWORD
+PG_DB = config.PG_DB
 
 
-# -------------------- Main logic --------------------
 def main():
     log.info("Bắt đầu job dim_exchanges")
-
     spark = None
     try:
-        # 1) Khởi tạo SparkSession
         log.info("Khởi tạo SparkSession với cấu hình MinIO S3A")
         spark = (
             SparkSession.builder.appName("dim_exchanges_job")
@@ -49,24 +31,25 @@ def main():
             .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
             .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
             .config("spark.hadoop.fs.s3a.path.style.access", "true")
-            .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+            .config(
+                "spark.hadoop.fs.s3a.connection.ssl.enabled",
+                "true" if MINIO_ENDPOINT.startswith("https") else "false",
+            )
             .getOrCreate()
         )
 
         spark.sparkContext.setLogLevel("WARN")
         log.info("SparkSession khởi tạo thành công")
 
-        # 2) Đọc dữ liệu JSON từ MinIO (đường dẫn thực tế)
         path = f"s3a://{MINIO_BUCKET_RAW_PRICE}/exchange_list/*.json"
-        log.info(f"Đọc dữ liệu từ: {path}")
+        log.info("Đọc dữ liệu từ: %s", path)
 
         df = spark.read.option("multiLine", True).json(path)
-        log.info(f"Số bản ghi nạp: {df.count()}")
+        log.info("Số bản ghi nạp: %s", df.count())
         df.printSchema()
 
-        # 3) Ghi thẳng vào Postgres (giữ nguyên logic gốc)
         jdbc_url = f"jdbc:postgresql://{PG_HOST}:{PG_PORT}/{PG_DB}"
-        log.info(f"Ghi dữ liệu vào: {jdbc_url}, bảng: dim_exchanges")
+        log.info("Ghi dữ liệu vào: %s, bảng: dim_exchanges", jdbc_url)
 
         (
             df.write.format("jdbc")
@@ -81,9 +64,9 @@ def main():
 
         log.info("Hoàn tất ghi bảng dim_exchanges vào Postgres-BI")
 
-    except Exception as e:
+    except Exception as exc:
         log.error("Job dim_exchanges thất bại")
-        log.error(str(e))
+        log.error(str(exc))
         traceback.print_exc()
         sys.exit(1)
     finally:

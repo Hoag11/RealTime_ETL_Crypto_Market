@@ -1,30 +1,23 @@
-import sys, traceback, logging
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
+import logging
+import sys
+import traceback
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s"
-)
+from pyspark.sql import SparkSession, functions as F
+
+from pipelines import config
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s")
 log = logging.getLogger("fact_market_cap")
 
-if "/configs" not in sys.path:
-    sys.path.insert(0, "/configs")
-import configs
-
-BUCKET_NAME = getattr(configs, "MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
-MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY = (
-    configs.MINIO_ENDPOINT,
-    configs.MINIO_ACCESS_KEY,
-    configs.MINIO_SECRET_KEY,
-)
-PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DB = (
-    configs.PG_HOST,
-    configs.PG_PORT,
-    configs.PG_USER,
-    configs.PG_PASSWORD,
-    configs.PG_DB,
-)
-
+BUCKET_NAME = getattr(config, "MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
+MINIO_ENDPOINT = config.MINIO_ENDPOINT
+MINIO_ACCESS_KEY = config.MINIO_ACCESS_KEY
+MINIO_SECRET_KEY = config.MINIO_SECRET_KEY
+PG_HOST = config.PG_HOST
+PG_PORT = config.PG_PORT
+PG_USER = config.PG_USER
+PG_PASSWORD = config.PG_PASSWORD
+PG_DB = config.PG_DB
 PATH_OBJECT = f"s3a://{BUCKET_NAME}/global_market/*.json"
 
 
@@ -38,7 +31,10 @@ def main():
             .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
             .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
             .config("spark.hadoop.fs.s3a.path.style.access", "true")
-            .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+            .config(
+                "spark.hadoop.fs.s3a.connection.ssl.enabled",
+                "true" if MINIO_ENDPOINT.startswith("https") else "false",
+            )
             .getOrCreate()
         )
 
@@ -61,9 +57,7 @@ def main():
             jdbc_url, "fact_market_global", properties=pg_props
         ).select("market_id", "date_id")
 
-        log.info(
-            "Chuyển struct total_market_cap thành dạng key-value (currency_id, value)"
-        )
+        log.info("Chuyển struct total_market_cap thành dạng key-value (currency_id, value)")
         df_cap = df.select(
             F.expr(
                 "stack(65, "
@@ -89,8 +83,8 @@ def main():
         )
         log.info("Ghi dữ liệu vào fact_market_cap thành công.")
 
-    except Exception as e:
-        log.error(f"Lỗi khi xử lý fact_market_cap: {e}")
+    except Exception as exc:
+        log.error("Lỗi khi xử lý fact_market_cap: %s", exc)
         traceback.print_exc()
         sys.exit(1)
     finally:

@@ -1,19 +1,20 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json, col, current_timestamp, to_date, explode
+from pyspark.sql.functions import explode, from_json, col, current_timestamp, to_date
 from pyspark.sql.types import (
-    StructType,
-    StructField,
-    StringType,
-    LongType,
-    DoubleType,
     ArrayType,
+    DoubleType,
+    LongType,
+    StringType,
+    StructField,
+    StructType,
 )
-import configs
+
+from pipelines import config as configs
+
 import logging
 import threading
 import time
 
-# Kafka configuration
 KAFKA_BROKER = configs.KAKFA_BROKER
 KAFKA_TOPIC = configs.KAFKA_TOPIC
 KAFKA_SECURITY_PROCTOCOL = configs.KAFKA_SECURITY_PROCTOCOL
@@ -21,13 +22,11 @@ KAFKA_SASL_MECHANISM = configs.KAFKA_SASL_MECHANISM
 KAFKA_SASL_USERNAME = configs.KAFKA_SASL_USERNAME
 KAFKA_SASL_PASSWORD = configs.KAFKA_SASL_PASSWORD
 
-# MinIO configuration
 MINIO_ENDPOINT = configs.MINIO_ENDPOINT
 MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
 MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
 MINIO_BUCKET_RAW_PRICE = configs.MINIO_BUCKET_RAW_PRICE
 
-# Schema cho từng coin record
 coin_schema = StructType(
     [
         StructField("id", StringType(), True),
@@ -35,26 +34,24 @@ coin_schema = StructType(
         StructField("name", StringType(), True),
         StructField("nameid", StringType(), True),
         StructField("rank", LongType(), True),
-        StructField("price_usd", StringType(), True),  # Chú ý: trong JSON là string
-        StructField("percent_change_24h", StringType(), True),  # String trong JSON
-        StructField("percent_change_1h", StringType(), True),  # String trong JSON
-        StructField("percent_change_7d", StringType(), True),  # String trong JSON
-        StructField("price_btc", StringType(), True),  # String trong JSON
-        StructField("market_cap_usd", StringType(), True),  # String trong JSON
+        StructField("price_usd", StringType(), True),
+        StructField("percent_change_24h", StringType(), True),
+        StructField("percent_change_1h", StringType(), True),
+        StructField("percent_change_7d", StringType(), True),
+        StructField("price_btc", StringType(), True),
+        StructField("market_cap_usd", StringType(), True),
         StructField("volume24", DoubleType(), True),
         StructField("volume24a", DoubleType(), True),
-        StructField("csupply", StringType(), True),  # String trong JSON
-        StructField("tsupply", StringType(), True),  # String trong JSON
-        StructField("msupply", StringType(), True),  # String trong JSON, có thể null
+        StructField("csupply", StringType(), True),
+        StructField("tsupply", StringType(), True),
+        StructField("msupply", StringType(), True),
     ]
 )
 
-# Schema cho info object
 info_schema = StructType(
     [StructField("coins_num", LongType(), True), StructField("time", LongType(), True)]
 )
 
-# Schema tổng thể
 main_schema = StructType(
     [
         StructField("data", ArrayType(coin_schema), True),
@@ -77,6 +74,10 @@ def create_spark_session():
         .config("spark.hadoop.fs.s3a.path.style.access", "true")
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config(
+            "spark.hadoop.fs.s3a.connection.ssl.enabled",
+            "true" if MINIO_ENDPOINT.startswith("https") else "false",
+        )
+        .config(
             "spark.sql.streaming.checkpointLocation",
             f"s3a://{MINIO_BUCKET_RAW_PRICE}/checkpoint/raw-price-data",
         )
@@ -87,13 +88,10 @@ def create_spark_session():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
     spark = create_spark_session()
 
-    # Đọc stream từ Kafka
     df = (
         spark.readStream.format("kafka")
         .option("kafka.bootstrap.servers", ",".join(KAFKA_BROKER))
@@ -109,71 +107,57 @@ if __name__ == "__main__":
         .load()
     )
 
-    # Parse JSON với schema chính xác
     df_parsed = (
         df.selectExpr("CAST(value AS STRING)")
         .select(
-            from_json(col("value"), main_schema, {"mode": "PERMISSIVE"}).alias(
-                "parsed_data"
-            )
+            from_json(col("value"), main_schema, {"mode": "PERMISSIVE"}).alias("parsed_data")
         )
         .select("parsed_data.data", "parsed_data.info")
     )
 
-    # Explode array để có từng coin riêng biệt
-    df_exploded = df_parsed.select(
-        explode(col("data")).alias("coin_data"), col("info")
-    ).select(
-        col("coin_data.*"),
-        col("info.coins_num").alias("total_coins"),
-        col("info.time").alias("api_timestamp"),
+    df_exploded = df_parsed.select(explode("data").alias("coin"), "info")
+
+    df_flat = df_exploded.select(
+        col("coin.id").alias("coin_id"),
+        col("coin.name").alias("coin_name"),
+        col("coin.symbol").alias("coin_symbol"),
+        col("coin.nameid").alias("coin_nameid"),
+        col("coin.rank").cast("integer").alias("rank"),
+        col("coin.price_usd").cast("double").alias("price_usd"),
+        col("coin.percent_change_24h").cast("double").alias("percent_change_24h"),
+        col("coin.percent_change_1h").cast("double").alias("percent_change_1h"),
+        col("coin.percent_change_7d").cast("double").alias("percent_change_7d"),
+        col("coin.price_btc").cast("double").alias("price_btc"),
+        col("coin.market_cap_usd").cast("double").alias("market_cap_usd"),
+        col("coin.volume24").cast("double").alias("volume24"),
+        col("coin.volume24a").cast("double").alias("volume24a"),
+        col("coin.csupply").cast("double").alias("csupply"),
+        col("coin.tsupply").cast("double").alias("tsupply"),
+        col("coin.msupply").cast("double").alias("msupply"),
+        col("info.coins_num").alias("coins_num"),
+        col("info.time").alias("info_time"),
+        current_timestamp().alias("ingestion_timestamp"),
+        to_date(current_timestamp()).alias("ingestion_date"),
     )
 
-    # Convert string fields to numeric và thêm timestamp
-    df_processed = (
-        df_exploded.withColumn("price_usd_numeric", col("price_usd").cast(DoubleType()))
-        .withColumn(
-            "percent_change_24h_numeric", col("percent_change_24h").cast(DoubleType())
+    def start_stream():
+        query = (
+            df_flat.writeStream.format("parquet")
+            .option("path", f"s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data")
+            .option("checkpointLocation", f"s3a://{MINIO_BUCKET_RAW_PRICE}/checkpoint")
+            .outputMode("append")
+            .start()
         )
-        .withColumn(
-            "percent_change_1h_numeric", col("percent_change_1h").cast(DoubleType())
-        )
-        .withColumn(
-            "percent_change_7d_numeric", col("percent_change_7d").cast(DoubleType())
-        )
-        .withColumn("price_btc_numeric", col("price_btc").cast(DoubleType()))
-        .withColumn("market_cap_usd_numeric", col("market_cap_usd").cast(DoubleType()))
-        .withColumn("csupply_numeric", col("csupply").cast(DoubleType()))
-        .withColumn("tsupply_numeric", col("tsupply").cast(DoubleType()))
-        .withColumn("msupply_numeric", col("msupply").cast(DoubleType()))
-        .withColumn("ingestion_timestamp", current_timestamp())
-        .withColumn("date", to_date(col("ingestion_timestamp")))
-        .withWatermark("ingestion_timestamp", "10 minutes")
-    )
+        query.awaitTermination()
 
-    # Lưu vào MinIO
-    query = (
-        df_processed.writeStream.format("parquet")
-        .option("path", f"s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data")
-        .option(
-            "checkpointLocation",
-            f"s3a://{MINIO_BUCKET_RAW_PRICE}/checkpoint/raw-data",
-        )
-        .partitionBy("date")
-        .trigger(processingTime="1 minute")
-        .start()
-    )
+    thread = threading.Thread(target=start_stream)
+    thread.start()
 
-    logging.info(
-        f"Streaming to MinIO started at s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data"
-    )
-
-    # Theo dõi query
-    def log_query_progress(query):
-        while query.isActive:
-            logging.info(f"Query status: {query.status}")
-            time.sleep(60)
-
-    threading.Thread(target=log_query_progress, args=(query,), daemon=True).start()
-
-    query.awaitTermination()
+    try:
+        while thread.is_alive():
+            time.sleep(5)
+    except KeyboardInterrupt:
+        logging.info("Stopping streaming job...")
+    finally:
+        spark.streams.active[0].stop()
+        spark.stop()

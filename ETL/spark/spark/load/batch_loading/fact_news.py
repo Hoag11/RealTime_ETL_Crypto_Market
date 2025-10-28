@@ -1,34 +1,22 @@
-
-import sys
-import traceback
 import logging
+import traceback
+
 from pyspark.sql import SparkSession, functions as F
 
-# ---------- Logging ----------
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s"
-)
+from pipelines import config
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s")
 log = logging.getLogger("fact_news")
 
-# ---------- Import configs ----------
-if "/configs" not in sys.path:
-    sys.path.insert(0, "/configs")
-try:
-    import configs
-except Exception:
-    log.error("Không thể import configs.py từ /configs.")
-    sys.exit(1)
-
-# ---------- Configs ----------
-BUCKET_NAME = getattr(configs, "MINIO_BUCKET_RAW_NEWS", "crypto-news-raw")
-MINIO_ENDPOINT = configs.MINIO_ENDPOINT
-MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
-MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
-PG_HOST = configs.PG_HOST
-PG_PORT = configs.PG_PORT
-PG_USER = configs.PG_USER
-PG_PASSWORD = configs.PG_PASSWORD
-PG_DB = configs.PG_DB
+BUCKET_NAME = getattr(config, "MINIO_BUCKET_RAW_NEWS", "crypto-news-raw")
+MINIO_ENDPOINT = config.MINIO_ENDPOINT
+MINIO_ACCESS_KEY = config.MINIO_ACCESS_KEY
+MINIO_SECRET_KEY = config.MINIO_SECRET_KEY
+PG_HOST = config.PG_HOST
+PG_PORT = config.PG_PORT
+PG_USER = config.PG_USER
+PG_PASSWORD = config.PG_PASSWORD
+PG_DB = config.PG_DB
 PATH_OBJECT = f"s3a://{BUCKET_NAME}/*.json"
 
 
@@ -49,7 +37,7 @@ def main():
             .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
             .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
             .config("spark.hadoop.fs.s3a.path.style.access", "true")
-            .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+            .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "true" if MINIO_ENDPOINT.startswith("https") else "false")
             .getOrCreate()
         )
         spark.sparkContext.setLogLevel("WARN")
@@ -60,7 +48,6 @@ def main():
             log.warning("Không có dữ liệu JSON trong bucket.")
             return
 
-        # ---------- Transform ----------
         def limit(col, n=200):
             return F.substring(F.col(col).cast("string"), 1, n)
 
@@ -83,12 +70,10 @@ def main():
             limit("status").alias("status"),
             _to_ts("created_on").alias("created_on"),
             _to_ts("updated_on").alias("updated_on"),
-            # ✅ đảm bảo JSON hợp lệ
             F.to_json(F.col("source_data")).alias("source_data_str"),
             F.to_json(F.col("category_data")).alias("category_data_str"),
         )
 
-        # ---------- Ghi vào bảng stage ----------
         jdbc_url = f"jdbc:postgresql://{PG_HOST}:{PG_PORT}/{PG_DB}"
         pg_props = {
             "user": PG_USER,
@@ -100,8 +85,8 @@ def main():
         df_transformed.write.jdbc(jdbc_url, stage_table, mode="overwrite", properties=pg_props)
         log.info("✅ Ghi dữ liệu vào bảng tạm fact_news_stage thành công.")
 
-        # ---------- Merge vào fact_news ----------
         import psycopg2
+
         conn = psycopg2.connect(
             host=PG_HOST, port=PG_PORT, user=PG_USER, password=PG_PASSWORD, dbname=PG_DB
         )
@@ -137,14 +122,21 @@ def main():
             category_data_str::jsonb
         FROM fact_news_stage
         ON CONFLICT (guid) DO UPDATE SET
+            published_on = EXCLUDED.published_on,
             title = EXCLUDED.title,
             subtitle = EXCLUDED.subtitle,
             authors = EXCLUDED.authors,
             url = EXCLUDED.url,
+            source_id = EXCLUDED.source_id,
             body = EXCLUDED.body,
             keywords = EXCLUDED.keywords,
+            lang = EXCLUDED.lang,
+            upvotes = EXCLUDED.upvotes,
+            downvotes = EXCLUDED.downvotes,
+            score = EXCLUDED.score,
             sentiment = EXCLUDED.sentiment,
             status = EXCLUDED.status,
+            created_on = EXCLUDED.created_on,
             updated_on = EXCLUDED.updated_on,
             source_data = EXCLUDED.source_data,
             category_data = EXCLUDED.category_data;
@@ -152,19 +144,14 @@ def main():
         cur.execute(merge_sql)
         cur.close()
         conn.close()
-
-        log.info("🎯 Merge dữ liệu vào fact_news thành công!")
-
-    except Exception as e:
-        log.error(f"❌ Lỗi khi xử lý fact_news: {e}")
-        traceback.print_exc()
-        sys.exit(1)
+        log.info("✅ Merge dữ liệu vào fact_news thành công.")
+    except Exception:
+        log.error("❌ Lỗi trong quá trình load fact_news:\n%s", traceback.format_exc())
+        raise
     finally:
         if spark:
-            log.info("🧹 Đóng SparkSession.")
             spark.stop()
 
 
 if __name__ == "__main__":
     main()
-

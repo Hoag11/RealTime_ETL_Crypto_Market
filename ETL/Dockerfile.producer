@@ -2,14 +2,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy requirements trước (tận dụng cache)
-COPY requirements.txt /app/requirements.txt
+COPY requirements.txt pyproject.toml /app/
+COPY src/ /app/src/
 RUN pip install --upgrade pip && \
-    pip install -r /app/requirements.txt
+    pip install -r /app/requirements.txt && \
+    pip install -e /app
 
-# Copy code
-COPY scripts/ /app/scripts/
-COPY configs/ /app/configs/
-
-CMD ["python", "scripts/stream/producer.py"]
-
+CMD ["python", "-m", "pipelines.stream.producer"]

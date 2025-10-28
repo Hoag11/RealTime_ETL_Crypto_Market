@@ -1,7 +1,9 @@
+from datetime import datetime, timedelta
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from datetime import datetime, timedelta
-from scripts.batch import exchange_list
+
+from pipelines.batch import exchange_list
 
 default_args = {
     "owner": "airflow",
@@ -16,10 +18,10 @@ with DAG(
     dag_id="exchange_list_data_pipeline",
     default_args=default_args,
     description="Fetch and save exchange list data to Minio",
-    schedule="0 5 * * 1-5",
+    schedule="0 6 * * 1-5",
     start_date=datetime(2025, 1, 1),
     catchup=False,
-    tags=["crypto", "exchange_list"],
+    tags=["crypto", "exchange"],
 ) as dag:
     fetch_task = PythonOperator(
         task_id="fetch_exchange_data",

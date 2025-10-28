@@ -1,35 +1,25 @@
-FROM spark/spark:3.5
+FROM bitnami/spark:3.5.1
 
 USER root
-
 ENV HOME=/root
 RUN mkdir -p /root/.ivy2
 
-
-# Pre-download Spark dependencies to avoid runtime downloads
 RUN echo 'exit()' | spark-shell --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.6
 
-# Làm việc trong /app
 WORKDIR /app
 
-# Copy code & configs
+COPY requirements.txt pyproject.toml /app/
+COPY src/ /app/src/
 COPY spark/spark/consumer_price.py /app/consumer_price.py
-COPY configs/configs.py /app/configs.py
-COPY requirements.txt /app/requirements.txt
-# COPY logging /app/logging
 
-# Tạo virtualenv và cài dependencies
-RUN python -m venv /data/pyspark_venv && \
-    /data/pyspark_venv/bin/pip install --upgrade pip && \
-    /data/pyspark_venv/bin/pip install -r /app/requirements.txt
+RUN /opt/bitnami/python/bin/pip install --upgrade pip && \
+    /opt/bitnami/python/bin/pip install -r /app/requirements.txt && \
+    /opt/bitnami/python/bin/pip install -e /app
 
-# Thiết lập biến môi trường cho Spark
 ENV PYSPARK_DRIVER_PYTHON=python
-ENV PYSPARK_PYTHON=/data/pyspark_venv/bin/python
-ENV PYTHONPATH=/app
+ENV PYSPARK_PYTHON=/opt/bitnami/python/bin/python
+ENV PYTHONPATH=/app/src
 
-# Expose Spark UI
 EXPOSE 4040
 
-# Chạy consumer bằng spark-submit (no need to change --packages here; they're pre-cached)
 CMD ["spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.hadoop:hadoop-aws:3.3.6", "/app/consumer_price.py"]

@@ -1,55 +1,108 @@
+"""Runtime configuration helpers for the crypto ETL pipelines.
+
+This module exposes the same attribute-based configuration interface that the
+legacy ``configs`` package provided, but values can now be overridden via
+environment variables or (when running inside Airflow) Variables. The
+convention is to look up both the plain name (e.g. ``MINIO_ENDPOINT``) and the
+``CRYPTO_ETL_`` prefixed variant before falling back to the default.
+"""
+from __future__ import annotations
+
 import logging
 import os
-from datetime import datetime
+from typing import Iterable, List
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# LOG_DIR = os.path.join(BASE_DIR, "logging")
-#
-# os.makedirs(LOG_DIR, exist_ok=True)
-#
-timestamp = datetime.now().strftime("%Y%m%d")
-# LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
+try:  # pragma: no cover - Airflow is not available in the test environment
+    from airflow.models import Variable  # type: ignore
+except Exception:  # pragma: no cover - graceful fallback outside Airflow
+    Variable = None  # type: ignore
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler()],
+
+LOGGER = logging.getLogger(__name__)
+
+
+def _resolve_runtime_value(name: str, default: str | None = None) -> str | None:
+    """Return a configuration value from env vars or Airflow Variables."""
+    candidates: Iterable[str] = (name, f"CRYPTO_ETL_{name}")
+    for candidate in candidates:
+        env_value = os.environ.get(candidate)
+        if env_value is not None:
+            return env_value
+    if Variable is not None:
+        for candidate in candidates:
+            try:
+                return Variable.get(candidate)
+            except KeyError:
+                continue
+            except Exception as exc:  # pragma: no cover - defensive fallback
+                LOGGER.debug("Unable to read Airflow Variable %s: %s", candidate, exc)
+                continue
+    return default
+
+
+def _resolve_int(name: str, default: int) -> int:
+    value = _resolve_runtime_value(name)
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except ValueError:
+        LOGGER.warning(
+            "Invalid integer for %s=%s, falling back to default %s", name, value, default
+        )
+        return default
+
+
+def _resolve_list(name: str, default: List[str]) -> List[str]:
+    value = _resolve_runtime_value(name)
+    if not value:
+        return list(default)
+    items = [item.strip() for item in value.split(",") if item.strip()]
+    return items or list(default)
+
+
+# Kafka configuration -----------------------------------------------------
+KAKFA_BROKER = _resolve_list(
+    "KAFKA_BROKER", ["kafka-0:9092", "kafka-1:9092", "kafka-2:9092"]
+)
+KAFKA_BROKER = KAKFA_BROKER  # backwards compatible alias
+KAFKA_TOPIC = _resolve_runtime_value("KAFKA_TOPIC", "coin_prices")
+KAFKA_SECURITY_PROCTOCOL = _resolve_runtime_value("KAFKA_SECURITY_PROCTOCOL", "SASL_PLAINTEXT")
+KAFKA_SASL_MECHANISM = _resolve_runtime_value("KAFKA_SASL_MECHANISM", "PLAIN")
+KAFKA_SASL_USERNAME = _resolve_runtime_value("KAFKA_SASL_USERNAME", "admin")
+KAFKA_SASL_PASSWORD = _resolve_runtime_value("KAFKA_SASL_PASSWORD", "Unigap@2024")
+
+# API configuration -------------------------------------------------------
+API_STREAMING = _resolve_runtime_value(
+    "API_STREAMING", "https://api.coinlore.net/api/tickers/"
+)
+API_BATCHING = _resolve_runtime_value(
+    "API_BATCHING",
+    "https://data-api.coindesk.com/news/v1/article/list?lang=EN&limit=100",
+)
+API_HISTORICAL = _resolve_runtime_value(
+    "API_HISTORICAL", "https://api.coingecko.com/api/v3"
 )
 
-# KAFKA CONFIG
-KAKFA_BROKER = ["kafka-0:9092", "kafka-1:9092", "kafka-2:9092"]
+# MinIO configuration -----------------------------------------------------
+MINIO_ENDPOINT = _resolve_runtime_value("MINIO_ENDPOINT", "http://minio:9000")
+MINIO_ACCESS_KEY = _resolve_runtime_value("MINIO_ACCESS_KEY", "admin")
+MINIO_SECRET_KEY = _resolve_runtime_value("MINIO_SECRET_KEY", "admin123")
+MINIO_BUCKET_RAW_PRICE = _resolve_runtime_value("MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
+MINIO_BUCKET_RAW_NEWS = _resolve_runtime_value("MINIO_BUCKET_RAW_NEWS", "crypto-news-raw")
 
-KAFKA_TOPIC = "coin_prices"
+# PostgreSQL configuration -----------------------------------------------
+PG_HOST = _resolve_runtime_value("PG_HOST", "postgres-bi")
+PG_PORT = _resolve_int("PG_PORT", 5432)
+PG_USER = _resolve_runtime_value("PG_USER", "postgres")
+PG_PASSWORD = _resolve_runtime_value("PG_PASSWORD", "postgres")
+PG_DB = _resolve_runtime_value("PG_DB", "warehouse")
 
-KAFKA_SECURITY_PROCTOCOL = "SASL_PLAINTEXT"
-KAFKA_SASL_MECHANISM = "PLAIN"
-KAFKA_SASL_USERNAME = "admin"
-KAFKA_SASL_PASSWORD = "Unigap@2024"
+# Spark configuration -----------------------------------------------------
+SPARK_MASTER = _resolve_runtime_value("SPARK_MASTER", "spark-spark-1:7077")
+SPARK_APP_NAME = _resolve_runtime_value("SPARK_APP_NAME", "streamingCryptoApp")
 
-# API CONFIG
-API_STREAMING = "https://api.coinlore.net/api/tickers/"
-API_BATCHING = "https://data-api.coindesk.com/news/v1/article/list?lang=EN&limit=100"
-API_HISTORICAL = "https://api.coingecko.com/api/v3"
-
-# MinIO CONFIG
-MINIO_ENDPOINT = "http://minio:9000"
-MINIO_ACCESS_KEY = "admin"
-MINIO_SECRET_KEY = "admin123"
-MINIO_BUCKET_RAW_PRICE = "crypto-data-raw"
-MINIO_BUCKET_RAW_NEWS = "crypto-news-raw"
-
-# POSTGRES CONFIG
-PG_HOST = "postgres-bi"
-PG_PORT = 5432
-PG_USER = "postgres"
-PG_PASSWORD = "postgres"
-PG_DB = "warehouse"
-
-# SPARK CONFIG
-SPARK_MASTER = "spark-spark-1:7077"
-SPARK_APP_NAME = "streamingCryptoApp"
-
-
+# Static coin list --------------------------------------------------------
 COINS = [
     {"id": "osmosis-allbtc", "name": "Bitcoin"},
     {"id": "the-ticker-is-eth", "name": "Ethereum"},
@@ -151,4 +204,30 @@ COINS = [
     {"id": "vaulta", "name": "Vaulta"},
     {"id": "fartcoin", "name": "Fartcoin"},
     {"id": "gala", "name": "Gala"},
+]
+
+__all__ = [
+    "API_BATCHING",
+    "API_HISTORICAL",
+    "API_STREAMING",
+    "COINS",
+    "KAFKA_BROKER",
+    "KAFKA_SASL_MECHANISM",
+    "KAFKA_SASL_PASSWORD",
+    "KAFKA_SASL_USERNAME",
+    "KAFKA_SECURITY_PROCTOCOL",
+    "KAKFA_BROKER",
+    "KAFKA_TOPIC",
+    "MINIO_ACCESS_KEY",
+    "MINIO_BUCKET_RAW_NEWS",
+    "MINIO_BUCKET_RAW_PRICE",
+    "MINIO_ENDPOINT",
+    "MINIO_SECRET_KEY",
+    "PG_DB",
+    "PG_HOST",
+    "PG_PASSWORD",
+    "PG_PORT",
+    "PG_USER",
+    "SPARK_APP_NAME",
+    "SPARK_MASTER",
 ]

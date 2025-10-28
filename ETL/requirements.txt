@@ -5,3 +5,4 @@ pyspark
 kafka-python
 minio
 # apache-airflow
+prometheus-client

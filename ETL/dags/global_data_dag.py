@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
+from dags.utils.notifications import notify_failure
 from scripts.batch import global_market
 
 default_args = {
@@ -10,6 +11,7 @@ default_args = {
     "email_on_retry": False,
     "retries": 3,
     "retry_delay": timedelta(minutes=5),
+    "on_failure_callback": notify_failure,
 }
 
 with DAG(

@@ -1,3 +1,9 @@
+from typing import Any, Dict, Optional
+
+import logging
+import threading
+import time
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, current_timestamp, to_date, explode
 from pyspark.sql.types import (
@@ -8,10 +14,45 @@ from pyspark.sql.types import (
     DoubleType,
     ArrayType,
 )
+
 import configs
-import logging
-import threading
-import time
+
+try:
+    from prometheus_client import CollectorRegistry, Counter, Gauge, start_http_server
+except ImportError:  # pragma: no cover - exercised when optional dependency missing
+    class CollectorRegistry:  # type: ignore
+        def __init__(self, *args, **kwargs):
+            self._metrics = {}
+
+        def register(self, name, metric):
+            self._metrics[name] = metric
+
+        def get_sample_value(self, name):
+            metric = self._metrics.get(name)
+            return getattr(metric, "_value", None)
+
+    class _FallbackMetric:  # pragma: no cover - only used in environments without deps
+        def __init__(self, name, documentation, registry=None, **kwargs):
+            self._value = 0.0
+            if registry is not None and hasattr(registry, "register"):
+                registry.register(name, self)
+
+        def inc(self, amount=1):
+            self._value += amount
+
+        def set(self, value):
+            self._value = value
+
+    class Counter(_FallbackMetric):  # type: ignore
+        pass
+
+    class Gauge(_FallbackMetric):  # type: ignore
+        pass
+
+    def start_http_server(port, registry=None):  # type: ignore
+        logging.getLogger(__name__).warning(
+            "prometheus_client is not installed; metrics endpoint disabled."
+        )
 
 # Kafka configuration
 KAFKA_BROKER = configs.KAKFA_BROKER
@@ -63,6 +104,19 @@ main_schema = StructType(
 )
 
 
+METRICS_REGISTRY = CollectorRegistry()
+STREAMED_RECORDS = Counter(
+    "spark_stream_processed_records_total",
+    "Total number of records processed by the Spark streaming job.",
+    registry=METRICS_REGISTRY,
+)
+LAST_TRIGGER_DURATION_SECONDS = Gauge(
+    "spark_stream_last_trigger_duration_seconds",
+    "Duration of the latest Spark streaming trigger execution in seconds.",
+    registry=METRICS_REGISTRY,
+)
+
+
 def create_spark_session():
     spark = (
         SparkSession.builder.appName("RawIngestion")
@@ -84,6 +138,87 @@ def create_spark_session():
     )
     spark.sparkContext.setLogLevel("WARN")
     return spark
+
+
+def parse_kafka_payload(raw_df):
+    """Parse the Kafka payload using the predefined schema."""
+
+    return (
+        raw_df.selectExpr("CAST(value AS STRING)")
+        .select(
+            from_json(col("value"), main_schema, {"mode": "PERMISSIVE"}).alias(
+                "parsed_data"
+            )
+        )
+        .select("parsed_data.data", "parsed_data.info")
+    )
+
+
+def transform_coin_dataframe(parsed_df):
+    """Transform the parsed dataframe into a normalized schema."""
+
+    df_exploded = parsed_df.select(
+        explode(col("data")).alias("coin_data"), col("info")
+    ).select(
+        col("coin_data.*"),
+        col("info.coins_num").alias("total_coins"),
+        col("info.time").alias("api_timestamp"),
+    )
+
+    return (
+        df_exploded.withColumn(
+            "price_usd_numeric", col("price_usd").cast(DoubleType())
+        )
+        .withColumn(
+            "percent_change_24h_numeric", col("percent_change_24h").cast(DoubleType())
+        )
+        .withColumn(
+            "percent_change_1h_numeric", col("percent_change_1h").cast(DoubleType())
+        )
+        .withColumn(
+            "percent_change_7d_numeric", col("percent_change_7d").cast(DoubleType())
+        )
+        .withColumn("price_btc_numeric", col("price_btc").cast(DoubleType()))
+        .withColumn(
+            "market_cap_usd_numeric", col("market_cap_usd").cast(DoubleType())
+        )
+        .withColumn("csupply_numeric", col("csupply").cast(DoubleType()))
+        .withColumn("tsupply_numeric", col("tsupply").cast(DoubleType()))
+        .withColumn("msupply_numeric", col("msupply").cast(DoubleType()))
+        .withColumn("ingestion_timestamp", current_timestamp())
+        .withColumn("date", to_date(col("ingestion_timestamp")))
+        .withWatermark("ingestion_timestamp", "10 minutes")
+    )
+
+
+def record_streaming_metrics(
+    progress: Optional[Dict[str, Any]],
+    *,
+    records_metric: Counter = STREAMED_RECORDS,
+    trigger_duration_metric: Gauge = LAST_TRIGGER_DURATION_SECONDS,
+) -> None:
+    """Update Prometheus metrics based on the query progress payload."""
+
+    if not progress:
+        return
+
+    num_rows = progress.get("numInputRows")
+    if isinstance(num_rows, int):
+        records_metric.inc(num_rows)
+
+    duration_ms = None
+    duration_payload = progress.get("durationMs")
+    if isinstance(duration_payload, dict):
+        duration_ms = duration_payload.get("triggerExecution")
+
+    if isinstance(duration_ms, (int, float)):
+        trigger_duration_metric.set(duration_ms / 1000.0)
+
+
+def start_metrics_server(port: int = 8000) -> None:
+    """Expose Prometheus metrics for the streaming job."""
+
+    start_http_server(port, registry=METRICS_REGISTRY)
 
 
 if __name__ == "__main__":
@@ -109,47 +244,9 @@ if __name__ == "__main__":
         .load()
     )
 
-    # Parse JSON với schema chính xác
-    df_parsed = (
-        df.selectExpr("CAST(value AS STRING)")
-        .select(
-            from_json(col("value"), main_schema, {"mode": "PERMISSIVE"}).alias(
-                "parsed_data"
-            )
-        )
-        .select("parsed_data.data", "parsed_data.info")
-    )
+    df_parsed = parse_kafka_payload(df)
 
-    # Explode array để có từng coin riêng biệt
-    df_exploded = df_parsed.select(
-        explode(col("data")).alias("coin_data"), col("info")
-    ).select(
-        col("coin_data.*"),
-        col("info.coins_num").alias("total_coins"),
-        col("info.time").alias("api_timestamp"),
-    )
-
-    # Convert string fields to numeric và thêm timestamp
-    df_processed = (
-        df_exploded.withColumn("price_usd_numeric", col("price_usd").cast(DoubleType()))
-        .withColumn(
-            "percent_change_24h_numeric", col("percent_change_24h").cast(DoubleType())
-        )
-        .withColumn(
-            "percent_change_1h_numeric", col("percent_change_1h").cast(DoubleType())
-        )
-        .withColumn(
-            "percent_change_7d_numeric", col("percent_change_7d").cast(DoubleType())
-        )
-        .withColumn("price_btc_numeric", col("price_btc").cast(DoubleType()))
-        .withColumn("market_cap_usd_numeric", col("market_cap_usd").cast(DoubleType()))
-        .withColumn("csupply_numeric", col("csupply").cast(DoubleType()))
-        .withColumn("tsupply_numeric", col("tsupply").cast(DoubleType()))
-        .withColumn("msupply_numeric", col("msupply").cast(DoubleType()))
-        .withColumn("ingestion_timestamp", current_timestamp())
-        .withColumn("date", to_date(col("ingestion_timestamp")))
-        .withWatermark("ingestion_timestamp", "10 minutes")
-    )
+    df_processed = transform_coin_dataframe(df_parsed)
 
     # Lưu vào MinIO
     query = (
@@ -164,6 +261,8 @@ if __name__ == "__main__":
         .start()
     )
 
+    start_metrics_server()
+
     logging.info(
         f"Streaming to MinIO started at s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data"
     )
@@ -171,7 +270,11 @@ if __name__ == "__main__":
     # Theo dõi query
     def log_query_progress(query):
         while query.isActive:
-            logging.info(f"Query status: {query.status}")
+            progress = query.lastProgress or {}
+            record_streaming_metrics(progress)
+            logging.info("Query status: %s", query.status)
+            if progress:
+                logging.info("Last query progress: %s", progress)
             time.sleep(60)
 
     threading.Thread(target=log_query_progress, args=(query,), daemon=True).start()

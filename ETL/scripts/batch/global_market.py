@@ -9,8 +9,11 @@ import requests
 import io
 import logging
 import json
-from fake_useragent import UserAgent
 from datetime import datetime
+from typing import Any, Dict, Iterable
+
+from fake_useragent import UserAgent
+
 from configs import configs
 from minio import Minio
 from minio.error import S3Error
@@ -32,6 +35,12 @@ OBJECT_FOLDER = "global_market"
 
 RATE_LIMIT_SECONDS = 15
 
+_EXPECTED_DATA_KEYS: Iterable[str] = (
+    "active_cryptocurrencies",
+    "markets",
+    "total_market_cap",
+)
+
 
 def _init_minio_client():
     return Minio(
@@ -40,6 +49,42 @@ def _init_minio_client():
         secret_key=MINIO_SECRET_KEY,
         secure=MINIO_SECURE,
     )
+
+
+def validate_global_market_payload(payload: Any) -> Dict[str, Any]:
+    """Validate the payload returned by the global market API.
+
+    Parameters
+    ----------
+    payload:
+        Raw payload returned by the upstream API.
+
+    Returns
+    -------
+    dict
+        The validated "data" section that should be persisted to MinIO.
+
+    Raises
+    ------
+    ValueError
+        If the payload is missing required sections or has an unexpected type.
+    """
+
+    if not isinstance(payload, dict):
+        raise ValueError("Payload must be a dictionary.")
+
+    data_section = payload.get("data")
+    if not isinstance(data_section, dict):
+        raise ValueError("Payload does not contain a valid 'data' section.")
+
+    missing_keys = [key for key in _EXPECTED_DATA_KEYS if key not in data_section]
+    if missing_keys:
+        raise ValueError(
+            "Global market payload is missing required keys: %s"
+            % ", ".join(missing_keys)
+        )
+
+    return data_section
 
 
 def fetch_data(**context):
@@ -76,10 +121,10 @@ def get_data(**context):
 
     try:
         parsed = json.loads(global_data)  # parse string -> dict
-        parsed_data = parsed.get("data", {})
-        if not parsed_data:
-            logging.warning("Parsed data is empty")
-            return None
+        parsed_data = validate_global_market_payload(parsed)
+    except ValueError as e:
+        logging.error("Payload validation failed: %s", e)
+        return None
     except Exception as e:
         logging.error("Error parsing data: %s", e)
         return None

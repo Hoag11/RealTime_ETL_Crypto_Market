@@ -1,21 +1,20 @@
-import sys
 import os
+import sys
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 sys.path.insert(0, parent_dir)
 
-import requests
 import io
 import logging
 import json
-from fake_useragent import UserAgent
 from datetime import datetime
 from configs import configs
 from minio import Minio
 from minio.error import S3Error
+from requests import RequestException
 
-ua = UserAgent()
+from scripts.common import http_client
 
 # Configure logging to see messages in the console
 logging.basicConfig(
@@ -26,11 +25,12 @@ logging.basicConfig(
 def extract_news():
     """Fetches news articles from a remote API."""
     try:
-        response = requests.get(
-            configs.API_BATCHING, headers={"User-Agent": ua.random}, timeout=10
+        response = http_client.get(configs.API_BATCHING, timeout=10)
+        logging.info(
+            "Response status code: %s (%.2fs)",
+            response.status_code,
+            response.elapsed.total_seconds(),
         )
-        response.raise_for_status()  # This will raise an HTTPError for bad responses (4xx or 5xx)
-        logging.info(f"Response status code: {response.status_code}")
 
         data = response.json()
         articles = data.get("Data", [])
@@ -39,7 +39,7 @@ def extract_news():
 
         return articles
 
-    except requests.exceptions.RequestException as e:
+    except RequestException as e:
         logging.error(f"Error fetching news: {e}")
         return []
 

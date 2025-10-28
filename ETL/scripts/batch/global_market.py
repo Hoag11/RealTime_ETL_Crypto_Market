@@ -5,17 +5,16 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 sys.path.insert(0, parent_dir)
 
-import requests
 import io
 import logging
 import json
-from fake_useragent import UserAgent
 from datetime import datetime
 from configs import configs
 from minio import Minio
 from minio.error import S3Error
+from requests import RequestException
 
-ua = UserAgent()
+from scripts.common import http_client
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -46,18 +45,21 @@ def fetch_data(**context):
     url = f"{API}/global"
 
     try:
-        response = requests.get(url, headers={"User-Agent": ua.random})
-        response.raise_for_status()  # Raise an error for bad status codes
+        response = http_client.get(url)
 
-        logging.info("Data fetched successfully from %s", url)
-        logging.info("Response status code: %s", response.status_code)
+        logging.info(
+            "Data fetched successfully from %s (status %s, %.2fs)",
+            url,
+            response.status_code,
+            response.elapsed.total_seconds(),
+        )
 
         data = response.json()
 
         if not data or "data" not in data:
             logging.warning("No data found in the response")
             return None
-    except requests.RequestException as e:
+    except RequestException as e:
         logging.error("Request error: %s", e)
         return None
     return json.dumps(data)

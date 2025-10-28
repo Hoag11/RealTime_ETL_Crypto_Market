@@ -2,12 +2,10 @@ import json
 import logging
 import time
 
-import requests
-from fake_useragent import UserAgent
 from kafka import KafkaProducer
+from requests import RequestException
 
-
-ua = UserAgent()
+from scripts.common import http_client
 
 # Hardcoded configuration
 KAFKA_BROKER = ["localhost:9094", "localhost:9194", "localhost:9294"]
@@ -21,12 +19,14 @@ API_STREAMING = "https://api.coinlore.net/api/tickers/"
 
 def get_data_from_api():
     try:
-        response = requests.get(API_STREAMING, headers={
-                                "User-Agent": ua.random})
-        response.raise_for_status()
-        logging.info(f"Data fetched successfully from {API_STREAMING}")
+        response = http_client.get(API_STREAMING)
+        logging.info(
+            "Data fetched successfully from %s in %.2fs",
+            API_STREAMING,
+            response.elapsed.total_seconds(),
+        )
         return response.json()
-    except requests.exceptions.RequestException as e:
+    except RequestException as e:
         logging.error(f"Error fetching data from API: {e}")
         return None
 

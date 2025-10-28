@@ -1,154 +1,79 @@
-import logging
-import os
-from datetime import datetime
+"""Compatibility layer for legacy imports.
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# LOG_DIR = os.path.join(BASE_DIR, "logging")
-#
-# os.makedirs(LOG_DIR, exist_ok=True)
-#
-timestamp = datetime.now().strftime("%Y%m%d")
-# LOG_FILE = os.path.join(LOG_DIR, f"{timestamp}.log")
+The legacy ``configs`` module previously exposed a collection of constants. The
+new configuration system lives in :mod:`core.config` and exposes a ``Settings``
+dataclass via :func:`core.config.get_settings`.  This module now simply loads
+those settings once and mirrors the original attribute names so that existing
+imports keep working.
+"""
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler()],
-)
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+
+SRC_DIR = Path(__file__).resolve().parents[1] / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from core.config import get_settings
+
+_settings = get_settings()
 
 # KAFKA CONFIG
-KAKFA_BROKER = ["kafka-0:9092", "kafka-1:9092", "kafka-2:9092"]
-
-KAFKA_TOPIC = "coin_prices"
-
-KAFKA_SECURITY_PROCTOCOL = "SASL_PLAINTEXT"
-KAFKA_SASL_MECHANISM = "PLAIN"
-KAFKA_SASL_USERNAME = "admin"
-KAFKA_SASL_PASSWORD = "Unigap@2024"
+KAKFA_BROKER = _settings.kafka_brokers
+KAFKA_TOPIC = _settings.kafka_topic
+KAFKA_SECURITY_PROCTOCOL = _settings.kafka_security_protocol
+KAFKA_SASL_MECHANISM = _settings.kafka_sasl_mechanism
+KAFKA_SASL_USERNAME = _settings.kafka_sasl_username
+KAFKA_SASL_PASSWORD = _settings.kafka_sasl_password
 
 # API CONFIG
-API_STREAMING = "https://api.coinlore.net/api/tickers/"
-API_BATCHING = "https://data-api.coindesk.com/news/v1/article/list?lang=EN&limit=100"
-API_HISTORICAL = "https://api.coingecko.com/api/v3"
+API_STREAMING = _settings.api_streaming_url
+API_BATCHING = _settings.api_batching_url
+API_HISTORICAL = _settings.api_historical_url
 
 # MinIO CONFIG
-MINIO_ENDPOINT = "http://minio:9000"
-MINIO_ACCESS_KEY = "admin"
-MINIO_SECRET_KEY = "admin123"
-MINIO_BUCKET_RAW_PRICE = "crypto-data-raw"
-MINIO_BUCKET_RAW_NEWS = "crypto-news-raw"
+MINIO_ENDPOINT = _settings.minio_endpoint
+MINIO_ACCESS_KEY = _settings.minio_access_key
+MINIO_SECRET_KEY = _settings.minio_secret_key
+MINIO_BUCKET_RAW_PRICE = _settings.minio_bucket_raw_price
+MINIO_BUCKET_RAW_NEWS = _settings.minio_bucket_raw_news
 
 # POSTGRES CONFIG
-PG_HOST = "postgres-bi"
-PG_PORT = 5432
-PG_USER = "postgres"
-PG_PASSWORD = "postgres"
-PG_DB = "warehouse"
+PG_HOST = _settings.postgres_host
+PG_PORT = _settings.postgres_port
+PG_USER = _settings.postgres_user
+PG_PASSWORD = _settings.postgres_password
+PG_DB = _settings.postgres_db
 
 # SPARK CONFIG
-SPARK_MASTER = "spark-spark-1:7077"
-SPARK_APP_NAME = "streamingCryptoApp"
+SPARK_MASTER = _settings.spark_master
+SPARK_APP_NAME = _settings.spark_app_name
 
+COINS = _settings.coins
 
-COINS = [
-    {"id": "osmosis-allbtc", "name": "Bitcoin"},
-    {"id": "the-ticker-is-eth", "name": "Ethereum"},
-    {"id": "warioxrpdumbledoreyugioh69inu", "name": "XRP"},
-    {"id": "zircuit-bridged-usdt-zircuit", "name": "Tether"},
-    {"id": "binance-coin-wormhole", "name": "Binance Coin"},
-    {"id": "wrapped-solana", "name": "Solana"},
-    {"id": "zksync-bridged-usdc-zksync", "name": "USD Coin"},
-    {"id": "staked-ether", "name": "Staked Ether"},
-    {"id": "doge-on-pulsechain", "name": "Dogecoin"},
-    {"id": "tron-bsc", "name": "TRON"},
-    {"id": "cardano", "name": "Cardano"},
-    {"id": "wormhole-bridged-hype", "name": "Hyperliquid"},
-    {"id": "osmosis-alllink", "name": "ChainLink"},
-    {"id": "zora-bridged-weth-zora-network", "name": "WETH"},
-    {"id": "zksync-bridged-wbtc-zksync", "name": "Wrapped Bitcoin"},
-    {"id": "wrapped-beacon-eth", "name": "Wrapped Beacon ETH"},
-    {"id": "okb", "name": "OKB"},
-    {"id": "bitcoin-cash", "name": "Bitcoin Cash"},
-    {"id": "sui", "name": "Sui"},
-    {"id": "stellar", "name": "Stellar"},
-    {"id": "binance-peg-avalanche", "name": "Avalanche"},
-    {"id": "hedera-hashgraph", "name": "Hedera Hashgraph"},
-    {"id": "litecoin", "name": "Litecoin"},
-    {"id": "tontoken", "name": "TON Coin"},
-    {"id": "strategic-hub-for-innovation-in-blockchain", "name": "Shiba Inu"},
-    {"id": "xbanking-usde", "name": "Ethena USDe"},
-    {"id": "xcdot", "name": "Polkadot"},
-    {"id": "uniswap-wormhole", "name": "Uniswap"},
-    {"id": "bitget-token", "name": "Bitget Token"},
-    {"id": "zksync-erc20-bridged-dai-zksync", "name": "Dai"},
-    {"id": "monero", "name": "Monero"},
-    {"id": "ethena", "name": "Ethena"},
-    {"id": "aave", "name": "Aave"},
-    {"id": "pepe-token", "name": "Pepe"},
-    {"id": "mynth", "name": "Mantle"},
-    {"id": "ethereum-classic", "name": "Ethereum Classic"},
-    {"id": "the-anthropic-order", "name": "Bittensor"},
-    {"id": "near", "name": "NEAR Protocol"},
-    {"id": "ondo-finance", "name": "Ondo"},
-    {"id": "aptos", "name": "Aptos"},
-    {"id": "pi-network-iou", "name": "Pi"},
-    {"id": "internet-computer", "name": "Internet Computer (IOU)"},
-    {"id": "osmosis-allarb", "name": "Arbitrum"},
-    {"id": "RENDER", "name": "Render Token"},
-    {"id": "crypto-com-chain", "name": "Crypto.com Chain"},
-    {"id": "story-2", "name": "Story"},
-    {"id": "wrapped-kaspa", "name": "Kaspa"},
-    {"id": "binance-staked-sol", "name": "Binance Staked SOL"},
-    {"id": "vechain", "name": "VeChain"},
-    {"id": "algorand", "name": "Algorand"},
-    {"id": "worldcoin-wld", "name": "Worldcoin"},
-    {"id": "pudgy-penguins", "name": "Pudgy Penguins"},
-    {"id": "render-token", "name": "Render"},
-    {"id": "lost-bitcoin-layer", "name": "Cosmos"},
-    {"id": "sei-network", "name": "Sei"},
-    {"id": "trumpeffect69420", "name": "OFFICIAL TRUMP"},
-    {"id": "bonk-on-eth", "name": "Bonk"},
-    {"id": "filecoin", "name": "Filecoin"},
-    {"id": "maker", "name": "Maker"},
-    {"id": "flare-networks", "name": "Flare"},
-    {"id": "fetch-ai", "name": "Fetch.ai"},
-    {"id": "first-digital-usd", "name": "First Digital USD"},
-    {"id": "injective-protocol", "name": "Injective Protocol"},
-    {"id": "kucoin-shares", "name": "KuCoin Shares"},
-    {"id": "optimism", "name": "Optimism"},
-    {"id": "quant-network", "name": "Quant"},
-    {"id": "tia", "name": "Celestia"},
-    {"id": "spx6900", "name": "SPX6900"},
-    {"id": "curve-dao-token", "name": "Curve DAO Token"},
-    {"id": "linea-bridged-ldo-linea", "name": "Lido DAO"},
-    {"id": "pax-gold", "name": "PAX Gold"},
-    {"id": "stox", "name": "Stacks"},
-    {"id": "aerodrome-finance", "name": "Aerodrome Finance"},
-    {"id": "immutable-x", "name": "Immutable"},
-    {"id": "XDCE", "name": "XinFin Network"},
-    {"id": "pyth-network", "name": "Pyth Network"},
-    {"id": "kaia", "name": "Kaia"},
-    {"id": "tether-gold", "name": "Tether Gold"},
-    {"id": "fantom", "name": "Fantom"},
-    {"id": "the-graph", "name": "The Graph"},
-    {"id": "cosmic-force-token-v2", "name": "Conflux"},
-    {"id": "token-s", "name": "Sonic (prev. FTM)"},
-    {"id": "flokiwifhat", "name": "Floki Inu"},
-    {"id": "raydium", "name": "Raydium"},
-    {"id": "paypal-usd", "name": "PayPal USD"},
-    {"id": "pancakeswap-token", "name": "PancakeSwap"},
-    {"id": "wif-secondchance", "name": "dogwifhat"},
-    {"id": "nexo", "name": "Nexo"},
-    {"id": "ethereum-name-service", "name": "Ethereum Name Service"},
-    {"id": "matic-network", "name": "Matic Network"},
-    {"id": "theta-token", "name": "Theta Token"},
-    {"id": "singularitynet", "name": "SingularityNET"},
-    {"id": "pendle", "name": "Pendle"},
-    {"id": "zcash", "name": "Zcash"},
-    {"id": "virtual-protocol", "name": "Virtual Protocol"},
-    {"id": "tezos", "name": "Tezos"},
-    {"id": "the-sandbox-wormhole", "name": "The Sandbox"},
-    {"id": "vaulta", "name": "Vaulta"},
-    {"id": "fartcoin", "name": "Fartcoin"},
-    {"id": "gala", "name": "Gala"},
+__all__ = [
+    "API_BATCHING",
+    "API_HISTORICAL",
+    "API_STREAMING",
+    "COINS",
+    "KAFKA_SASL_MECHANISM",
+    "KAFKA_SASL_PASSWORD",
+    "KAFKA_SASL_USERNAME",
+    "KAFKA_SECURITY_PROCTOCOL",
+    "KAKFA_BROKER",
+    "KAFKA_TOPIC",
+    "MINIO_ACCESS_KEY",
+    "MINIO_BUCKET_RAW_NEWS",
+    "MINIO_BUCKET_RAW_PRICE",
+    "MINIO_ENDPOINT",
+    "MINIO_SECRET_KEY",
+    "PG_DB",
+    "PG_HOST",
+    "PG_PASSWORD",
+    "PG_PORT",
+    "PG_USER",
+    "SPARK_APP_NAME",
+    "SPARK_MASTER",
 ]

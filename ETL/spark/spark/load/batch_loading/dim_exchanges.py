@@ -1,38 +1,41 @@
-import os
+import logging
 import sys
 import traceback
-import logging
+from pathlib import Path
+
 from pyspark.sql import SparkSession
 
 # -------------------- Logging setup --------------------
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s"
-)
-log = logging.getLogger("dim_exchanges")
+log = logging.getLogger(__name__)
+if not log.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s - %(message)s"))
+    log.addHandler(handler)
+log.setLevel(logging.INFO)
 
 # -------------------- Import configs --------------------
-if "/configs" not in sys.path:
-    sys.path.insert(0, "/configs")
+SRC_DIR = Path(__file__).resolve()
+for parent in SRC_DIR.parents:
+    candidate = parent / "src"
+    if candidate.exists():
+        if str(candidate) not in sys.path:
+            sys.path.insert(0, str(candidate))
+        break
 
-try:
-    import configs
-except Exception as e:
-    log.error(
-        "Không thể import configs.py từ /configs. Kiểm tra volume mount và tên file."
-    )
-    raise
+from core.config import get_settings
 
 # -------------------- Load configs --------------------
-MINIO_ENDPOINT = getattr(configs, "MINIO_ENDPOINT", "http://minio:9000")
-MINIO_ACCESS_KEY = getattr(configs, "MINIO_ACCESS_KEY", "")
-MINIO_SECRET_KEY = getattr(configs, "MINIO_SECRET_KEY", "")
-MINIO_BUCKET_RAW_PRICE = getattr(configs, "MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
+settings = get_settings()
+MINIO_ENDPOINT = settings.minio_endpoint.replace("http://", "").replace("https://", "")
+MINIO_ACCESS_KEY = settings.minio_access_key
+MINIO_SECRET_KEY = settings.minio_secret_key
+MINIO_BUCKET_RAW_PRICE = settings.minio_bucket_raw_price
 
-PG_HOST = getattr(configs, "PG_HOST", "postgres-bi")
-PG_PORT = int(getattr(configs, "PG_PORT", 5432))
-PG_USER = getattr(configs, "PG_USER", "postgres")
-PG_PASSWORD = getattr(configs, "PG_PASSWORD", "postgres")
-PG_DB = getattr(configs, "PG_DB", "warehouse")
+PG_HOST = settings.postgres_host
+PG_PORT = settings.postgres_port
+PG_USER = settings.postgres_user
+PG_PASSWORD = settings.postgres_password
+PG_DB = settings.postgres_db
 
 
 # -------------------- Main logic --------------------
@@ -49,7 +52,10 @@ def main():
             .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
             .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
             .config("spark.hadoop.fs.s3a.path.style.access", "true")
-            .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+            .config(
+                "spark.hadoop.fs.s3a.connection.ssl.enabled",
+                str(settings.minio_endpoint.startswith("https://")).lower(),
+            )
             .getOrCreate()
         )
 

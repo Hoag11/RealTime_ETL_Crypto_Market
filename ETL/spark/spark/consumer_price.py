@@ -1,3 +1,9 @@
+import logging
+import sys
+import threading
+import time
+from pathlib import Path
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, current_timestamp, to_date, explode
 from pyspark.sql.types import (
@@ -8,24 +14,39 @@ from pyspark.sql.types import (
     DoubleType,
     ArrayType,
 )
-import configs
-import logging
-import threading
-import time
+
+SRC_DIR = Path(__file__).resolve()
+for parent in SRC_DIR.parents:
+    candidate = parent / "src"
+    if candidate.exists():
+        if str(candidate) not in sys.path:
+            sys.path.insert(0, str(candidate))
+        break
+
+from core.config import get_settings
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+settings = get_settings()
 
 # Kafka configuration
-KAFKA_BROKER = configs.KAKFA_BROKER
-KAFKA_TOPIC = configs.KAFKA_TOPIC
-KAFKA_SECURITY_PROCTOCOL = configs.KAFKA_SECURITY_PROCTOCOL
-KAFKA_SASL_MECHANISM = configs.KAFKA_SASL_MECHANISM
-KAFKA_SASL_USERNAME = configs.KAFKA_SASL_USERNAME
-KAFKA_SASL_PASSWORD = configs.KAFKA_SASL_PASSWORD
+KAFKA_BROKER = settings.kafka_brokers
+KAFKA_TOPIC = settings.kafka_topic
+KAFKA_SECURITY_PROCTOCOL = settings.kafka_security_protocol
+KAFKA_SASL_MECHANISM = settings.kafka_sasl_mechanism
+KAFKA_SASL_USERNAME = settings.kafka_sasl_username
+KAFKA_SASL_PASSWORD = settings.kafka_sasl_password
 
 # MinIO configuration
-MINIO_ENDPOINT = configs.MINIO_ENDPOINT
-MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
-MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
-MINIO_BUCKET_RAW_PRICE = configs.MINIO_BUCKET_RAW_PRICE
+MINIO_ENDPOINT = settings.minio_endpoint
+MINIO_ACCESS_KEY = settings.minio_access_key
+MINIO_SECRET_KEY = settings.minio_secret_key
+MINIO_BUCKET_RAW_PRICE = settings.minio_bucket_raw_price
 
 # Schema cho từng coin record
 coin_schema = StructType(
@@ -87,10 +108,6 @@ def create_spark_session():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
-
     spark = create_spark_session()
 
     # Đọc stream từ Kafka
@@ -164,14 +181,14 @@ if __name__ == "__main__":
         .start()
     )
 
-    logging.info(
-        f"Streaming to MinIO started at s3a://{MINIO_BUCKET_RAW_PRICE}/raw-data"
+    logger.info(
+        "Streaming to MinIO started at s3a://%s/raw-data", MINIO_BUCKET_RAW_PRICE
     )
 
     # Theo dõi query
     def log_query_progress(query):
         while query.isActive:
-            logging.info(f"Query status: {query.status}")
+            logger.info("Query status: %s", query.status)
             time.sleep(60)
 
     threading.Thread(target=log_query_progress, args=(query,), daemon=True).start()

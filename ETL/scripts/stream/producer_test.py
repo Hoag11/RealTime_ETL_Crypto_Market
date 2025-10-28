@@ -1,43 +1,53 @@
 import json
 import logging
 import time
+import json
+import logging
+import sys
+import time
+from pathlib import Path
 
 import requests
 from fake_useragent import UserAgent
 from kafka import KafkaProducer
 
+SRC_DIR = Path(__file__).resolve().parents[2] / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
+from core.config import get_settings
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+settings = get_settings()
 ua = UserAgent()
-
-# Hardcoded configuration
-KAFKA_BROKER = ["localhost:9094", "localhost:9194", "localhost:9294"]
-KAFKA_TOPIC = "coin_prices"
-KAFKA_SECURITY_PROTOCOL = "SASL_PLAINTEXT"
-KAFKA_SASL_MECHANISM = "PLAIN"
-KAFKA_SASL_USERNAME = "admin"
-KAFKA_SASL_PASSWORD = "Unigap@2024"
-API_STREAMING = "https://api.coinlore.net/api/tickers/"
 
 
 def get_data_from_api():
     try:
-        response = requests.get(API_STREAMING, headers={
-                                "User-Agent": ua.random})
+        response = requests.get(
+            settings.api_streaming_url, headers={"User-Agent": ua.random}
+        )
         response.raise_for_status()
-        logging.info(f"Data fetched successfully from {API_STREAMING}")
+        logger.info("Data fetched successfully from %s", settings.api_streaming_url)
         return response.json()
     except requests.exceptions.RequestException as e:
-        logging.error(f"Error fetching data from API: {e}")
+        logger.error("Error fetching data from API: %s", e)
         return None
 
 
 def create_kafka_producer():
     producer = KafkaProducer(
-        bootstrap_servers=KAFKA_BROKER,
-        security_protocol=KAFKA_SECURITY_PROTOCOL,
-        sasl_mechanism=KAFKA_SASL_MECHANISM,
-        sasl_plain_username=KAFKA_SASL_USERNAME,
-        sasl_plain_password=KAFKA_SASL_PASSWORD,
+        bootstrap_servers=settings.kafka_brokers,
+        security_protocol=settings.kafka_security_protocol,
+        sasl_mechanism=settings.kafka_sasl_mechanism,
+        sasl_plain_username=settings.kafka_sasl_username,
+        sasl_plain_password=settings.kafka_sasl_password,
         value_serializer=lambda v: json.dumps(v).encode("utf-8"),
     )
 
@@ -45,21 +55,21 @@ def create_kafka_producer():
         while True:
             data = get_data_from_api()
             if data:
-                producer.send(KAFKA_TOPIC, value=data)
-                logging.info(f"Data sent to Kafka topic {KAFKA_TOPIC}")
+                producer.send(settings.kafka_topic, value=data)
+                logger.info("Data sent to Kafka topic %s", settings.kafka_topic)
             else:
-                logging.warning("No data to send to Kafka")
+                logger.warning("No data to send to Kafka")
 
             producer.flush()
             time.sleep(2)
     except KeyboardInterrupt:
-        logging.info("Kafka producer stopped manually")
+        logger.info("Kafka producer stopped manually")
     except Exception as e:
-        logging.error(f"Error in Kafka producer: {e}")
+        logger.error("Error in Kafka producer: %s", e)
     finally:
         producer.flush()
         producer.close()
-        logging.info("Kafka producer closed")
+        logger.info("Kafka producer closed")
 
 
 if __name__ == "__main__":

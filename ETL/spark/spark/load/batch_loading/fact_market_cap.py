@@ -1,28 +1,40 @@
-import sys, traceback, logging
+import logging
+import sys
+import traceback
+from pathlib import Path
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s %(levelname)s - %(message)s"
-)
-log = logging.getLogger("fact_market_cap")
+SRC_DIR = Path(__file__).resolve()
+for parent in SRC_DIR.parents:
+    candidate = parent / "src"
+    if candidate.exists():
+        if str(candidate) not in sys.path:
+            sys.path.insert(0, str(candidate))
+        break
 
-if "/configs" not in sys.path:
-    sys.path.insert(0, "/configs")
-import configs
+from core.config import get_settings
 
-BUCKET_NAME = getattr(configs, "MINIO_BUCKET_RAW_PRICE", "crypto-data-raw")
-MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY = (
-    configs.MINIO_ENDPOINT,
-    configs.MINIO_ACCESS_KEY,
-    configs.MINIO_SECRET_KEY,
-)
+log = logging.getLogger(__name__)
+if not log.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s - %(message)s"))
+    log.addHandler(handler)
+log.setLevel(logging.INFO)
+
+settings = get_settings()
+
+BUCKET_NAME = settings.minio_bucket_raw_price
+MINIO_ENDPOINT = settings.minio_endpoint.replace("http://", "").replace("https://", "")
+MINIO_ACCESS_KEY = settings.minio_access_key
+MINIO_SECRET_KEY = settings.minio_secret_key
 PG_HOST, PG_PORT, PG_USER, PG_PASSWORD, PG_DB = (
-    configs.PG_HOST,
-    configs.PG_PORT,
-    configs.PG_USER,
-    configs.PG_PASSWORD,
-    configs.PG_DB,
+    settings.postgres_host,
+    settings.postgres_port,
+    settings.postgres_user,
+    settings.postgres_password,
+    settings.postgres_db,
 )
 
 PATH_OBJECT = f"s3a://{BUCKET_NAME}/global_market/*.json"

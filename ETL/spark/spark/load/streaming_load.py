@@ -1,22 +1,45 @@
 import logging
-from pyspark.sql import SparkSession, functions as F, types as T
-import configs
+import sys
+from pathlib import Path
+
 import psycopg2
 from psycopg2 import sql
+from pyspark.sql import SparkSession, functions as F, types as T
 from pyspark.sql.window import Window
 
+SRC_DIR = Path(__file__).resolve()
+for parent in SRC_DIR.parents:
+    candidate = parent / "src"
+    if candidate.exists():
+        if str(candidate) not in sys.path:
+            sys.path.insert(0, str(candidate))
+        break
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+from core.config import get_settings
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+settings = get_settings()
+
+MINIO_ENDPOINT = settings.minio_endpoint
+MINIO_HOST = MINIO_ENDPOINT.replace("http://", "").replace("https://", "")
+MINIO_SECURE = MINIO_ENDPOINT.startswith("https://")
+
+bucket = settings.minio_bucket_raw_price.rstrip("/")
+RAW_PATH = f"s3a://{bucket}/raw-data/"
+CHECKPOINT_PATH = f"s3a://{bucket}/_checkpoints/fact_coin_metrics_stream/"
+POSTGRES_URL = (
+    f"jdbc:postgresql://{settings.postgres_host}:{settings.postgres_port}/"
+    f"{settings.postgres_db}"
 )
-
-BUCKET = configs.MINIO_BUCKET_RAW_PRICE.rstrip("/")
-RAW_PATH = f"s3a://{BUCKET}/raw-data/"
-CHECKPOINT_PATH = f"s3a://{BUCKET}/_checkpoints/fact_coin_metrics_stream/"
-POSTGRES_URL = f"jdbc:postgresql://{configs.PG_HOST}:{configs.PG_PORT}/{configs.PG_DB}"
 POSTGRES_PROPS = {
-    "user": configs.PG_USER,
-    "password": configs.PG_PASSWORD,
+    "user": settings.postgres_user,
+    "password": settings.postgres_password,
     "driver": "org.postgresql.Driver",
 }
 
@@ -49,15 +72,12 @@ parquet_schema = T.StructType(
 def start_spark():
     spark = (
         SparkSession.builder.appName("StreamLoad_FactCoinMetrics")
-        .config(
-            "spark.hadoop.fs.s3a.endpoint",
-            configs.MINIO_ENDPOINT.replace("http://", ""),
-        )
-        .config("spark.hadoop.fs.s3a.access.key", configs.MINIO_ACCESS_KEY)
-        .config("spark.hadoop.fs.s3a.secret.key", configs.MINIO_SECRET_KEY)
+        .config("spark.hadoop.fs.s3a.endpoint", MINIO_HOST)
+        .config("spark.hadoop.fs.s3a.access.key", settings.minio_access_key)
+        .config("spark.hadoop.fs.s3a.secret.key", settings.minio_secret_key)
         .config("spark.hadoop.fs.s3a.path.style.access", "true")
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-        .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+        .config("spark.hadoop.fs.s3a.connection.ssl.enabled", str(MINIO_SECURE).lower())
         .getOrCreate()
     )
     spark.sparkContext.setLogLevel("WARN")
@@ -66,7 +86,7 @@ def start_spark():
 
 def process_batch(df, batch_id):
     if df.isEmpty():
-        logging.info(f"Batch {batch_id}: No data to process.")
+        logger.info("Batch %s: No data to process.", batch_id)
         return
 
     spark = df.sparkSession
@@ -134,11 +154,13 @@ def process_batch(df, batch_id):
 
     record_count = df_dedup.count()
     if record_count == 0:
-        logging.info(f"Batch {batch_id}: No valid records after deduplication.")
+        logger.info("Batch %s: No valid records after deduplication.", batch_id)
         return
 
-    logging.info(
-        f"Batch {batch_id}: Writing {record_count} deduplicated rows to stage table..."
+    logger.info(
+        "Batch %s: Writing %s deduplicated rows to stage table...",
+        batch_id,
+        record_count,
     )
 
     # 6️⃣ Ghi vào bảng stage
@@ -168,40 +190,40 @@ def process_batch(df, batch_id):
     # 8️⃣ Kết nối PostgreSQL để chạy merge
     try:
         conn = psycopg2.connect(
-            host=configs.PG_HOST,
-            database=configs.PG_DB,
-            user=configs.PG_USER,
-            password=configs.PG_PASSWORD,
+            host=settings.postgres_host,
+            database=settings.postgres_db,
+            user=settings.postgres_user,
+            password=settings.postgres_password,
         )
         conn.autocommit = True
         with conn.cursor() as cur:
             cur.execute(merge_query)
         conn.close()
-        logging.info(f"✅ Batch {batch_id}: Upsert completed successfully.")
+        logger.info("✅ Batch %s: Upsert completed successfully.", batch_id)
     except Exception as e:
-        logging.error(f"❌ Upsert failed for batch {batch_id}: {e}")
+        logger.error("❌ Upsert failed for batch %s: %s", batch_id, e)
     finally:
         # 9️⃣ Dọn bảng stage sau mỗi batch
         try:
             conn = psycopg2.connect(
-                host=configs.PG_HOST,
-                database=configs.PG_DB,
-                user=configs.PG_USER,
-                password=configs.PG_PASSWORD,
+                host=settings.postgres_host,
+                database=settings.postgres_db,
+                user=settings.postgres_user,
+                password=settings.postgres_password,
             )
             conn.autocommit = True
             with conn.cursor() as cur:
                 cur.execute(sql.SQL("TRUNCATE TABLE fact_coin_metrics_stage;"))
             conn.close()
-            logging.info("🧹 Stage table truncated after merge.")
+            logger.info("🧹 Stage table truncated after merge.")
         except Exception as e:
-            logging.warning(f"⚠️ Could not truncate stage table: {e}")
+            logger.warning("⚠️ Could not truncate stage table: %s", e)
 
 
-def main():
-    spark = start_spark()
+def main(spark=None):
+    spark = spark or start_spark()
 
-    logging.info(f"🔄 Reading streaming data from {RAW_PATH} ...")
+    logger.info("🔄 Reading streaming data from %s ...", RAW_PATH)
     df_stream = spark.readStream.schema(parquet_schema).parquet(f"{RAW_PATH}date=*")
 
     query = (
@@ -215,9 +237,15 @@ def main():
 
 
 if __name__ == "__main__":
+    spark_session = None
     try:
-        main()
+        spark_session = start_spark()
+        logger.info("Spark session created. Starting streaming pipeline.")
+        main(spark_session)
     except Exception as e:
-        logging.error(f"Spark streaming job failed: {e}")
+        logger.error("Spark streaming job failed: %s", e)
+        raise
     finally:
-        logging.info("Closing SparkSession.")
+        if spark_session:
+            spark_session.stop()
+            logger.info("SparkSession stopped.")

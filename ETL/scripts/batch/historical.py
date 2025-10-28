@@ -1,31 +1,44 @@
 import io
 import json
-import time
 import logging
-import requests
-import pandas as pd
+import sys
+import time
 from datetime import datetime
+from pathlib import Path
+
+import pandas as pd
+import requests
 from fake_useragent import UserAgent
 from minio import Minio
 from minio.error import S3Error
 
-from configs import configs
+SRC_DIR = Path(__file__).resolve().parents[2] / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
 
+from core.config import get_settings
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+settings = get_settings()
 ua = UserAgent()
-API = getattr(configs, "API_HISTORICAL", "https://api.coingecko.com/api/v3")
-BUCKET_NAME = getattr(configs, "MINIO_BUCKET_RAW_PRICE", None)
-MINIO_ENDPOINT = configs.MINIO_ENDPOINT.replace("http://", "")
-MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
-MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
-MINIO_SECURE = False
+API = settings.api_historical_url
+BUCKET_NAME = settings.minio_bucket_raw_price
+_endpoint = settings.minio_endpoint
+MINIO_ENDPOINT = _endpoint.replace("http://", "").replace("https://", "")
+MINIO_ACCESS_KEY = settings.minio_access_key
+MINIO_SECRET_KEY = settings.minio_secret_key
+MINIO_SECURE = _endpoint.startswith("https://")
 
 OBJECT_FOLDER = "historical"
 OBJECT_NAME = f"{OBJECT_FOLDER}/historical_data.json"
 
 RATE_LIMIT_SECONDS = 20
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
 
 
 def _init_minio_client():
@@ -89,7 +102,7 @@ def get_data(coin_data, vs_currency="usd", days=365):
         coin_id = coin_data
 
     if not coin_id:
-        logging.warning("No coin_id found in coin_data: %s", coin_data)
+        logger.warning("No coin_id found in coin_data: %s", coin_data)
         return None
 
     try:
@@ -103,7 +116,7 @@ def get_data(coin_data, vs_currency="usd", days=365):
         resp_ohlc.raise_for_status()
         ohlc_data = resp_ohlc.json()
         if not ohlc_data:
-            logging.info("No OHLC data for %s (days=%s)", coin_id, days)
+            logger.info("No OHLC data for %s (days=%s)", coin_id, days)
             return None
         df_ohlc = pd.DataFrame(
             ohlc_data, columns=["timestamp", "open", "high", "low", "close"]
@@ -119,7 +132,7 @@ def get_data(coin_data, vs_currency="usd", days=365):
         resp_mc.raise_for_status()
         mc_data = resp_mc.json()
         if not mc_data or "total_volumes" not in mc_data:
-            logging.info("No market_chart data for %s (days=%s)", coin_id, days)
+            logger.info("No market_chart data for %s (days=%s)", coin_id, days)
             return None
         df_vol = pd.DataFrame(mc_data["total_volumes"], columns=["timestamp", "volume"])
 
@@ -133,10 +146,10 @@ def get_data(coin_data, vs_currency="usd", days=365):
         return df
 
     except requests.exceptions.RequestException as e:
-        logging.error("HTTP error while fetching %s: %s", coin_id, e)
+        logger.error("HTTP error while fetching %s: %s", coin_id, e)
         return None
     except Exception as e:
-        logging.exception("Unexpected error while fetching %s: %s", coin_id, e)
+        logger.exception("Unexpected error while fetching %s: %s", coin_id, e)
         return None
 
 
@@ -153,7 +166,7 @@ def fetch_historical_data(**context):
         first_run = True
 
     all_frames = []
-    coins_list = getattr(configs, "COINS", [])
+    coins_list = settings.coins
     if not coins_list:
         return "[]"
 
@@ -176,15 +189,17 @@ def fetch_historical_data(**context):
 def save_historical_to_minio(**context):
     ti = context.get("ti")
     if not ti:
+        logger.error("No task instance found in context")
         return
 
     new_json = ti.xcom_pull(task_ids="fetch_historical_data")
     if not new_json:
+        logger.error("No data retrieved from XCom")
         return
 
     try:
         new_df = pd.DataFrame(json.loads(new_json))
-    except Exception as e:
+    except Exception:
         return
 
     if new_df.empty:
@@ -237,4 +252,4 @@ def save_historical_to_minio(**context):
         )
 
     except Exception as e:
-        logging.exception("Failed to save historical to MinIO: %s", e)
+        logger.exception("Failed to save historical to MinIO: %s", e)

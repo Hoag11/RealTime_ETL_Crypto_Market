@@ -1,35 +1,39 @@
+import io
+import json
+import logging
 import sys
-import os
-
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-sys.path.insert(0, parent_dir)
+from datetime import datetime
+from pathlib import Path
 
 import requests
-import io
-import logging
-import json
 from fake_useragent import UserAgent
-from datetime import datetime
-from configs import configs
 from minio import Minio
 from minio.error import S3Error
 
+SRC_DIR = Path(__file__).resolve().parents[2] / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from core.config import get_settings
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+settings = get_settings()
 ua = UserAgent()
-
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
-API = getattr(configs, "API_HISTORICAL", "https://api.coingecko.com/api/v3")
-BUCKET_NAME = getattr(configs, "MINIO_BUCKET_RAW_PRICE", None)
-MINIO_ENDPOINT = configs.MINIO_ENDPOINT.replace("http://", "")
-MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
-MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
-MINIO_SECURE = False
+API = settings.api_historical_url
+BUCKET_NAME = settings.minio_bucket_raw_price
+_endpoint = settings.minio_endpoint
+MINIO_ENDPOINT = _endpoint.replace("http://", "").replace("https://", "")
+MINIO_ACCESS_KEY = settings.minio_access_key
+MINIO_SECRET_KEY = settings.minio_secret_key
+MINIO_SECURE = _endpoint.startswith("https://")
 
 OBJECT_FOLDER = "exchange_list"
-
 RATE_LIMIT_SECONDS = 15
 
 
@@ -47,16 +51,16 @@ def fetch_data(**context):
 
     try:
         response = requests.get(url, headers={"User-Agent": ua.random})
-        response.raise_for_status()  # Raise an error for bad status codes
+        response.raise_for_status()
 
-        logging.info("Data fetched successfully from %s", url)
-        logging.info("Response status code: %s", response.status_code)
+        logger.info("Data fetched successfully from %s", url)
+        logger.info("Response status code: %s", response.status_code)
 
         data = response.json()
         if not data:
-            logging.warning("No data found in the response")
+            logger.warning("No data found in the response")
     except requests.RequestException as e:
-        logging.error("Request error: %s", e)
+        logger.error("Request error: %s", e)
         return None
     return data
 
@@ -64,20 +68,16 @@ def fetch_data(**context):
 def get_data(**context):
     ti = context.get("ti")
     if not ti:
-        logging.error("No task instance found in context")
+        logger.error("No task instance found in context")
         return None
 
     exchange_data = ti.xcom_pull(task_ids="fetch_exchange_data")
     if not exchange_data:
-        logging.error("No data retrieved from XCom")
+        logger.error("No data retrieved from XCom")
         return None
 
-    try:
-        if not isinstance(exchange_data, list):
-            logging.warning("Exchange data is not a list, got %s", type(exchange_data))
-            return None
-    except Exception as e:
-        logging.error("Error parsing data: %s", e)
+    if not isinstance(exchange_data, list):
+        logger.warning("Exchange data is not a list, got %s", type(exchange_data))
         return None
 
     today_str = datetime.utcnow().strftime("%Y-%m-%d")
@@ -98,9 +98,9 @@ def get_data(**context):
             content_type="application/json",
         )
 
-        logging.info("Successfully uploaded data to %s/%s", BUCKET_NAME, object_name)
+        logger.info("Successfully uploaded data to %s/%s", BUCKET_NAME, object_name)
         return object_name
 
     except S3Error as e:
-        logging.error("MinIO error: %s", e)
+        logger.error("MinIO error: %s", e)
         return None

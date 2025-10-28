@@ -1,19 +1,29 @@
-import sys
 import os
+import sys
 
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-sys.path.insert(0, parent_dir)
+CURRENT_DIR = os.path.dirname(__file__)
+SCRIPTS_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPTS_DIR, ".."))
+
+for path in (PROJECT_ROOT, SCRIPTS_DIR):
+    if path not in sys.path:
+        sys.path.insert(0, path)
 
 import requests
-import io
 import logging
 import json
+from datetime import datetime, timezone
 from fake_useragent import UserAgent
-from datetime import datetime
+
 from configs import configs
-from minio import Minio
 from minio.error import S3Error
+
+from scripts.helpers.minio_utils import (
+    ensure_bucket,
+    get_minio_client,
+    upload_json_bytes,
+)
 
 ua = UserAgent()
 
@@ -48,43 +58,37 @@ def extract_news():
         return []
 
 
-def save_news_to_minio(**context):
+def save_news_to_minio(articles=None, **context):
     """Saves news articles to a Minio bucket as a JSON file."""
-    ti = context["ti"]  # Or context['task_instance']
-    articles = ti.xcom_pull(task_ids="extract_news")  # Pull from upstream task
+    if articles is None:
+        ti = context.get("ti")  # Or context['task_instance']
+        if ti:
+            articles = ti.xcom_pull(task_ids="extract_news")  # Pull from upstream task
 
     if not articles:
         logging.warning("No articles to save to Minio.")
         return
 
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    now = datetime.now(timezone.utc)
+    timestamp = now.strftime("%Y%m%dT%H%M%SZ")
+    date_partition = now.strftime("%Y-%m-%d")
     bucket_name = configs.MINIO_BUCKET_RAW_NEWS
-    object_name = f"{timestamp}_crypto_news.json"
+    object_name = f"news/date={date_partition}/{timestamp}_crypto_news.json"
 
     # Create an in-memory file-like object to avoid writing to disk
     json_data = json.dumps(articles, ensure_ascii=False, indent=4).encode("utf-8")
 
     try:
-        client = Minio(
-            configs.MINIO_ENDPOINT.replace("http://", ""),
-            access_key=configs.MINIO_ACCESS_KEY,
-            secret_key=configs.MINIO_SECRET_KEY,
+        client = get_minio_client(
+            configs.MINIO_ENDPOINT,
+            configs.MINIO_ACCESS_KEY,
+            configs.MINIO_SECRET_KEY,
             secure=False,
         )
 
-        # Check if bucket exists and create if it doesn't
-        if not client.bucket_exists(bucket_name):
-            logging.info(f"Bucket '{bucket_name}' does not exist. Creating it now.")
-            client.make_bucket(bucket_name)
+        ensure_bucket(client, bucket_name)
 
-        # Upload the in-memory data
-        client.put_object(
-            bucket_name,
-            object_name,
-            data=io.BytesIO(json_data),
-            length=len(json_data),
-            content_type="application/json",
-        )
+        upload_json_bytes(client, bucket_name, object_name, json_data)
 
         logging.info(
             f"Successfully uploaded {len(articles)} articles to Minio bucket '{bucket_name}' as '{object_name}'"
@@ -99,7 +103,7 @@ def save_news_to_minio(**context):
 
 def main():
     extracted_news = extract_news()
-    save_news_to_minio(extracted_news)
+    save_news_to_minio(articles=extracted_news)
 
 
 if __name__ == "__main__":

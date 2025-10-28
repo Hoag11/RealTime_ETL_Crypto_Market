@@ -1,26 +1,42 @@
-import io
 import json
-import time
 import logging
-import requests
+import os
+import sys
+import time
+from datetime import datetime, timezone
+
 import pandas as pd
-from datetime import datetime
+import requests
 from fake_useragent import UserAgent
-from minio import Minio
 from minio.error import S3Error
 
+
+CURRENT_DIR = os.path.dirname(__file__)
+SCRIPTS_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPTS_DIR, ".."))
+
+for path in (PROJECT_ROOT, SCRIPTS_DIR):
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+
 from configs import configs
+from scripts.helpers.minio_utils import (
+    bucket_has_objects,
+    ensure_bucket,
+    get_minio_client,
+    upload_json_bytes,
+)
 
 ua = UserAgent()
 API = getattr(configs, "API_HISTORICAL", "https://api.coingecko.com/api/v3")
 BUCKET_NAME = getattr(configs, "MINIO_BUCKET_RAW_PRICE", None)
-MINIO_ENDPOINT = configs.MINIO_ENDPOINT.replace("http://", "")
+MINIO_ENDPOINT = configs.MINIO_ENDPOINT
 MINIO_ACCESS_KEY = configs.MINIO_ACCESS_KEY
 MINIO_SECRET_KEY = configs.MINIO_SECRET_KEY
 MINIO_SECURE = False
 
 OBJECT_FOLDER = "historical"
-OBJECT_NAME = f"{OBJECT_FOLDER}/historical_data.json"
 
 RATE_LIMIT_SECONDS = 20
 logging.basicConfig(
@@ -29,7 +45,7 @@ logging.basicConfig(
 
 
 def _init_minio_client():
-    return Minio(
+    return get_minio_client(
         MINIO_ENDPOINT,
         access_key=MINIO_ACCESS_KEY,
         secret_key=MINIO_SECRET_KEY,
@@ -51,33 +67,6 @@ def _clean_df_for_json(df):
 
     df = df.astype(object).where(pd.notnull(df), None)
     return df
-
-
-def _parse_any_json(raw: str):
-    try:
-        data = json.loads(raw)
-        if isinstance(data, list):
-            return data
-        if isinstance(data, dict):
-            return [data]
-    except Exception:
-        pass
-
-    dec = json.JSONDecoder()
-    i, n = 0, len(raw)
-    out = []
-    while i < n:
-        while i < n and raw[i].isspace():
-            i += 1
-        if i >= n:
-            break
-        obj, idx = dec.raw_decode(raw, i)
-        i = idx
-        if isinstance(obj, list):
-            out.extend(obj)
-        elif isinstance(obj, dict):
-            out.append(obj)
-    return out
 
 
 def get_data(coin_data, vs_currency="usd", days=365):
@@ -143,12 +132,12 @@ def get_data(coin_data, vs_currency="usd", days=365):
 def fetch_historical_data(**context):
     client = _init_minio_client()
     bucket_name = BUCKET_NAME
-    object_name = OBJECT_NAME
 
     first_run = True
     try:
-        client.stat_object(bucket_name, object_name)
-        first_run = False
+        first_run = not bucket_has_objects(
+            client, bucket_name, prefix=f"{OBJECT_FOLDER}/"
+        )
     except S3Error:
         first_run = True
 
@@ -190,51 +179,30 @@ def save_historical_to_minio(**context):
     if new_df.empty:
         return
 
-    new_df = _clean_df_for_json(new_df)
-
     client = _init_minio_client()
     bucket_name = BUCKET_NAME
-    object_name = OBJECT_NAME
+
+    now = datetime.now(timezone.utc)
+    date_partition = now.strftime("%Y-%m-%d")
+    timestamp = now.strftime("%Y%m%dT%H%M%SZ")
+    object_name = (
+        f"{OBJECT_FOLDER}/date={date_partition}/historical_{timestamp}.json"
+    )
 
     try:
-        old_df = pd.DataFrame()
-        try:
-            resp = client.get_object(bucket_name, object_name)
-            old_raw = resp.read().decode("utf-8")
-            old_records = _parse_any_json(old_raw)
-            old_df = pd.DataFrame(old_records)
-        finally:
-            try:
-                resp.close()
-                resp.release_conn()
-            except Exception:
-                pass
+        new_df.drop_duplicates(subset=["coin_id", "datetime"], inplace=True)
+        new_df.sort_values(by=["coin_id", "datetime"], inplace=True)
 
-        combined_df = (
-            pd.concat([old_df, new_df], ignore_index=True)
-            if not old_df.empty
-            else new_df.copy()
-        )
-        combined_df.drop_duplicates(subset=["coin_id", "datetime"], inplace=True)
-        combined_df.sort_values(by=["coin_id", "datetime"], inplace=True)
+        cleaned_df = _clean_df_for_json(new_df)
 
-        combined_df = _clean_df_for_json(combined_df)
-
-        records = combined_df.to_dict(orient="records")
+        records = cleaned_df.to_dict(orient="records")
         json_bytes = json.dumps(
             records, ensure_ascii=False, indent=2, allow_nan=False
         ).encode("utf-8")
 
-        if not client.bucket_exists(bucket_name):
-            client.make_bucket(bucket_name)
+        ensure_bucket(client, bucket_name)
 
-        client.put_object(
-            bucket_name,
-            object_name,
-            data=io.BytesIO(json_bytes),
-            length=len(json_bytes),
-            content_type="application/json",
-        )
+        upload_json_bytes(client, bucket_name, object_name, json_bytes)
 
     except Exception as e:
         logging.exception("Failed to save historical to MinIO: %s", e)

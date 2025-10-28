@@ -18,7 +18,7 @@ with DAG(
     save_news_to_minio = PythonOperator(
         task_id="save_news_to_minio",
         python_callable=news_crawler.save_news_to_minio,
-        # provide_context=True,
+        provide_context=True,
     )
 
     extract_news >> save_news_to_minio

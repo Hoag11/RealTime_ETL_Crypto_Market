@@ -1,0 +1,1 @@
+{"timestamp":"2025-11-03T15:52:46.472746","level":"info","event":"Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/standard/example_external_task_child_deferrable.py","logger":"airflow.models.dagbag.DagBag"}

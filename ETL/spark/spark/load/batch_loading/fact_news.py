@@ -1,4 +1,3 @@
-
 import sys
 import traceback
 import logging
@@ -97,11 +96,14 @@ def main():
         }
 
         stage_table = "fact_news_stage"
-        df_transformed.write.jdbc(jdbc_url, stage_table, mode="overwrite", properties=pg_props)
+        df_transformed.write.jdbc(
+            jdbc_url, stage_table, mode="overwrite", properties=pg_props
+        )
         log.info("✅ Ghi dữ liệu vào bảng tạm fact_news_stage thành công.")
 
         # ---------- Merge vào fact_news ----------
         import psycopg2
+
         conn = psycopg2.connect(
             host=PG_HOST, port=PG_PORT, user=PG_USER, password=PG_PASSWORD, dbname=PG_DB
         )
@@ -136,7 +138,7 @@ def main():
             source_data_str::jsonb,
             category_data_str::jsonb
         FROM fact_news_stage
-        ON CONFLICT (guid) DO UPDATE SET
+        ON CONFLICT (guid, published_on) DO UPDATE SET
             title = EXCLUDED.title,
             subtitle = EXCLUDED.subtitle,
             authors = EXCLUDED.authors,
@@ -167,4 +169,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

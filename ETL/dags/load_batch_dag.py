@@ -30,7 +30,7 @@ with DAG(
         "-v spark_lib:/opt/bitnami/spark/.ivy2 "
         "-v spark_data:/data "
         "spark/spark:3.5 bash -c '"
-        "pip install psycopg2-binary && "
+        "pip install psycopg2-binary sqlalchemy numpy && "
         "export PYTHONPATH=$PYTHONPATH:/configs && "
         "spark-submit "
         "--packages org.postgresql:postgresql:42.7.3,org.apache.hadoop:hadoop-aws:3.3.6 "
@@ -72,6 +72,14 @@ with DAG(
         ),
     )
 
+    load_fact_volume = BashOperator(
+        task_id="load_fact_volume",
+        bash_command=SPARK_DOCKER_CMD.format(
+            job_name="fact_volume_job",
+            script_name="fact_market_volume",
+        ),
+    )
+
     load_fact_news = BashOperator(
         task_id="load_fact_news",
         bash_command=SPARK_DOCKER_CMD.format(
@@ -94,6 +102,7 @@ with DAG(
         >> load_fact_market_global
         >> load_fact_market_cap
         >> load_fact_market_cap_percentage
+        >> load_fact_volume
         >> load_fact_news
         >> load_fact_price_history
     )

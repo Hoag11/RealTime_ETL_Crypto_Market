@@ -101,6 +101,7 @@ if __name__ == "__main__":
         .option("startingOffsets", "earliest")
         .option("kafka.sasl.mechanism", KAFKA_SASL_MECHANISM)
         .option("kafka.security.protocol", KAFKA_SECURITY_PROCTOCOL)
+        .option("failOnDataLoss", "false")
         .option(
             "kafka.sasl.jaas.config",
             f"org.apache.kafka.common.security.plain.PlainLoginModule required "

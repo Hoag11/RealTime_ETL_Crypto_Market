@@ -2,6 +2,7 @@ import sys
 import traceback
 import logging
 from pyspark.sql import SparkSession, functions as F
+from pyspark.sql.window import Window
 
 # ---------- Logging ----------
 logging.basicConfig(
@@ -41,7 +42,7 @@ def _to_ts(col):
 def main():
     spark = None
     try:
-        log.info("🚀 Khởi tạo SparkSession cho fact_news ...")
+        log.info("Khởi tạo SparkSession cho fact_news ...")
         spark = (
             SparkSession.builder.appName("Load fact_news")
             .config("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT)
@@ -53,7 +54,7 @@ def main():
         )
         spark.sparkContext.setLogLevel("WARN")
 
-        log.info(f"📥 Đọc dữ liệu JSON từ: {PATH_OBJECT}")
+        log.info(f"Đọc dữ liệu JSON từ: {PATH_OBJECT}")
         df = spark.read.option("multiline", "true").json(PATH_OBJECT)
         if df.rdd.isEmpty():
             log.warning("Không có dữ liệu JSON trong bucket.")
@@ -82,10 +83,23 @@ def main():
             limit("status").alias("status"),
             _to_ts("created_on").alias("created_on"),
             _to_ts("updated_on").alias("updated_on"),
-            # ✅ đảm bảo JSON hợp lệ
             F.to_json(F.col("source_data")).alias("source_data_str"),
             F.to_json(F.col("category_data")).alias("category_data_str"),
         )
+
+        # ============================================================
+        #  DEDUP — GIỮ BẢN MỚI NHẤT THEO GUID (updated_on mới nhất)
+        # ============================================================
+        w = Window.partitionBy("guid").orderBy(
+            F.col("updated_on").desc_nulls_last()
+        )
+
+        df_dedup = df_transformed.withColumn(
+            "rn", F.row_number().over(w)
+        ).filter("rn = 1").drop("rn")
+
+        log.info(f"Tổng số record sau dedup: {df_dedup.count()}")
+        # ============================================================
 
         # ---------- Ghi vào bảng stage ----------
         jdbc_url = f"jdbc:postgresql://{PG_HOST}:{PG_PORT}/{PG_DB}"
@@ -96,16 +110,18 @@ def main():
         }
 
         stage_table = "fact_news_stage"
-        df_transformed.write.jdbc(
+
+        df_dedup.write.jdbc(
             jdbc_url, stage_table, mode="overwrite", properties=pg_props
         )
-        log.info("✅ Ghi dữ liệu vào bảng tạm fact_news_stage thành công.")
+        log.info("Ghi dữ liệu vào bảng tạm fact_news_stage thành công.")
 
         # ---------- Merge vào fact_news ----------
         import psycopg2
 
         conn = psycopg2.connect(
-            host=PG_HOST, port=PG_PORT, user=PG_USER, password=PG_PASSWORD, dbname=PG_DB
+            host=PG_HOST, port=PG_PORT, user=PG_USER,
+            password=PG_PASSWORD, dbname=PG_DB
         )
         conn.autocommit = True
         cur = conn.cursor()
@@ -138,7 +154,7 @@ def main():
             source_data_str::jsonb,
             category_data_str::jsonb
         FROM fact_news_stage
-        ON CONFLICT (guid, published_on) DO UPDATE SET
+        ON CONFLICT (guid) DO UPDATE SET
             title = EXCLUDED.title,
             subtitle = EXCLUDED.subtitle,
             authors = EXCLUDED.authors,
@@ -155,15 +171,15 @@ def main():
         cur.close()
         conn.close()
 
-        log.info("🎯 Merge dữ liệu vào fact_news thành công!")
+        log.info("Merge dữ liệu vào fact_news thành công!")
 
     except Exception as e:
-        log.error(f"❌ Lỗi khi xử lý fact_news: {e}")
+        log.error(f" Lỗi khi xử lý fact_news: {e}")
         traceback.print_exc()
         sys.exit(1)
     finally:
         if spark:
-            log.info("🧹 Đóng SparkSession.")
+            log.info("Đóng SparkSession.")
             spark.stop()
 
 

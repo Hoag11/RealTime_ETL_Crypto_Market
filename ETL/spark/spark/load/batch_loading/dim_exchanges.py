@@ -1,4 +1,3 @@
-import os
 import sys
 import traceback
 import logging
@@ -16,7 +15,7 @@ if "/configs" not in sys.path:
 
 try:
     import configs
-except Exception as e:
+except Exception:
     log.error(
         "Không thể import configs.py từ /configs. Kiểm tra volume mount và tên file."
     )

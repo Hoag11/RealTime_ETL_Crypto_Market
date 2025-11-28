@@ -20,7 +20,7 @@ POSTGRES_PROPS = {
     "driver": "org.postgresql.Driver",
 }
 
-# 🧩 Schema gốc (không dùng *_numeric nữa)
+#  Schema gốc 
 parquet_schema = T.StructType(
     [
         T.StructField("id", T.StringType()),
@@ -71,12 +71,12 @@ def process_batch(df, batch_id):
 
     spark = df.sparkSession
 
-    # 1️⃣ Đọc dim_dates để map sang date_id
+    #  Đọc dim_dates để map sang date_id
     dim_dates = spark.read.jdbc(
         POSTGRES_URL, "dim_dates", properties=POSTGRES_PROPS
     ).select("date_id", F.to_date("full_date").alias("full_date"))
 
-    # 2️⃣ Chuẩn hoá & ép kiểu
+    #  Chuẩn hoá & ép kiểu
     df_casted = (
         df.withColumn("price_usd", F.col("price_usd").cast("double"))
         .withColumn("percent_change_1h", F.col("percent_change_1h").cast("double"))
@@ -94,7 +94,7 @@ def process_batch(df, batch_id):
         .withColumn("date_only", F.to_date("api_timestamp"))
     )
 
-    # 3️⃣ Join dim_dates để lấy date_id
+    #  Join dim_dates để lấy date_id
     df_joined = df_casted.join(
         dim_dates, F.col("date_only") == F.col("full_date"), "left"
     ).withColumn(
@@ -104,7 +104,7 @@ def process_batch(df, batch_id):
         ),
     )
 
-    # 4️⃣ Chọn đúng schema theo fact_coin_metrics
+    #  Chọn đúng schema theo fact_coin_metrics
     df_final = df_joined.filter(F.col("date_id").isNotNull()).select(
         F.col("nameid").alias("coin_id"),
         "date_id",
@@ -122,7 +122,7 @@ def process_batch(df, batch_id):
         F.current_timestamp().alias("ingestion_timestamp"),
     )
 
-    # 5️⃣ Dedup trùng coin_id + date_id (chỉ giữ bản ghi mới nhất)
+    #  Dedup trùng coin_id + date_id (chỉ giữ bản ghi mới nhất)
     window_spec = Window.partitionBy("coin_id", "api_timestamp").orderBy(
         F.col("api_timestamp").desc()
     )
@@ -141,11 +141,11 @@ def process_batch(df, batch_id):
         f"Batch {batch_id}: Writing {record_count} deduplicated rows to stage table..."
     )
 
-    # 6️⃣ Ghi vào bảng stage
+    #  Ghi vào bảng stage
     STAGE_TABLE = "fact_coin_metrics_stage"
     df_dedup.write.jdbc(POSTGRES_URL, STAGE_TABLE, "overwrite", POSTGRES_PROPS)
 
-    # 7️⃣ Merge dữ liệu từ stage → fact_coin_metrics
+    #  Merge dữ liệu từ stage → fact_coin_metrics
     merge_query = """
         INSERT INTO fact_coin_metrics AS fcm
         SELECT * FROM fact_coin_metrics_stage
@@ -165,7 +165,7 @@ def process_batch(df, batch_id):
             ingestion_timestamp = EXCLUDED.ingestion_timestamp;
     """
 
-    # 8️⃣ Kết nối PostgreSQL để chạy merge
+    #  Kết nối PostgreSQL để chạy merge
     try:
         conn = psycopg2.connect(
             host=configs.PG_HOST,
@@ -177,11 +177,11 @@ def process_batch(df, batch_id):
         with conn.cursor() as cur:
             cur.execute(merge_query)
         conn.close()
-        logging.info(f"✅ Batch {batch_id}: Upsert completed successfully.")
+        logging.info(f" Batch {batch_id}: Upsert completed successfully.")
     except Exception as e:
-        logging.error(f"❌ Upsert failed for batch {batch_id}: {e}")
+        logging.error(f" Upsert failed for batch {batch_id}: {e}")
     finally:
-        # 9️⃣ Dọn bảng stage sau mỗi batch
+        #  Dọn bảng stage sau mỗi batch
         try:
             conn = psycopg2.connect(
                 host=configs.PG_HOST,
@@ -193,15 +193,15 @@ def process_batch(df, batch_id):
             with conn.cursor() as cur:
                 cur.execute(sql.SQL("TRUNCATE TABLE fact_coin_metrics_stage;"))
             conn.close()
-            logging.info("🧹 Stage table truncated after merge.")
+            logging.info(" Stage table truncated after merge.")
         except Exception as e:
-            logging.warning(f"⚠️ Could not truncate stage table: {e}")
+            logging.warning(f"Could not truncate stage table: {e}")
 
 
 def main():
     spark = start_spark()
 
-    logging.info(f"🔄 Reading streaming data from {RAW_PATH} ...")
+    logging.info(f"Reading streaming data from {RAW_PATH} ...")
     df_stream = spark.readStream.schema(parquet_schema).parquet(f"{RAW_PATH}date=*")
 
     query = (

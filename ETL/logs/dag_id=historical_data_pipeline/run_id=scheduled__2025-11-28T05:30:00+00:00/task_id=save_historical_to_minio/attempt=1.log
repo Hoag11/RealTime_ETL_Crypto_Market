@@ -1,0 +1,10 @@
+{"timestamp":"2025-11-28T06:04:56.116528","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-11-28T06:04:56.116955","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/historical_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-11-28T06:04:56.236165Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-28T06:04:56.236291Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-28T06:04:56.236451Z","level":"info","event":"Current task name:save_historical_to_minio","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-28T06:04:56.236491Z","level":"info","event":"Dag name:historical_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-28T06:04:57.038932","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
+{"timestamp":"2025-11-28T06:04:57.047510Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-28T06:04:57.047636Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-28T06:04:57.047809Z","level":"info","event":"Task operator:<Task(PythonOperator): save_historical_to_minio>","chan":"stdout","logger":"task"}

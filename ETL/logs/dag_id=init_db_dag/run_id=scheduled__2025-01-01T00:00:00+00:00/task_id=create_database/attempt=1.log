@@ -10,3 +10,14 @@
 {"timestamp":"2025-10-19T10:32:24.941107Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
 {"timestamp":"2025-10-19T10:32:24.941190Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
 {"timestamp":"2025-10-19T10:32:24.941283Z","level":"info","event":"Task operator:<Task(PythonOperator): create_database>","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.873558","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-11-14T03:10:13.873926","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/init_db_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-11-14T03:10:13.948155Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.948281Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.948367Z","level":"info","event":"Current task name:create_database","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.948407Z","level":"info","event":"Dag name:init_db_dag","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.989904Z","level":"info","event":"Database warehouse created successfully.","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.990670","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
+{"timestamp":"2025-11-14T03:10:13.998657Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.998757Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-14T03:10:13.998833Z","level":"info","event":"Task operator:<Task(PythonOperator): create_database>","chan":"stdout","logger":"task"}

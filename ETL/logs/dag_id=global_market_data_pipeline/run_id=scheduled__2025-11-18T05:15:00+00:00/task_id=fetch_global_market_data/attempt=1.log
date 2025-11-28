@@ -1,0 +1,11 @@
+{"timestamp":"2025-11-18T15:15:17.370054","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-11-18T15:15:17.370485","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/global_data_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-11-18T15:15:18.453435Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-18T15:15:18.453596Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-18T15:15:18.453703Z","level":"info","event":"Current task name:fetch_global_market_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-18T15:15:18.453758Z","level":"info","event":"Dag name:global_market_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-18T15:15:22.675438","level":"error","event":"Request error: 500 Server Error: Internal Server Error for url: https://api.coingecko.com/api/v3/global","logger":"root"}
+{"timestamp":"2025-11-18T15:15:22.676789","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator"}
+{"timestamp":"2025-11-18T15:15:22.692005Z","level":"info","event":"Task instance in success state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-18T15:15:22.692087Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","chan":"stdout","logger":"task"}
+{"timestamp":"2025-11-18T15:15:22.692845Z","level":"info","event":"Task operator:<Task(PythonOperator): fetch_global_market_data>","chan":"stdout","logger":"task"}

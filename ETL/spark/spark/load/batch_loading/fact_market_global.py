@@ -122,7 +122,7 @@ def main():
         )
 
         upsert_postgres(df_final, "fact_market_global")
-        log.info("✅ Hoàn thành job fact_market_global")
+        log.info("Hoàn thành job fact_market_global")
 
     except Exception as e:
         log.error(f"Lỗi job fact_market_global: {e}")

@@ -59,8 +59,8 @@ COINS = [
     "WLD", "PENGU", "RENDER", "ATOM", "SEI", "TRUMP", "BONK", "FIL", "MKR", "FLR",
     "FET", "FDUSD", "INJ", "KCS", "OP", "QNT", "TIA", "SPX", "CRV", "LDO",
     "PAXG", "STX", "AERO", "IMX", "XDCE", "PYTH", "KAIA", "XAUT", "FTM", "GRT",
-    "CFX", "S", "FLOKI", "RAY", "PYUSD", "CAKE", "WIF", "NEXO", "ENS", "MATIC",
-    "THETA", "AGIX", "PENDLE", "ZEC", "VIRTUAL", "XTZ", "SAND", "A", "FARTCOIN",
+    "CFX", "FLOKI", "RAY", "PYUSD", "CAKE", "WIF", "NEXO", "ENS", "MATIC",
+    "THETA", "AGIX", "PENDLE", "ZEC", "VIRTUAL", "XTZ", "SAND", "FARTCOIN",
     "GALA"
 ]
 

@@ -4,7 +4,7 @@
 # Stop old container & run new streaming Spark job
 # ===============================================
 
-CONTAINER_NAME="project-spark-stream"
+CONTAINER_NAME="stream-loader-ez"
 NETWORK_NAME="streaming-network-ez"
 SPARK_IMAGE="spark/spark:3.5"
 SPARK_SCRIPT="/spark/spark/load/streaming_load.py"
@@ -35,7 +35,7 @@ docker run --rm --name "$CONTAINER_NAME" \
     export PYTHONPATH=\$PYTHONPATH:/configs &&
     spark-submit \
       --packages org.postgresql:postgresql:42.7.3,org.apache.hadoop:hadoop-aws:3.3.6 \
-      --executor-memory 2g --driver-memory 2g \
+      --executor-memory 1g --driver-memory 1g \
       --name $JOB_NAME \
       $SPARK_SCRIPT
   "

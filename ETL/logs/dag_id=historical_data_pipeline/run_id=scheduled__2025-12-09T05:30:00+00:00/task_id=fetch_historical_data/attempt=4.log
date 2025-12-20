@@ -1,0 +1,17 @@
+{"timestamp":"2025-12-20T06:33:02.157159","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
+{"timestamp":"2025-12-20T06:33:02.157617","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/historical_dag.py","logger":"airflow.models.dagbag.DagBag"}
+{"timestamp":"2025-12-20T06:33:02.576303","level":"info","event":"Loaded 19121 valid CoinGecko IDs","logger":"root"}
+{"timestamp":"2025-12-20T06:33:02.593507Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
+{"timestamp":"2025-12-20T06:33:02.593609Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
+{"timestamp":"2025-12-20T06:33:02.593693Z","level":"info","event":"Current task name:fetch_historical_data","chan":"stdout","logger":"task"}
+{"timestamp":"2025-12-20T06:33:02.593732Z","level":"info","event":"Dag name:historical_data_pipeline","chan":"stdout","logger":"task"}
+{"timestamp":"2025-12-20T06:33:02.597079","level":"info","event":"[CryptoCompare] Fetching OHLC for BTC...","logger":"root"}
+{"timestamp":"2025-12-20T06:33:04.232199","level":"info","event":"[BTC] Loaded 2001 rows.","logger":"root"}
+{"timestamp":"2025-12-20T06:33:24.234283","level":"info","event":"[CryptoCompare] Fetching OHLC for ETH...","logger":"root"}
+{"timestamp":"2025-12-20T06:33:26.457279","level":"info","event":"[ETH] Loaded 2001 rows.","logger":"root"}
+{"timestamp":"2025-12-20T06:33:46.458944","level":"info","event":"[CryptoCompare] Fetching OHLC for XRP...","logger":"root"}
+{"timestamp":"2025-12-20T06:33:49.988555","level":"info","event":"[XRP] Loaded 2001 rows.","logger":"root"}
+{"timestamp":"2025-12-20T06:34:09.989800","level":"info","event":"[CryptoCompare] Fetching OHLC for USDT...","logger":"root"}
+{"timestamp":"2025-12-20T06:34:12.517147","level":"info","event":"[USDT] Loaded 2001 rows.","logger":"root"}
+{"timestamp":"2025-12-20T06:34:32.518777","level":"info","event":"[CryptoCompare] Fetching OHLC for BNB...","logger":"root"}
+{"timestamp":"2025-12-20T06:34:34.938868","level":"info","event":"[BNB] Loaded 2001 rows.","logger":"root"}

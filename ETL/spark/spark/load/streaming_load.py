@@ -59,6 +59,7 @@ def start_spark():
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
         .config("spark.master", "spark://spark-spark-1:7077")
+        .config("spark.cores.max", "1")
         .getOrCreate()
     )
     spark.sparkContext.setLogLevel("WARN")

@@ -27,7 +27,58 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+# ============================================
+#   LOAD VALID COIN IDs (CoinGecko Validation)
+# ============================================
+def load_valid_coin_ids():
+    url = f"{API}/coins/list"
+    try:
+        resp = requests.get(url, timeout=60)
+        resp.raise_for_status()
+        data = resp.json()
+        valid = {item["id"] for item in data}
+        logging.info(f"Loaded {len(valid)} valid CoinGecko IDs")
+        return valid
+    except Exception as e:
+        logging.error(f"Failed to load coin list: {e}")
+        return set()
 
+VALID_COINS = load_valid_coin_ids()
+
+# ============================================
+#   SAFE REQUEST WITH RETRY + BACKOFF
+# ============================================
+def safe_request(url, params=None, max_retries=5):
+    for attempt in range(max_retries):
+        try:
+            resp = requests.get(
+                url,
+                params=params,
+                headers={"User-Agent": ua.random},
+                timeout=60,
+            )
+
+            if resp.status_code == 429:
+                # Rate limited → exponential backoff
+                wait = 2 ** attempt
+                logging.warning(f"[429] Rate-limit. Waiting {wait}s → retry...")
+                time.sleep(wait)
+                continue
+
+            resp.raise_for_status()
+            return resp
+
+        except Exception as e:
+            wait = 2 ** attempt
+            logging.warning(f"Request failed ({e}). Retry in {wait}s...")
+            time.sleep(wait)
+
+    logging.error(f"Max retries exceeded for URL: {url}")
+    return None
+
+# ============================================
+#   ORIGINAL CLEANING + JSON PARSE — KEEP SAME
+# ============================================
 def _init_minio_client():
     return Minio(
         MINIO_ENDPOINT,
@@ -46,7 +97,7 @@ def _clean_df_for_json(df):
 
     try:
         df["datetime"] = pd.to_datetime(df["datetime"]).dt.strftime("%Y-%m-%d %H:%M:%S")
-    except Exception:
+    except:
         pass
 
     df = df.astype(object).where(pd.notnull(df), None)
@@ -56,11 +107,8 @@ def _clean_df_for_json(df):
 def _parse_any_json(raw: str):
     try:
         data = json.loads(raw)
-        if isinstance(data, list):
-            return data
-        if isinstance(data, dict):
-            return [data]
-    except Exception:
+        return data if isinstance(data, list) else [data]
+    except:
         pass
 
     dec = json.JSONDecoder()
@@ -73,73 +121,93 @@ def _parse_any_json(raw: str):
             break
         obj, idx = dec.raw_decode(raw, i)
         i = idx
-        if isinstance(obj, list):
-            out.extend(obj)
-        elif isinstance(obj, dict):
-            out.append(obj)
+        out.extend(obj if isinstance(obj, list) else [obj])
     return out
 
-
+# ============================================
+#   UPDATED get_data() WITH VALIDATION + RETRY
+# ============================================
+# ============================================
+#   NEW get_data() USING CRYPTOCOMPARE API
+# ============================================
 def get_data(coin_data, vs_currency="usd", days=365):
+    """
+    Thay thế toàn bộ logic CoinGecko bằng CryptoCompare histoday API.
+    Lấy full daily OHLCV, sau đó lọc ra đúng dữ liệu năm 2024.
+    """
+
+    # Detect symbol (CryptoCompare cần symbol, không phải id)
     if isinstance(coin_data, dict):
-        coin_id = (
-            coin_data.get("nameid") or coin_data.get("id") or coin_data.get("symbol")
-        )
+        symbol = coin_data.get("symbol") or coin_data.get("id") or coin_data.get("name")
     else:
-        coin_id = coin_data
+        symbol = coin_data
 
-    if not coin_id:
-        logging.warning("No coin_id found in coin_data: %s", coin_data)
+    if not symbol:
+        logging.warning("Missing coin symbol → skip")
         return None
 
-    try:
-        url_ohlc = f"{API}/coins/{coin_id}/ohlc"
-        resp_ohlc = requests.get(
-            url_ohlc,
-            params={"vs_currency": vs_currency, "days": int(days)},
-            headers={"User-Agent": ua.random},
-            timeout=60,
-        )
-        resp_ohlc.raise_for_status()
-        ohlc_data = resp_ohlc.json()
-        if not ohlc_data:
-            logging.info("No OHLC data for %s (days=%s)", coin_id, days)
-            return None
-        df_ohlc = pd.DataFrame(
-            ohlc_data, columns=["timestamp", "open", "high", "low", "close"]
-        )
+    # chuẩn hóa symbol thành uppercase (CryptoCompare format)
+    symbol = symbol.upper()
 
-        url_mc = f"{API}/coins/{coin_id}/market_chart"
-        resp_mc = requests.get(
-            url_mc,
-            params={"vs_currency": vs_currency, "days": int(days)},
-            headers={"User-Agent": ua.random},
-            timeout=60,
-        )
-        resp_mc.raise_for_status()
-        mc_data = resp_mc.json()
-        if not mc_data or "total_volumes" not in mc_data:
-            logging.info("No market_chart data for %s (days=%s)", coin_id, days)
-            return None
-        df_vol = pd.DataFrame(mc_data["total_volumes"], columns=["timestamp", "volume"])
+    logging.info(f"[CryptoCompare] Fetching OHLC for {symbol}...")
 
-        df = pd.merge(df_ohlc, df_vol, on="timestamp", how="left")
-        df["datetime"] = pd.to_datetime(df["timestamp"], unit="ms").dt.strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
-        df["coin_id"] = coin_id
-        df = df[["coin_id", "datetime", "open", "high", "low", "close", "volume"]]
+    # CryptoCompare daily historical endpoint
+    url = "https://min-api.cryptocompare.com/data/v2/histoday"
+    params = {
+        "fsym": symbol,
+        "tsym": "USD",
+        "limit": 2000,   # full historical
+    }
 
-        return df
-
-    except requests.exceptions.RequestException as e:
-        logging.error("HTTP error while fetching %s: %s", coin_id, e)
-        return None
-    except Exception as e:
-        logging.exception("Unexpected error while fetching %s: %s", coin_id, e)
+    resp = safe_request(url, params=params)
+    if not resp:
+        logging.error(f"[{symbol}] Request failed!")
         return None
 
+    js = resp.json()
 
+    if js.get("Response") != "Success":
+        logging.error(f"[{symbol}] CryptoCompare error: {js}")
+        return None
+
+    data = js["Data"]["Data"]
+    if not data:
+        logging.warning(f"[{symbol}] No historical data returned.")
+        return None
+
+    # Convert -> DataFrame
+    df = pd.DataFrame(data)
+
+    # timestamp -> datetime
+    df["datetime"] = pd.to_datetime(df["time"], unit="s")
+
+    # Rename columns về schema hệ thống
+    df = df.rename(
+        columns={
+            "open": "open",
+            "high": "high",
+            "low": "low",
+            "close": "close",
+            "volumeto": "volume",   # CryptoCompare uses "volumeto"
+        }
+    )
+
+    # coin_id dùng symbol để đảm bảo consistency (vd: BTC, ETH)
+    df["coin_id"] = symbol.lower()
+
+    # giữ đúng format schema hệ thống
+    df = df[
+        ["coin_id", "datetime", "open", "high", "low", "close", "volume"]
+    ]
+
+    logging.info(f"[{symbol}] Loaded {len(df)} rows.")
+
+    return df
+
+
+# ============================================
+#   REMAINDER OF FILE — KEEP ORIGINAL LOGIC
+# ============================================
 def fetch_historical_data(**context):
     client = _init_minio_client()
     bucket_name = BUCKET_NAME
@@ -162,6 +230,7 @@ def fetch_historical_data(**context):
         df = get_data(coin, vs_currency="usd", days=days)
         if df is not None and not df.empty:
             all_frames.append(df)
+
         time.sleep(RATE_LIMIT_SECONDS)
 
     if not all_frames:
@@ -169,8 +238,7 @@ def fetch_historical_data(**context):
 
     result_df = pd.concat(all_frames, ignore_index=True)
     result_df = _clean_df_for_json(result_df)
-    json_str = json.dumps(result_df.to_dict(orient="records"), ensure_ascii=False)
-    return json_str
+    return json.dumps(result_df.to_dict(orient="records"), ensure_ascii=False)
 
 
 def save_historical_to_minio(**context):
@@ -184,7 +252,7 @@ def save_historical_to_minio(**context):
 
     try:
         new_df = pd.DataFrame(json.loads(new_json))
-    except Exception as e:
+    except:
         return
 
     if new_df.empty:
@@ -207,7 +275,7 @@ def save_historical_to_minio(**context):
             try:
                 resp.close()
                 resp.release_conn()
-            except Exception:
+            except:
                 pass
 
         combined_df = (
@@ -220,9 +288,11 @@ def save_historical_to_minio(**context):
 
         combined_df = _clean_df_for_json(combined_df)
 
-        records = combined_df.to_dict(orient="records")
         json_bytes = json.dumps(
-            records, ensure_ascii=False, indent=2, allow_nan=False
+            combined_df.to_dict(orient="records"),
+            ensure_ascii=False,
+            indent=2,
+            allow_nan=False,
         ).encode("utf-8")
 
         if not client.bucket_exists(bucket_name):

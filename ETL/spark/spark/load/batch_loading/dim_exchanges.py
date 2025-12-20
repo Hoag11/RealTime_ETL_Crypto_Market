@@ -49,6 +49,7 @@ def main():
             .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
             .config("spark.hadoop.fs.s3a.path.style.access", "true")
             .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+            .config("spark.master", "spark://spark-spark-1:7077")
             .getOrCreate()
         )
 

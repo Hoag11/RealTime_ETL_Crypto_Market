@@ -49,25 +49,26 @@ def main():
     spark = (
         SparkSession.builder.appName("Load Fact Price History")
         .config("spark.sql.session.timeZone", "UTC")
-        # ✅ MinIO (S3A) configuration
+        # MinIO (S3A) configuration
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config("spark.hadoop.fs.s3a.access.key", MINIO_ACCESS_KEY)
         .config("spark.hadoop.fs.s3a.secret.key", MINIO_SECRET_KEY)
         .config("spark.hadoop.fs.s3a.endpoint", MINIO_ENDPOINT)
         .config("spark.hadoop.fs.s3a.path.style.access", "true")
         .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+        .config("spark.master", "spark://spark-spark-1:7077")
         .getOrCreate()
     )
 
     try:
         log.info("Khởi động SparkSession thành công")
 
-        # ✅ Đọc dữ liệu từ MinIO
+        # Đọc dữ liệu từ MinIO
         input_path = PATH_OBJECT
         log.info(f"Đang đọc dữ liệu từ {input_path}")
         df = spark.read.option("multiline", True).json(input_path)
 
-        # ✅ Chuẩn hóa schema
+        # Chuẩn hóa schema
         df_transformed = (
             df.withColumn("coin_id", F.col("coin_id").cast("string"))
             .withColumn("datetime", F.to_timestamp("datetime"))
@@ -81,7 +82,7 @@ def main():
         )
         log.info(f"Đã chuẩn hóa dữ liệu, số bản ghi: {df_transformed.count()}")
 
-        # ✅ Kết nối PostgreSQL
+        # Kết nối PostgreSQL
         jdbc_url = f"jdbc:postgresql://{PG_HOST}:{PG_PORT}/{PG_DB}"
         connection_props = {
             "user": PG_USER,
@@ -89,13 +90,13 @@ def main():
             "driver": "org.postgresql.Driver",
         }
 
-        # ✅ Đọc bảng dim_dates
+        # Đọc bảng dim_dates
         log.info("Đang đọc bảng dim_dates từ PostgreSQL...")
         dim_dates = spark.read.jdbc(
             url=jdbc_url, table="dim_dates", properties=connection_props
         )
 
-        # ✅ Join với dim_dates
+        # Join với dim_dates
         log.info("Đang join với dim_dates...")
         df_final = (
             df_transformed.alias("t")
@@ -118,7 +119,7 @@ def main():
 
         log.info(f"Join thành công, số bản ghi sau join: {df_final.count()}")
 
-        # ✅ Ghi vào PostgreSQL
+        #v Ghi vào PostgreSQL
         log.info("Ghi dữ liệu vào bảng fact_price_history...")
         df_final.write.jdbc(
             url=jdbc_url,

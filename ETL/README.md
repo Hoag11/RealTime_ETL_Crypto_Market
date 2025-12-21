@@ -28,10 +28,10 @@ cd spark
 docker build -t spark/spark:3.5 .
 ```
 ```
-docker volume create spark-lib
+docker volume create spark_lib
 ```
 ```
-docker volume create spark-data
+docker volume create spark_data
 ```
 ```
 docker compose up -d

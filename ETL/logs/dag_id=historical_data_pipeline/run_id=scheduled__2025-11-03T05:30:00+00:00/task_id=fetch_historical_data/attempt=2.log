@@ -1,8 +1,0 @@
-{"timestamp":"2025-11-03T15:55:55.349933","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager"}
-{"timestamp":"2025-11-03T15:55:55.350284","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/historical_dag.py","logger":"airflow.models.dagbag.DagBag"}
-{"timestamp":"2025-11-03T15:55:56.655878Z","level":"info","event":"Task instance is in running state","chan":"stdout","logger":"task"}
-{"timestamp":"2025-11-03T15:55:56.655998Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","chan":"stdout","logger":"task"}
-{"timestamp":"2025-11-03T15:55:56.656083Z","level":"info","event":"Current task name:fetch_historical_data","chan":"stdout","logger":"task"}
-{"timestamp":"2025-11-03T15:55:56.656121Z","level":"info","event":"Dag name:historical_data_pipeline","chan":"stdout","logger":"task"}
-{"timestamp":"2025-11-03T16:00:21.755380","level":"error","event":"HTTP error while fetching wormhole-bridged-hype: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))","logger":"root"}
-{"timestamp":"2025-11-03T16:01:08.533016","level":"error","event":"HTTP error while fetching osmosis-alllink: 500 Server Error: Internal Server Error for url: https://api.coingecko.com/api/v3/coins/osmosis-alllink/ohlc?vs_currency=usd&days=1","logger":"root"}

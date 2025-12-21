@@ -4,7 +4,7 @@
 cd ETL
 docker netowrk create streaming-network-ez
 ```
-/h2 airflow
+** airflow
 ```bash
 docker compose build
 ```
@@ -20,7 +20,7 @@ hoặc
 ```
 docker-compose up -d
 ```
-/h2 spark
+** spark
 ```bash
 cd spark
 ```
@@ -37,7 +37,7 @@ docker volume create spark-data
 docker compose up -d
 ```
 
-/h2 Minio. Kafka, Postgres
+** Minio. Kafka, Postgres
 cd vào docker/{thư mục tương ứng}
 ```
 docker compose up -d

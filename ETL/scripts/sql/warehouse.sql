@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dim_date (
+CREATE TABLE IF NOT EXISTS dim_dates (
     date_id integer NOT NULL,
     full_date timestamp without time zone,
     year integer,
